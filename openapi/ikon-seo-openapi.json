@@ -1,0 +1,1766 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Ikon SEO",
+    "version": "0.6.0",
+    "description": "Universal website profiles, simple one-time pairing, Local SEO safeguards, Google Business Profile insights, Search Console, page-plan queues and approval-first optimization."
+  },
+  "servers": [
+    {
+      "url": "https://YOUR-WEBSITE.example/wp-json/ikon-seo/v1"
+    }
+  ],
+  "security": [],
+  "paths": {
+    "/pair": {
+      "post": {
+        "operationId": "pairIkonSEOWebsite",
+        "summary": "Exchange a short-lived one-time pairing code for the website connection package",
+        "security": [],
+        "x-openai-isConsequential": true,
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "code"
+                ],
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "example": "ABCD-2345"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "One-time connection package"
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "operationId": "checkIkonSEOConnection",
+        "summary": "Check installation and capabilities",
+        "responses": {
+          "200": {
+            "description": "Connection status"
+          }
+        },
+        "parameters": [
+          {
+            "name": "X-Ikon-SEO-Key",
+            "in": "header",
+            "required": true,
+            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/profile": {
+      "get": {
+        "operationId": "readIkonSEOWebsiteProfile",
+        "summary": "Read the current website identity and schema policy before writing",
+        "responses": {
+          "200": {
+            "description": "Non-secret active website profile"
+          }
+        },
+        "parameters": [
+          {
+            "name": "X-Ikon-SEO-Key",
+            "in": "header",
+            "required": true,
+            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/profile/export": {
+      "get": {
+        "operationId": "exportIkonSEOWebsiteProfile",
+        "summary": "Export the portable non-secret profile",
+        "responses": {
+          "200": {
+            "description": "Portable profile document"
+          }
+        },
+        "parameters": [
+          {
+            "name": "X-Ikon-SEO-Key",
+            "in": "header",
+            "required": true,
+            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/pages": {
+      "get": {
+        "operationId": "findWordPressPages",
+        "summary": "Find existing pages before creating content",
+        "parameters": [
+          {
+            "name": "X-Ikon-SEO-Key",
+            "in": "header",
+            "required": true,
+            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Matching pages"
+          }
+        }
+      },
+      "post": {
+        "operationId": "createOrImproveWordPressPage",
+        "summary": "Create a new page draft or separate improvement draft",
+        "x-openai-isConsequential": true,
+        "parameters": [
+          {
+            "name": "X-Ikon-SEO-Key",
+            "in": "header",
+            "required": true,
+            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/Idempotency"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PagePayload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Draft created"
+          },
+          "400": {
+            "description": "Invalid or mismatched profile"
+          },
+          "409": {
+            "description": "Duplicate or conflict"
+          }
+        }
+      }
+    },
+    "/pages/{id}": {
+      "get": {
+        "operationId": "readWordPressPage",
+        "summary": "Read page content, metadata, schema and quality",
+        "parameters": [
+          {
+            "name": "X-Ikon-SEO-Key",
+            "in": "header",
+            "required": true,
+            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/PageId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Page data"
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updateIkonSEODraft",
+        "summary": "Update an Ikon SEO managed draft",
+        "x-openai-isConsequential": true,
+        "parameters": [
+          {
+            "name": "X-Ikon-SEO-Key",
+            "in": "header",
+            "required": true,
+            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/PageId"
+          },
+          {
+            "$ref": "#/components/parameters/Idempotency"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PagePayload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Draft updated"
+          }
+        }
+      }
+    },
+    "/schema/preview": {
+      "post": {
+        "operationId": "previewIkonSEOSchema",
+        "summary": "Preview profile-aware schema without changing WordPress",
+        "x-openai-isConsequential": false,
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PagePayload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Generated types, graph and conflict warnings"
+          }
+        },
+        "parameters": [
+          {
+            "name": "X-Ikon-SEO-Key",
+            "in": "header",
+            "required": true,
+            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/inventory": {
+      "get": {
+        "operationId": "auditWordPressInventory",
+        "summary": "Audit pages, links, metadata, orphans and keyword overlap",
+        "responses": {
+          "200": {
+            "description": "Site inventory"
+          }
+        },
+        "parameters": [
+          {
+            "name": "X-Ikon-SEO-Key",
+            "in": "header",
+            "required": true,
+            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/internal-links": {
+      "get": {
+        "operationId": "findInternalLinkCandidates",
+        "summary": "Find confirmed internal-link destinations",
+        "parameters": [
+          {
+            "name": "X-Ikon-SEO-Key",
+            "in": "header",
+            "required": true,
+            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Internal-link candidates"
+          }
+        }
+      }
+    },
+    "/media": {
+      "get": {
+        "operationId": "findWordPressImages",
+        "summary": "Search the Media Library",
+        "responses": {
+          "200": {
+            "description": "Matching images"
+          }
+        },
+        "parameters": [
+          {
+            "name": "X-Ikon-SEO-Key",
+            "in": "header",
+            "required": true,
+            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      },
+      "post": {
+        "operationId": "importApprovedImage",
+        "summary": "Import an image from an approved HTTPS host",
+        "x-openai-isConsequential": true,
+        "parameters": [
+          {
+            "name": "X-Ikon-SEO-Key",
+            "in": "header",
+            "required": true,
+            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/Idempotency"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MediaImport"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Image imported"
+          }
+        }
+      }
+    },
+    "/reviews": {
+      "get": {
+        "operationId": "listIkonSEOReviews",
+        "summary": "List improvement drafts awaiting review",
+        "responses": {
+          "200": {
+            "description": "Review queue"
+          }
+        },
+        "parameters": [
+          {
+            "name": "X-Ikon-SEO-Key",
+            "in": "header",
+            "required": true,
+            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/reviews/{id}/comparison": {
+      "get": {
+        "operationId": "compareIkonSEOReview",
+        "summary": "Compare an improvement draft with its source",
+        "parameters": [
+          {
+            "name": "X-Ikon-SEO-Key",
+            "in": "header",
+            "required": true,
+            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/PageId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Before-and-after comparison"
+          }
+        }
+      }
+    },
+    "/reviews/{id}/merge": {
+      "post": {
+        "operationId": "mergeApprovedIkonSEOReview",
+        "summary": "Merge an approved draft into its original page",
+        "description": "Disabled by default. Requires approve scope and Remote approval.",
+        "x-openai-isConsequential": true,
+        "parameters": [
+          {
+            "name": "X-Ikon-SEO-Key",
+            "in": "header",
+            "required": true,
+            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/PageId"
+          },
+          {
+            "$ref": "#/components/parameters/Idempotency"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Draft merged and rollback snapshot created"
+          }
+        }
+      }
+    },
+    "/pages/{id}/snapshots": {
+      "get": {
+        "operationId": "listIkonSEOSnapshots",
+        "summary": "List rollback snapshots for a page",
+        "parameters": [
+          {
+            "name": "X-Ikon-SEO-Key",
+            "in": "header",
+            "required": true,
+            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/PageId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Rollback snapshots"
+          }
+        }
+      }
+    },
+    "/pages/{id}/rollback": {
+      "post": {
+        "operationId": "rollbackIkonSEOPage",
+        "summary": "Restore a page from an Ikon SEO snapshot",
+        "description": "Disabled by default. Requires approve scope and Remote approval.",
+        "x-openai-isConsequential": true,
+        "parameters": [
+          {
+            "name": "X-Ikon-SEO-Key",
+            "in": "header",
+            "required": true,
+            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/PageId"
+          },
+          {
+            "$ref": "#/components/parameters/Idempotency"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Rollback"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Snapshot restored"
+          }
+        }
+      }
+    },
+    "/logs": {
+      "get": {
+        "operationId": "readIkonSEOActivity",
+        "summary": "Read recent workflow activity",
+        "parameters": [
+          {
+            "name": "X-Ikon-SEO-Key",
+            "in": "header",
+            "required": true,
+            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "maximum": 100
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sanitized activity records"
+          }
+        }
+      }
+    },
+    "/domain-migration": {
+      "get": {
+        "operationId": "previewIkonSEODomainMigration",
+        "summary": "Preview stored references affected by a domain change",
+        "parameters": [
+          {
+            "name": "X-Ikon-SEO-Key",
+            "in": "header",
+            "required": true,
+            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "old_url",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uri"
+            }
+          },
+          {
+            "name": "new_url",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uri"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Read-only migration report; application is administrator-only"
+          }
+        }
+      }
+    },
+    "/search-console/status": {
+      "get": {
+        "operationId": "readSearchConsoleStatus",
+        "summary": "Check the read-only Search Console connection without exposing credentials",
+        "responses": {
+          "200": {
+            "description": "Non-secret connection status"
+          }
+        },
+        "parameters": [
+          {
+            "name": "X-Ikon-SEO-Key",
+            "in": "header",
+            "required": true,
+            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/search-console/performance": {
+      "get": {
+        "operationId": "readSearchPerformance",
+        "summary": "Compare Search Console performance periods and list top queries and pages",
+        "parameters": [
+          {
+            "name": "X-Ikon-SEO-Key",
+            "in": "header",
+            "required": true,
+            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "days",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 7,
+              "maximum": 90,
+              "default": 28
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Current and previous performance data"
+          }
+        }
+      }
+    },
+    "/search-console/inspect": {
+      "get": {
+        "operationId": "inspectGoogleIndexStatus",
+        "summary": "Inspect Google's indexed version of a URL on this website",
+        "parameters": [
+          {
+            "name": "X-Ikon-SEO-Key",
+            "in": "header",
+            "required": true,
+            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "url",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uri"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Indexed-version inspection result"
+          }
+        }
+      }
+    },
+    "/search-console/sitemaps": {
+      "get": {
+        "operationId": "readSearchConsoleSitemaps",
+        "summary": "Read submitted sitemap status, warnings and errors",
+        "responses": {
+          "200": {
+            "description": "Submitted sitemaps"
+          }
+        },
+        "parameters": [
+          {
+            "name": "X-Ikon-SEO-Key",
+            "in": "header",
+            "required": true,
+            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/queue": {
+      "get": {
+        "operationId": "listIkonSEOPagePlans",
+        "summary": "List CSV-imported page plans awaiting interactive generation",
+        "parameters": [
+          {
+            "name": "X-Ikon-SEO-Key",
+            "in": "header",
+            "required": true,
+            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "planned",
+                "claimed",
+                "paused",
+                "completed",
+                "failed",
+                "archived"
+              ]
+            }
+          },
+          {
+            "name": "batch_id",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "maximum": 200
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Page-plan queue"
+          }
+        }
+      }
+    },
+    "/queue/{id}/claim": {
+      "post": {
+        "operationId": "claimIkonSEOPagePlan",
+        "summary": "Claim one page plan for up to one hour",
+        "x-openai-isConsequential": true,
+        "parameters": [
+          {
+            "name": "X-Ikon-SEO-Key",
+            "in": "header",
+            "required": true,
+            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/PageId"
+          },
+          {
+            "$ref": "#/components/parameters/Idempotency"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Claimed plan and one-time claim token"
+          },
+          "409": {
+            "description": "Plan is unavailable or already claimed"
+          }
+        }
+      }
+    },
+    "/queue/{id}/complete": {
+      "post": {
+        "operationId": "completeIkonSEOPagePlan",
+        "summary": "Validate a generated page, create its draft and complete the plan",
+        "x-openai-isConsequential": true,
+        "parameters": [
+          {
+            "name": "X-Ikon-SEO-Key",
+            "in": "header",
+            "required": true,
+            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/PageId"
+          },
+          {
+            "$ref": "#/components/parameters/Idempotency"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QueueCompletion"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Page draft created and plan completed"
+          },
+          "409": {
+            "description": "Claim expired or plan conflict"
+          }
+        }
+      }
+    },
+    "/monitoring": {
+      "get": {
+        "operationId": "readContentRefreshMonitor",
+        "summary": "Read scheduled reviews and meaningful Search Console declines",
+        "responses": {
+          "200": {
+            "description": "Recommendation-only refresh report"
+          }
+        },
+        "parameters": [
+          {
+            "name": "X-Ikon-SEO-Key",
+            "in": "header",
+            "required": true,
+            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/local": {
+      "get": {
+        "operationId": "readIkonSEOLocalSummary",
+        "summary": "Read local profile, citation, rank and NAP status",
+        "responses": {
+          "200": {
+            "description": "Local SEO summary"
+          }
+        },
+        "parameters": [
+          {
+            "name": "X-Ikon-SEO-Key",
+            "in": "header",
+            "required": true,
+            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/local/locations": {
+      "get": {
+        "operationId": "readIkonSEOLocations",
+        "summary": "Read profile-bound storefront, hybrid and service-area records",
+        "responses": {
+          "200": {
+            "description": "Local location records"
+          }
+        },
+        "parameters": [
+          {
+            "name": "X-Ikon-SEO-Key",
+            "in": "header",
+            "required": true,
+            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/local/nap-audit": {
+      "get": {
+        "operationId": "auditIkonSEONAP",
+        "summary": "Compare master NAP data with assigned pages and schema",
+        "responses": {
+          "200": {
+            "description": "NAP consistency report"
+          }
+        },
+        "parameters": [
+          {
+            "name": "X-Ikon-SEO-Key",
+            "in": "header",
+            "required": true,
+            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/local/citations": {
+      "get": {
+        "operationId": "readIkonSEOCitations",
+        "summary": "Read citation consistency records",
+        "responses": {
+          "200": {
+            "description": "Citation records"
+          }
+        },
+        "parameters": [
+          {
+            "name": "X-Ikon-SEO-Key",
+            "in": "header",
+            "required": true,
+            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/local/ranks": {
+      "get": {
+        "operationId": "readIkonSEOLocalRanks",
+        "summary": "Read manually imported organic and local-pack observations",
+        "responses": {
+          "200": {
+            "description": "Local rank observations"
+          }
+        },
+        "parameters": [
+          {
+            "name": "X-Ikon-SEO-Key",
+            "in": "header",
+            "required": true,
+            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/local/utm": {
+      "post": {
+        "operationId": "buildIkonSEOLocalUTM",
+        "summary": "Build a controlled same-site UTM URL",
+        "x-openai-isConsequential": false,
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UTMRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Tracked same-site URL"
+          }
+        },
+        "parameters": [
+          {
+            "name": "X-Ikon-SEO-Key",
+            "in": "header",
+            "required": true,
+            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/local/gbp/status": {
+      "get": {
+        "operationId": "readGoogleBusinessProfileStatus",
+        "summary": "Read Business Profile connection and approval policy",
+        "responses": {
+          "200": {
+            "description": "Non-secret connection status"
+          }
+        },
+        "parameters": [
+          {
+            "name": "X-Ikon-SEO-Key",
+            "in": "header",
+            "required": true,
+            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/local/gbp/comparison": {
+      "get": {
+        "operationId": "compareGoogleBusinessProfileLocation",
+        "summary": "Compare a linked Google location with the website master record",
+        "parameters": [
+          {
+            "name": "X-Ikon-SEO-Key",
+            "in": "header",
+            "required": true,
+            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "location_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "refresh",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Location consistency comparison"
+          }
+        }
+      }
+    },
+    "/local/gbp/reviews": {
+      "get": {
+        "operationId": "readGoogleBusinessProfileReviews",
+        "summary": "Read recent reviews for a linked verified location",
+        "parameters": [
+          {
+            "name": "X-Ikon-SEO-Key",
+            "in": "header",
+            "required": true,
+            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "location_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "refresh",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Briefly cached review report"
+          }
+        }
+      }
+    },
+    "/local/gbp/performance": {
+      "get": {
+        "operationId": "readGoogleBusinessProfilePerformance",
+        "summary": "Read Maps and Search visibility and customer actions",
+        "parameters": [
+          {
+            "name": "X-Ikon-SEO-Key",
+            "in": "header",
+            "required": true,
+            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "location_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "days",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 7,
+              "maximum": 90,
+              "default": 30
+            }
+          },
+          {
+            "name": "refresh",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Business Profile performance report"
+          }
+        }
+      }
+    },
+    "/local/gbp/search-keywords": {
+      "get": {
+        "operationId": "readGoogleBusinessProfileSearchKeywords",
+        "summary": "Read monthly search keyword impressions or privacy thresholds",
+        "parameters": [
+          {
+            "name": "X-Ikon-SEO-Key",
+            "in": "header",
+            "required": true,
+            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "location_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "months",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 18,
+              "default": 3
+            }
+          },
+          {
+            "name": "refresh",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Business Profile search keyword report"
+          }
+        }
+      }
+    },
+    "/local/gbp/drafts": {
+      "get": {
+        "operationId": "readGoogleBusinessProfileDrafts",
+        "summary": "Read staged posts and review replies",
+        "responses": {
+          "200": {
+            "description": "Local approval queue"
+          }
+        },
+        "parameters": [
+          {
+            "name": "X-Ikon-SEO-Key",
+            "in": "header",
+            "required": true,
+            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      },
+      "post": {
+        "operationId": "stageGoogleBusinessProfileDraft",
+        "summary": "Stage content for WordPress administrator approval without sending it to Google",
+        "x-openai-isConsequential": true,
+        "parameters": [
+          {
+            "name": "X-Ikon-SEO-Key",
+            "in": "header",
+            "required": true,
+            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/Idempotency"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GBPDraft"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Draft staged locally; not sent"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "IkonSEOKey": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-Ikon-SEO-Key"
+      }
+    },
+    "parameters": {
+      "PageId": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        }
+      },
+      "Idempotency": {
+        "name": "X-Idempotency-Key",
+        "in": "header",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "minLength": 8,
+          "maxLength": 128
+        }
+      }
+    },
+    "schemas": {
+      "Button": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      },
+      "FAQ": {
+        "type": "object",
+        "required": [
+          "question",
+          "answer"
+        ],
+        "properties": {
+          "question": {
+            "type": "string"
+          },
+          "answer": {
+            "type": "string"
+          }
+        }
+      },
+      "Section": {
+        "type": "object",
+        "required": [
+          "type",
+          "heading"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "content",
+              "cards",
+              "features",
+              "checklist",
+              "table",
+              "process",
+              "faq",
+              "related-links",
+              "cta",
+              "split-content",
+              "stats",
+              "trust",
+              "documents",
+              "notice",
+              "expert",
+              "sources",
+              "location-details",
+              "service-area",
+              "map",
+              "local-proof",
+              "reviews"
+            ]
+          },
+          "eyebrow": {
+            "type": "string"
+          },
+          "heading": {
+            "type": "string"
+          },
+          "intro": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "map_query": {
+            "type": "string"
+          },
+          "map_url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "map_embed_url": {
+            "type": "string",
+            "format": "uri",
+            "description": "Optional HTTPS www.google.com/maps/embed URL."
+          },
+          "map_label": {
+            "type": "string"
+          },
+          "map_zoom": {
+            "type": "integer",
+            "minimum": 5,
+            "maximum": 20
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "headers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "rows": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "button": {
+            "$ref": "#/components/schemas/Button"
+          }
+        }
+      },
+      "SEO": {
+        "type": "object",
+        "required": [
+          "title",
+          "description",
+          "focus_keyword"
+        ],
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "focus_keyword": {
+            "type": "string"
+          },
+          "canonical": {
+            "type": "string",
+            "format": "uri"
+          },
+          "robots": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "SchemaConfig": {
+        "type": "object",
+        "properties": {
+          "page_type": {
+            "type": "string",
+            "enum": [
+              "webpage",
+              "service",
+              "article",
+              "profile",
+              "collection",
+              "tool",
+              "about",
+              "contact",
+              "location",
+              "howto"
+            ]
+          },
+          "semantic_faq": {
+            "type": "boolean"
+          },
+          "service": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "business_entity": {
+            "type": "object",
+            "description": "Type is always controlled by the active Website Profile.",
+            "additionalProperties": true
+          },
+          "breadcrumbs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "article": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "person": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "collection": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "application": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "howto": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "video": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      },
+      "LocalPage": {
+        "type": "object",
+        "description": "Required for local location pages. Service areas cannot expose an address or location entity.",
+        "required": [
+          "location_id",
+          "page_kind",
+          "services",
+          "unique_local_details"
+        ],
+        "properties": {
+          "location_id": {
+            "type": "integer"
+          },
+          "page_kind": {
+            "type": "string",
+            "enum": [
+              "verified_location",
+              "service_area"
+            ]
+          },
+          "target_area": {
+            "type": "string"
+          },
+          "services": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            }
+          },
+          "unique_local_details": {
+            "type": "array",
+            "minItems": 3,
+            "items": {
+              "type": "string"
+            }
+          },
+          "landmarks": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "directions": {
+            "type": "string"
+          },
+          "parking": {
+            "type": "string"
+          },
+          "map_url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "show_address": {
+            "type": "boolean"
+          },
+          "emit_location_entity": {
+            "type": "boolean"
+          }
+        }
+      },
+      "PagePayload": {
+        "type": "object",
+        "required": [
+          "profile_id",
+          "title",
+          "sections",
+          "seo"
+        ],
+        "properties": {
+          "profile_id": {
+            "type": "string",
+            "description": "Current value returned by GET /profile."
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "create",
+              "improve"
+            ]
+          },
+          "source_page_id": {
+            "type": "integer"
+          },
+          "title": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "excerpt": {
+            "type": "string"
+          },
+          "language": {
+            "type": "string"
+          },
+          "hero": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "sections": {
+            "type": "array",
+            "maxItems": 40,
+            "items": {
+              "$ref": "#/components/schemas/Section"
+            }
+          },
+          "faq": {
+            "type": "array",
+            "maxItems": 30,
+            "items": {
+              "$ref": "#/components/schemas/FAQ"
+            }
+          },
+          "seo": {
+            "$ref": "#/components/schemas/SEO"
+          },
+          "schema": {
+            "$ref": "#/components/schemas/SchemaConfig"
+          },
+          "local": {
+            "$ref": "#/components/schemas/LocalPage"
+          },
+          "content_review": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "featured_media_id": {
+            "type": "integer"
+          },
+          "social_media_id": {
+            "type": "integer"
+          }
+        }
+      },
+      "MediaImport": {
+        "type": "object",
+        "required": [
+          "source_url",
+          "alt_text"
+        ],
+        "properties": {
+          "source_url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "filename": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "alt_text": {
+            "type": "string"
+          }
+        }
+      },
+      "QueueCompletion": {
+        "type": "object",
+        "required": [
+          "claim_token",
+          "page"
+        ],
+        "properties": {
+          "claim_token": {
+            "type": "string",
+            "minLength": 32,
+            "description": "One-time token returned by the claim operation. Expires after one hour."
+          },
+          "page": {
+            "$ref": "#/components/schemas/PagePayload"
+          }
+        }
+      },
+      "Rollback": {
+        "type": "object",
+        "properties": {
+          "snapshot_id": {
+            "type": "string",
+            "description": "Optional. The newest snapshot is used when omitted."
+          }
+        }
+      },
+      "UTMRequest": {
+        "type": "object",
+        "required": [
+          "url",
+          "campaign"
+        ],
+        "properties": {
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "source": {
+            "type": "string",
+            "default": "google"
+          },
+          "medium": {
+            "type": "string",
+            "default": "organic"
+          },
+          "campaign": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "term": {
+            "type": "string"
+          }
+        }
+      },
+      "GBPDraft": {
+        "type": "object",
+        "description": "Stages content locally. Sending is only available from WordPress after exact administrator approval.",
+        "required": [
+          "profile_id",
+          "location_id",
+          "draft_type",
+          "content"
+        ],
+        "properties": {
+          "profile_id": {
+            "type": "string"
+          },
+          "location_id": {
+            "type": "integer"
+          },
+          "draft_type": {
+            "type": "string",
+            "enum": [
+              "review_reply",
+              "google_post"
+            ]
+          },
+          "content": {
+            "type": "string",
+            "maxLength": 4000
+          },
+          "review_name": {
+            "type": "string"
+          },
+          "topic_type": {
+            "type": "string",
+            "enum": [
+              "STANDARD",
+              "EVENT",
+              "OFFER"
+            ]
+          },
+          "call_to_action": {
+            "type": "string"
+          },
+          "call_to_action_url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "event_title": {
+            "type": "string"
+          },
+          "start_time": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "end_time": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    }
+  }
+}

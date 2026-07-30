@@ -1,0 +1,3 @@
+keyword,service,location,page_type,language,template_hint,desired_slug,source_page_id,priority
+example service example city,Example Service,Example City,service,en,service landing page,example-service-example-city,,80
+existing page improvement,Example Service,Example City,service,en,retain URL and strengthen conversion sections,,123,70

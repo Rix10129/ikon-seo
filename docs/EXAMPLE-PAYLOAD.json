@@ -1,0 +1,113 @@
+{
+  "profile_id": "REPLACE-WITH-CURRENT-PROFILE-ID",
+  "mode": "create",
+  "title": "Example Service in Example City",
+  "slug": "example-service-example-city",
+  "excerpt": "A concise, accurate summary of the service and intended customer.",
+  "language": "en",
+  "status": "draft",
+  "hero": {
+    "eyebrow": "VERIFIED SERVICE",
+    "title": "Example Service in Example City",
+    "description": "Explain the service, customer need and next step without unsupported claims.",
+    "primary_cta": {
+      "label": "Request a Consultation",
+      "url": "https://YOUR-WEBSITE.example/contact/"
+    }
+  },
+  "sections": [
+    {
+      "type": "content",
+      "heading": "Service Overview",
+      "content": "<p>Use original, business-specific and fact-checked content.</p>"
+    },
+    {
+      "type": "features",
+      "heading": "How We Can Help",
+      "items": [
+        {
+          "title": "Verified Capability",
+          "content": "Describe a service the business genuinely provides."
+        }
+      ]
+    },
+    {
+      "type": "related-links",
+      "heading": "Related Services",
+      "items": [
+        {
+          "title": "Confirmed Existing Page",
+          "url": "https://YOUR-WEBSITE.example/confirmed-page/"
+        }
+      ]
+    },
+    {
+      "type": "cta",
+      "heading": "Discuss Your Requirements",
+      "content": "<p>Use the approved Website Profile contact details and CTA wording.</p>",
+      "button": {
+        "label": "Contact Us",
+        "url": "https://YOUR-WEBSITE.example/contact/"
+      }
+    }
+  ],
+  "faq": [
+    {
+      "question": "What should a customer prepare before contacting you?",
+      "answer": "Provide a business-specific answer that matches the visible service."
+    }
+  ],
+  "seo": {
+    "title": "Example Service in Example City | Business Name",
+    "description": "Explain the service, location and practical next step in a clear, accurate meta description.",
+    "focus_keyword": "example service example city",
+    "canonical": "https://YOUR-WEBSITE.example/example-service-example-city/",
+    "robots": ["index", "follow"]
+  },
+  "schema": {
+    "page_type": "service",
+    "service": {
+      "name": "Example Service in Example City",
+      "service_type": "Example Service",
+      "area_served": ["Example City"]
+    },
+    "breadcrumbs": [
+      {
+        "name": "Home",
+        "url": "https://YOUR-WEBSITE.example/"
+      },
+      {
+        "name": "Example Service",
+        "url": "https://YOUR-WEBSITE.example/example-service-example-city/"
+      }
+    ]
+  },
+  "local": {
+    "location_id": 1,
+    "page_kind": "verified_location",
+    "target_area": "Example City",
+    "services": [
+      "Example Service"
+    ],
+    "unique_local_details": [
+      "The customer entrance is on Example Street.",
+      "Appointments are available on weekday mornings.",
+      "The nearest public landmark is Example Station."
+    ],
+    "directions": "Use only verified arrival information.",
+    "parking": "Use only verified parking information.",
+    "landmarks": [
+      "Example Station"
+    ],
+    "map_url": "https://www.google.com/maps/place/VERIFIED-PLACE"
+  },
+  "content_review": {
+    "ymyl": false,
+    "sources": [],
+    "reviewed_by": "",
+    "fact_checked_date": "",
+    "applicable_period": "",
+    "jurisdiction": "",
+    "next_review_date": ""
+  }
+}

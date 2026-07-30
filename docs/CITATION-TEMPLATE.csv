@@ -1,0 +1,2 @@
+directory_name,listing_url,location_id,business_name,address,phone,status,login_owner,last_checked,next_review,duplicate_warning,correction_required,notes
+Example Directory,https://directory.example/listing,1,Example Business,Verified address,+0000000000,live,Site administrator,2026-07-30,2026-10-30,0,0,Replace this example row
