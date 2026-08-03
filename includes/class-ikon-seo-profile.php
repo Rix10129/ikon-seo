@@ -54,6 +54,9 @@ class Ikon_SEO_Profile {
 			'draft_only'            => (bool) $settings['draft_only'],
 			'remote_merge'          => (bool) $settings['remote_merge'],
 			'component_version'     => sanitize_text_field( $settings['component_version'] ),
+			'website_mode'          => sanitize_key( $settings['website_mode'] ?? 'local_business' ),
+			'strategy_configured'    => (bool) ( $settings['strategy_configured'] ?? false ),
+			'strategy_primary_goal'  => sanitize_key( $settings['strategy_primary_goal'] ?? 'leads' ),
 		);
 	}
 

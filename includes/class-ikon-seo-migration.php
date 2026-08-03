@@ -113,6 +113,12 @@ class Ikon_SEO_Migration {
 		$settings['gsc_refresh_token']= '';
 		$settings['gsc_property']     = '';
 		$settings['gsc_last_error']   = '';
+		$settings['ga_client_secret'] = '';
+		$settings['ga_refresh_token'] = '';
+		$settings['ga_property'] = '';
+		$settings['ga_last_error'] = '';
+		$settings['pagespeed_api_key'] = '';
+		$settings['pagespeed_last_error'] = '';
 		$settings['gbp_client_secret']= '';
 		$settings['gbp_refresh_token']= '';
 		$settings['gbp_account']      = '';

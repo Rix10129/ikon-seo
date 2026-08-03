@@ -49,3 +49,9 @@ The dashboard can request supported Business Profile daily metrics, including Se
 - No promise that a draft will be accepted or displayed by Google
 
 Domain or core profile identity changes clear the Business Profile authorization, remove remote location links and reject pending drafts. Reconnect and relink locations after verifying the new identity.
+
+## Local Growth integration
+
+Version 0.17.0 can synchronize review reply state and Business Profile performance into the Local Growth System. This synchronization is read-only. Review replies and Google Posts continue to use the existing staging and exact administrator-approval process.
+
+Google discontinued Business Profile Questions and Answers API support and related notifications in 2025. Q&A automation is therefore not included.

@@ -1,0 +1,2 @@
+source_url,target_url,source_title,anchor_text,link_type,status,source_strength,source_traffic,first_seen,last_seen,observed_at,notes
+https://example-source.com/article,https://example.com/service-page/,Example article,descriptive anchor,follow,active,0,0,2026-01-01,2026-08-01,2026-08-02,Replace example.com with the connected website domain

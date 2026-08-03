@@ -239,8 +239,8 @@ class Ikon_SEO_Search_Console {
 		$current  = $this->analytics_query( $property, $start, $end );
 		$previous = $this->analytics_query( $property, $previous_start, $previous_end );
 		$queries  = $this->analytics_query( $property, $start, $end, array( 'query' ), 25 );
-		$pages    = $this->analytics_query( $property, $start, $end, array( 'page' ), 100 );
-		$old_pages= $this->analytics_query( $property, $previous_start, $previous_end, array( 'page' ), 100 );
+		$pages    = $this->analytics_query( $property, $start, $end, array( 'page' ), 1000 );
+		$old_pages= $this->analytics_query( $property, $previous_start, $previous_end, array( 'page' ), 1000 );
 
 		foreach ( array( $current, $previous, $queries, $pages, $old_pages ) as $response ) {
 			if ( is_wp_error( $response ) ) {
@@ -288,6 +288,58 @@ class Ikon_SEO_Search_Console {
 		return $result;
 	}
 
+
+	/**
+	 * Retrieve paginated Search Analytics rows for persistent intelligence.
+	 *
+	 * Google may still omit anonymized or low-volume queries. This method uses
+	 * final data and stops at the configured local row limit.
+	 */
+	public function detailed_rows( $start, $end, array $dimensions = array( 'query', 'page' ), $max_rows = 50000 ) {
+		$property = sanitize_text_field( Ikon_SEO_Plugin::settings()['gsc_property'] ?? '' );
+		if ( ! $property ) {
+			return new WP_Error( 'ikon_seo_gsc_property', __( 'Select a Google Search Console property first.', 'ikon-seo' ) );
+		}
+		if ( ! preg_match( '/^\d{4}-\d{2}-\d{2}$/', (string) $start ) || ! preg_match( '/^\d{4}-\d{2}-\d{2}$/', (string) $end ) ) {
+			return new WP_Error( 'ikon_seo_gsc_dates', __( 'Search Console dates must use YYYY-MM-DD format.', 'ikon-seo' ) );
+		}
+		$allowed = array( 'query', 'page', 'country', 'device', 'date', 'searchAppearance' );
+		$dimensions = array_values( array_intersect( array_map( 'sanitize_key', $dimensions ), $allowed ) );
+		if ( ! $dimensions ) {
+			return new WP_Error( 'ikon_seo_gsc_dimensions', __( 'Select at least one supported Search Console dimension.', 'ikon-seo' ) );
+		}
+		$max_rows  = max( 1, min( 200000, absint( $max_rows ) ) );
+		$page_size = min( 25000, $max_rows );
+		$start_row = 0;
+		$rows      = array();
+		$truncated = false;
+		do {
+			$response = $this->analytics_query( $property, $start, $end, $dimensions, $page_size, $start_row );
+			if ( is_wp_error( $response ) ) {
+				return $response;
+			}
+			$batch = (array) ( $response['rows'] ?? array() );
+			foreach ( $batch as $row ) {
+				$rows[] = $row;
+				if ( count( $rows ) >= $max_rows ) {
+					$truncated = true;
+					break 2;
+				}
+			}
+			$start_row += count( $batch );
+		} while ( count( $batch ) === $page_size );
+
+		return array(
+			'property'   => $property,
+			'period'     => array( 'start' => $start, 'end' => $end ),
+			'dimensions' => $dimensions,
+			'rows'       => $rows,
+			'row_count'  => count( $rows ),
+			'truncated'  => $truncated,
+			'data_note'  => 'Search Console may omit anonymized and low-volume rows even when pagination completes.',
+		);
+	}
+
 	public function inspect_url( $url ) {
 		$url      = esc_url_raw( $url );
 		$property = Ikon_SEO_Plugin::settings()['gsc_property'];
@@ -311,19 +363,36 @@ class Ikon_SEO_Search_Console {
 			return $data;
 		}
 
-		$result = (array) ( $data['inspectionResult']['indexStatusResult'] ?? array() );
+		$inspection = (array) ( $data['inspectionResult'] ?? array() );
+		$result     = (array) ( $inspection['indexStatusResult'] ?? array() );
+		$mobile     = (array) ( $inspection['mobileUsabilityResult'] ?? array() );
+		$rich       = (array) ( $inspection['richResultsResult'] ?? array() );
+		$rich_items = array();
+		foreach ( array_slice( (array) ( $rich['detectedItems'] ?? array() ), 0, 50 ) as $detected ) {
+			$rich_items[] = array(
+				'type'       => sanitize_text_field( $detected['richResultType'] ?? '' ),
+				'item_count' => count( (array) ( $detected['items'] ?? array() ) ),
+			);
+		}
+
 		return array(
-			'url'                 => $url,
-			'verdict'             => sanitize_key( $result['verdict'] ?? '' ),
-			'coverage_state'      => sanitize_text_field( $result['coverageState'] ?? '' ),
-			'indexing_state'      => sanitize_key( $result['indexingState'] ?? '' ),
-			'page_fetch_state'    => sanitize_key( $result['pageFetchState'] ?? '' ),
-			'robots_txt_state'    => sanitize_key( $result['robotsTxtState'] ?? '' ),
-			'last_crawl_time'     => sanitize_text_field( $result['lastCrawlTime'] ?? '' ),
-			'google_canonical'    => esc_url_raw( $result['googleCanonical'] ?? '' ),
-			'user_canonical'      => esc_url_raw( $result['userCanonical'] ?? '' ),
-			'referring_urls'      => array_values( array_filter( array_map( 'esc_url_raw', (array) ( $result['referringUrls'] ?? array() ) ) ) ),
-			'inspection_scope'    => 'indexed_version_only',
+			'url'                       => $url,
+			'verdict'                   => sanitize_key( $result['verdict'] ?? '' ),
+			'coverage_state'            => sanitize_text_field( $result['coverageState'] ?? '' ),
+			'indexing_state'            => sanitize_key( $result['indexingState'] ?? '' ),
+			'page_fetch_state'          => sanitize_key( $result['pageFetchState'] ?? '' ),
+			'robots_txt_state'          => sanitize_key( $result['robotsTxtState'] ?? '' ),
+			'last_crawl_time'           => sanitize_text_field( $result['lastCrawlTime'] ?? '' ),
+			'google_canonical'          => esc_url_raw( $result['googleCanonical'] ?? '' ),
+			'user_canonical'            => esc_url_raw( $result['userCanonical'] ?? '' ),
+			'referring_urls'            => array_values( array_filter( array_map( 'esc_url_raw', (array) ( $result['referringUrls'] ?? array() ) ) ) ),
+			'mobile_usability_verdict'  => sanitize_key( $mobile['verdict'] ?? '' ),
+			'rich_results_verdict'      => sanitize_key( $rich['verdict'] ?? '' ),
+			'rich_items'                => $rich_items,
+			'inspection_result_link'    => esc_url_raw( $inspection['inspectionResultLink'] ?? '' ),
+			'inspection_scope'          => 'indexed_version_only',
+			'live_test_available'       => false,
+			'submits_for_indexing'      => false,
 		);
 	}
 
@@ -354,18 +423,22 @@ class Ikon_SEO_Search_Console {
 
 	public function clear_cache() {
 		delete_transient( self::CACHE_KEY );
+		if ( class_exists( 'Ikon_SEO_Search_Intelligence' ) ) {
+			delete_transient( Ikon_SEO_Search_Intelligence::CACHE_KEY );
+		}
 		foreach ( array( 7, 28, 30, 60, 90 ) as $days ) {
 			delete_transient( self::CACHE_KEY . '_' . $days );
 		}
 	}
 
-	private function analytics_query( $property, $start, $end, array $dimensions = array(), $row_limit = 1 ) {
+	private function analytics_query( $property, $start, $end, array $dimensions = array(), $row_limit = 1, $start_row = 0 ) {
 		$body = array(
 			'startDate' => $start,
 			'endDate'   => $end,
 			'type'      => 'web',
 			'dataState' => 'final',
 			'rowLimit'  => max( 1, min( 25000, absint( $row_limit ) ) ),
+			'startRow'  => max( 0, absint( $start_row ) ),
 		);
 		if ( $dimensions ) {
 			$body['dimensions'] = array_values( $dimensions );

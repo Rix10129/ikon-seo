@@ -1,0 +1,4 @@
+event_ref,event_type,occurred_at,source,medium,campaign,landing_url,post_id,crm_stage,value,currency,qualified,customer
+internal-001,lead,2026-08-03 09:00:00,organic,search,local-services,https://example.com/service/,0,new,0.00,USD,0,0
+internal-002,qualified_lead,2026-08-03 10:00:00,organic,search,local-services,https://example.com/service/,0,qualified,0.00,USD,1,0
+internal-003,sale,2026-08-03 11:00:00,organic,search,local-services,https://example.com/service/,0,won,500.00,USD,1,1

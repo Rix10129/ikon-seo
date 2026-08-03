@@ -2,128 +2,188 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Ikon SEO",
-    "version": "0.6.0",
-    "description": "Universal website profiles, simple one-time pairing, Local SEO safeguards, Google Business Profile insights, Search Console, page-plan queues and approval-first optimization."
+    "version": "1.5.0",
+    "description": "Audits, plans, measures, creates, improves and safely approves SEO-focused WordPress pages."
   },
   "servers": [
     {
-      "url": "https://YOUR-WEBSITE.example/wp-json/ikon-seo/v1"
+      "url": "https://example.com/wp-json/ikon-seo/v1"
     }
   ],
-  "security": [],
+  "security": [
+    {
+      "IkonSEOKey": []
+    }
+  ],
   "paths": {
-    "/pair": {
-      "post": {
-        "operationId": "pairIkonSEOWebsite",
-        "summary": "Exchange a short-lived one-time pairing code for the website connection package",
-        "security": [],
-        "x-openai-isConsequential": true,
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "code"
-                ],
-                "properties": {
-                  "code": {
-                    "type": "string",
-                    "example": "ABCD-2345"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "One-time connection package"
-          }
-        }
-      }
-    },
     "/health": {
       "get": {
         "operationId": "checkIkonSEOConnection",
-        "summary": "Check installation and capabilities",
+        "summary": "Check site capabilities",
         "responses": {
           "200": {
-            "description": "Connection status"
+            "description": "Successful response"
           }
-        },
-        "parameters": [
-          {
-            "name": "X-Ikon-SEO-Key",
-            "in": "header",
-            "required": true,
-            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
+        }
       }
     },
     "/profile": {
       "get": {
         "operationId": "readIkonSEOWebsiteProfile",
-        "summary": "Read the current website identity and schema policy before writing",
+        "summary": "Read the active website identity, schema policy and publishing rules before writing",
         "responses": {
           "200": {
-            "description": "Non-secret active website profile"
+            "description": "Successful response"
           }
-        },
-        "parameters": [
-          {
-            "name": "X-Ikon-SEO-Key",
-            "in": "header",
-            "required": true,
-            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
+        }
       }
     },
-    "/profile/export": {
-      "get": {
-        "operationId": "exportIkonSEOWebsiteProfile",
-        "summary": "Export the portable non-secret profile",
+    "/strategy": {
+      "post": {
+        "operationId": "syncIkonSEOWebsiteStrategy",
+        "summary": "Read the active website strategy and operating mode; save an approved strategy update only when save is true",
+        "parameters": [],
         "responses": {
           "200": {
-            "description": "Portable profile document"
+            "description": "Action completed"
+          },
+          "201": {
+            "description": "Resource created"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "403": {
+            "description": "Action or scope disabled"
+          },
+          "409": {
+            "description": "Conflict or duplicate"
           }
         },
-        "parameters": [
-          {
-            "name": "X-Ikon-SEO-Key",
-            "in": "header",
-            "required": true,
-            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
-            "schema": {
-              "type": "string"
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StrategySync"
+              }
             }
           }
-        ]
+        }
+      }
+    },
+    "/workflow-automation": {
+      "post": {
+        "operationId": "syncIkonSEOWorkflowAutomation",
+        "summary": "Read workflow state; create mode-based workflows, update or approve tasks, run read-only automation and generate briefings",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Action completed"
+          },
+          "201": {
+            "description": "Resource created"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "403": {
+            "description": "Action or scope disabled"
+          },
+          "409": {
+            "description": "Conflict or duplicate"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkflowAutomationSync"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/publisher-intelligence": {
+      "post": {
+        "operationId": "syncIkonSEOPublisherIntelligence",
+        "summary": "Read or update the keyword universe, topic hubs, editorial pipeline, contributor profiles, quality gates, lifecycle recommendations and portfolio signatures",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Action completed"
+          },
+          "201": {
+            "description": "Resource created"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "403": {
+            "description": "Action or scope disabled"
+          },
+          "409": {
+            "description": "Conflict or duplicate"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PublisherSync"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/agency-command-centre": {
+      "post": {
+        "operationId": "syncIkonSEOAgencyCommandCentre",
+        "summary": "Read the multi-site portfolio, refresh read-only snapshots, record budgets and resolve portfolio alerts",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Action completed"
+          },
+          "201": {
+            "description": "Resource created"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "403": {
+            "description": "Action or scope disabled"
+          },
+          "409": {
+            "description": "Conflict or duplicate"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AgencyCommandSync"
+              }
+            }
+          }
+        }
       }
     },
     "/pages": {
       "get": {
         "operationId": "findWordPressPages",
         "summary": "Find existing pages before creating content",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        },
         "parameters": [
-          {
-            "name": "X-Ikon-SEO-Key",
-            "in": "header",
-            "required": true,
-            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
-            "schema": {
-              "type": "string"
-            }
-          },
           {
             "name": "search",
             "in": "query",
@@ -137,32 +197,38 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "maximum": 50
+            }
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Matching pages"
-          }
-        }
+        ]
       },
       "post": {
         "operationId": "createOrImproveWordPressPage",
-        "summary": "Create a new page draft or separate improvement draft",
-        "x-openai-isConsequential": true,
-        "parameters": [
-          {
-            "name": "X-Ikon-SEO-Key",
-            "in": "header",
-            "required": true,
-            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
-            "schema": {
-              "type": "string"
-            }
+        "summary": "Create a page or separate improvement draft",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Action completed"
           },
-          {
-            "$ref": "#/components/parameters/Idempotency"
+          "201": {
+            "description": "Resource created"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "403": {
+            "description": "Action or scope disabled"
+          },
+          "409": {
+            "description": "Conflict or duplicate"
           }
-        ],
+        },
         "requestBody": {
           "required": true,
           "content": {
@@ -171,17 +237,6 @@
                 "$ref": "#/components/schemas/PagePayload"
               }
             }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Draft created"
-          },
-          "400": {
-            "description": "Invalid or mismatched profile"
-          },
-          "409": {
-            "description": "Duplicate or conflict"
           }
         }
       }
@@ -189,48 +244,53 @@
     "/pages/{id}": {
       "get": {
         "operationId": "readWordPressPage",
-        "summary": "Read page content, metadata, schema and quality",
-        "parameters": [
-          {
-            "name": "X-Ikon-SEO-Key",
-            "in": "header",
-            "required": true,
-            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "$ref": "#/components/parameters/PageId"
-          }
-        ],
+        "summary": "Read page content, SEO, schema and quality data",
         "responses": {
           "200": {
-            "description": "Page data"
+            "description": "Successful response"
           }
-        }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ]
       },
       "patch": {
         "operationId": "updateIkonSEODraft",
         "summary": "Update an Ikon SEO managed draft",
-        "x-openai-isConsequential": true,
         "parameters": [
           {
-            "name": "X-Ikon-SEO-Key",
-            "in": "header",
+            "name": "id",
+            "in": "path",
             "required": true,
-            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
             "schema": {
-              "type": "string"
+              "type": "integer"
             }
-          },
-          {
-            "$ref": "#/components/parameters/PageId"
-          },
-          {
-            "$ref": "#/components/parameters/Idempotency"
           }
         ],
+        "responses": {
+          "200": {
+            "description": "Action completed"
+          },
+          "201": {
+            "description": "Resource created"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "403": {
+            "description": "Action or scope disabled"
+          },
+          "409": {
+            "description": "Conflict or duplicate"
+          }
+        },
         "requestBody": {
           "required": true,
           "content": {
@@ -239,46 +299,8 @@
                 "$ref": "#/components/schemas/PagePayload"
               }
             }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Draft updated"
           }
         }
-      }
-    },
-    "/schema/preview": {
-      "post": {
-        "operationId": "previewIkonSEOSchema",
-        "summary": "Preview profile-aware schema without changing WordPress",
-        "x-openai-isConsequential": false,
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/PagePayload"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Generated types, graph and conflict warnings"
-          }
-        },
-        "parameters": [
-          {
-            "name": "X-Ikon-SEO-Key",
-            "in": "header",
-            "required": true,
-            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
       }
     },
     "/inventory": {
@@ -287,104 +309,211 @@
         "summary": "Audit pages, links, metadata, orphans and keyword overlap",
         "responses": {
           "200": {
-            "description": "Site inventory"
+            "description": "Successful response"
           }
         },
         "parameters": [
           {
-            "name": "X-Ikon-SEO-Key",
-            "in": "header",
-            "required": true,
-            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
-    "/internal-links": {
-      "get": {
-        "operationId": "findInternalLinkCandidates",
-        "summary": "Find confirmed internal-link destinations",
-        "parameters": [
-          {
-            "name": "X-Ikon-SEO-Key",
-            "in": "header",
-            "required": true,
-            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "query",
+            "name": "refresh",
             "in": "query",
-            "required": true,
             "schema": {
-              "type": "string"
+              "type": "boolean"
             }
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Internal-link candidates"
-          }
-        }
+        ]
       }
     },
-    "/media": {
+    "/evidence": {
       "get": {
-        "operationId": "findWordPressImages",
-        "summary": "Search the Media Library",
+        "operationId": "diagnoseIkonSEORankingEvidence",
+        "summary": "Read page-level technical, Search Console and Analytics evidence with categorised findings, evidence sufficiency, business value and clear limitations",
         "responses": {
           "200": {
-            "description": "Matching images"
+            "description": "Successful response"
           }
         },
         "parameters": [
           {
-            "name": "X-Ikon-SEO-Key",
-            "in": "header",
-            "required": true,
-            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
+            "name": "post_id",
+            "in": "query",
             "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      },
-      "post": {
-        "operationId": "importApprovedImage",
-        "summary": "Import an image from an approved HTTPS host",
-        "x-openai-isConsequential": true,
-        "parameters": [
-          {
-            "name": "X-Ikon-SEO-Key",
-            "in": "header",
-            "required": true,
-            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
-            "schema": {
-              "type": "string"
+              "type": "integer"
             }
           },
           {
-            "$ref": "#/components/parameters/Idempotency"
+            "name": "refresh",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
           }
-        ],
+        ]
+      }
+    },
+    "/technical-intelligence": {
+      "get": {
+        "operationId": "readIkonSEOTechnicalIntelligence",
+        "summary": "Read URL discovery, sitemap parity, internal-link graph, redirect evidence and PageSpeed/Core Web Vitals findings",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "refresh",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 10,
+              "maximum": 500,
+              "default": 100
+            }
+          }
+        ]
+      }
+    },
+    "/indexation-intelligence": {
+      "post": {
+        "operationId": "syncIkonSEOIndexationIntelligence",
+        "summary": "Read and manage quota-aware Google index evidence, canonical disagreements, inspection queues and production health checks",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Action completed"
+          },
+          "201": {
+            "description": "Resource created"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "403": {
+            "description": "Action or scope disabled"
+          },
+          "409": {
+            "description": "Conflict or duplicate"
+          }
+        },
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/MediaImport"
+                "$ref": "#/components/schemas/IndexationSync"
               }
             }
           }
-        },
+        }
+      }
+    },
+    "/competitor-content": {
+      "post": {
+        "operationId": "syncIkonSEOCompetitorContentIntelligence",
+        "summary": "Read stored competitor and content intelligence; optionally store current competitor observations or create a page-level content brief",
+        "parameters": [],
         "responses": {
+          "200": {
+            "description": "Action completed"
+          },
           "201": {
-            "description": "Image imported"
+            "description": "Resource created"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "403": {
+            "description": "Action or scope disabled"
+          },
+          "409": {
+            "description": "Conflict or duplicate"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompetitorContentSync"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/authority-intelligence": {
+      "post": {
+        "operationId": "syncIkonSEOAuthorityIntelligence",
+        "summary": "Read imported authority and off-site evidence; optionally store approved backlink or competitor-link observations",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Action completed"
+          },
+          "201": {
+            "description": "Resource created"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "403": {
+            "description": "Action or scope disabled"
+          },
+          "409": {
+            "description": "Conflict or duplicate"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthoritySync"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/closed-loop": {
+      "post": {
+        "operationId": "syncIkonSEOClosedLoop",
+        "summary": "Read or refresh the unified operating plan, manage recommendation states, capture baselines, measure outcomes and create recovery checkpoints",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Action completed"
+          },
+          "201": {
+            "description": "Resource created"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "403": {
+            "description": "Action or scope disabled"
+          },
+          "409": {
+            "description": "Conflict or duplicate"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClosedLoopSync"
+              }
+            }
           }
         }
       }
@@ -395,154 +524,82 @@
         "summary": "List improvement drafts awaiting review",
         "responses": {
           "200": {
-            "description": "Review queue"
+            "description": "Successful response"
           }
-        },
-        "parameters": [
-          {
-            "name": "X-Ikon-SEO-Key",
-            "in": "header",
-            "required": true,
-            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
+        }
       }
     },
     "/reviews/{id}/comparison": {
       "get": {
         "operationId": "compareIkonSEOReview",
-        "summary": "Compare an improvement draft with its source",
-        "parameters": [
-          {
-            "name": "X-Ikon-SEO-Key",
-            "in": "header",
-            "required": true,
-            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "$ref": "#/components/parameters/PageId"
-          }
-        ],
+        "summary": "Compare an improvement draft with its live source",
         "responses": {
           "200": {
-            "description": "Before-and-after comparison"
+            "description": "Successful response"
           }
-        }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ]
       }
     },
     "/reviews/{id}/merge": {
       "post": {
         "operationId": "mergeApprovedIkonSEOReview",
         "summary": "Merge an approved draft into its original page",
-        "description": "Disabled by default. Requires approve scope and Remote approval.",
-        "x-openai-isConsequential": true,
         "parameters": [
           {
-            "name": "X-Ikon-SEO-Key",
-            "in": "header",
+            "name": "id",
+            "in": "path",
             "required": true,
-            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
             "schema": {
-              "type": "string"
+              "type": "integer"
             }
-          },
-          {
-            "$ref": "#/components/parameters/PageId"
-          },
-          {
-            "$ref": "#/components/parameters/Idempotency"
           }
         ],
         "responses": {
           "200": {
-            "description": "Draft merged and rollback snapshot created"
-          }
-        }
-      }
-    },
-    "/pages/{id}/snapshots": {
-      "get": {
-        "operationId": "listIkonSEOSnapshots",
-        "summary": "List rollback snapshots for a page",
-        "parameters": [
-          {
-            "name": "X-Ikon-SEO-Key",
-            "in": "header",
-            "required": true,
-            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
-            "schema": {
-              "type": "string"
-            }
+            "description": "Action completed"
           },
-          {
-            "$ref": "#/components/parameters/PageId"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Rollback snapshots"
-          }
-        }
-      }
-    },
-    "/pages/{id}/rollback": {
-      "post": {
-        "operationId": "rollbackIkonSEOPage",
-        "summary": "Restore a page from an Ikon SEO snapshot",
-        "description": "Disabled by default. Requires approve scope and Remote approval.",
-        "x-openai-isConsequential": true,
-        "parameters": [
-          {
-            "name": "X-Ikon-SEO-Key",
-            "in": "header",
-            "required": true,
-            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
-            "schema": {
-              "type": "string"
-            }
+          "201": {
+            "description": "Resource created"
           },
-          {
-            "$ref": "#/components/parameters/PageId"
+          "400": {
+            "description": "Invalid request"
           },
-          {
-            "$ref": "#/components/parameters/Idempotency"
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Rollback"
-              }
-            }
+          "403": {
+            "description": "Action or scope disabled"
+          },
+          "409": {
+            "description": "Conflict or duplicate"
           }
         },
-        "responses": {
-          "200": {
-            "description": "Snapshot restored"
-          }
-        }
+        "description": "Disabled by default. Requires the approve key scope and Remote merge setting."
       }
     },
-    "/logs": {
+    "/search-intelligence": {
       "get": {
-        "operationId": "readIkonSEOActivity",
-        "summary": "Read recent workflow activity",
+        "operationId": "readIkonSEOSearchIntelligence",
+        "summary": "Read the persistent page-query database, query clusters, cannibalisation evidence, striking-distance opportunities and content decay",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        },
         "parameters": [
           {
-            "name": "X-Ikon-SEO-Key",
-            "in": "header",
-            "required": true,
-            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
+            "name": "refresh",
+            "in": "query",
             "schema": {
-              "type": "string"
+              "type": "boolean",
+              "default": false
             }
           },
           {
@@ -550,93 +607,24 @@
             "in": "query",
             "schema": {
               "type": "integer",
-              "maximum": 100
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Sanitized activity records"
-          }
-        }
-      }
-    },
-    "/domain-migration": {
-      "get": {
-        "operationId": "previewIkonSEODomainMigration",
-        "summary": "Preview stored references affected by a domain change",
-        "parameters": [
-          {
-            "name": "X-Ikon-SEO-Key",
-            "in": "header",
-            "required": true,
-            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "old_url",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uri"
-            }
-          },
-          {
-            "name": "new_url",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uri"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Read-only migration report; application is administrator-only"
-          }
-        }
-      }
-    },
-    "/search-console/status": {
-      "get": {
-        "operationId": "readSearchConsoleStatus",
-        "summary": "Check the read-only Search Console connection without exposing credentials",
-        "responses": {
-          "200": {
-            "description": "Non-secret connection status"
-          }
-        },
-        "parameters": [
-          {
-            "name": "X-Ikon-SEO-Key",
-            "in": "header",
-            "required": true,
-            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
-            "schema": {
-              "type": "string"
+              "minimum": 10,
+              "maximum": 250,
+              "default": 100
             }
           }
         ]
       }
     },
-    "/search-console/performance": {
+    "/analytics/report": {
       "get": {
-        "operationId": "readSearchPerformance",
-        "summary": "Compare Search Console performance periods and list top queries and pages",
+        "operationId": "readGoogleAnalyticsReport",
+        "summary": "Read current and previous landing-page sessions, users, engagement, views and key events",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        },
         "parameters": [
-          {
-            "name": "X-Ikon-SEO-Key",
-            "in": "header",
-            "required": true,
-            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
-            "schema": {
-              "type": "string"
-            }
-          },
           {
             "name": "days",
             "in": "query",
@@ -646,63 +634,13 @@
               "maximum": 90,
               "default": 28
             }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Current and previous performance data"
-          }
-        }
-      }
-    },
-    "/search-console/inspect": {
-      "get": {
-        "operationId": "inspectGoogleIndexStatus",
-        "summary": "Inspect Google's indexed version of a URL on this website",
-        "parameters": [
-          {
-            "name": "X-Ikon-SEO-Key",
-            "in": "header",
-            "required": true,
-            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
-            "schema": {
-              "type": "string"
-            }
           },
           {
-            "name": "url",
+            "name": "refresh",
             "in": "query",
-            "required": true,
             "schema": {
-              "type": "string",
-              "format": "uri"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Indexed-version inspection result"
-          }
-        }
-      }
-    },
-    "/search-console/sitemaps": {
-      "get": {
-        "operationId": "readSearchConsoleSitemaps",
-        "summary": "Read submitted sitemap status, warnings and errors",
-        "responses": {
-          "200": {
-            "description": "Submitted sitemaps"
-          }
-        },
-        "parameters": [
-          {
-            "name": "X-Ikon-SEO-Key",
-            "in": "header",
-            "required": true,
-            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
-            "schema": {
-              "type": "string"
+              "type": "boolean",
+              "default": false
             }
           }
         ]
@@ -712,16 +650,12 @@
       "get": {
         "operationId": "listIkonSEOPagePlans",
         "summary": "List CSV-imported page plans awaiting interactive generation",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        },
         "parameters": [
-          {
-            "name": "X-Ikon-SEO-Key",
-            "in": "header",
-            "required": true,
-            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
-            "schema": {
-              "type": "string"
-            }
-          },
           {
             "name": "status",
             "in": "query",
@@ -752,42 +686,38 @@
               "maximum": 200
             }
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Page-plan queue"
-          }
-        }
+        ]
       }
     },
     "/queue/{id}/claim": {
       "post": {
         "operationId": "claimIkonSEOPagePlan",
-        "summary": "Claim one page plan for up to one hour",
-        "x-openai-isConsequential": true,
+        "summary": "Claim one page plan for up to one hour before generating its payload",
         "parameters": [
           {
-            "name": "X-Ikon-SEO-Key",
-            "in": "header",
+            "name": "id",
+            "in": "path",
             "required": true,
-            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
             "schema": {
-              "type": "string"
+              "type": "integer"
             }
-          },
-          {
-            "$ref": "#/components/parameters/PageId"
-          },
-          {
-            "$ref": "#/components/parameters/Idempotency"
           }
         ],
         "responses": {
           "200": {
-            "description": "Claimed plan and one-time claim token"
+            "description": "Action completed"
+          },
+          "201": {
+            "description": "Resource created"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "403": {
+            "description": "Action or scope disabled"
           },
           "409": {
-            "description": "Plan is unavailable or already claimed"
+            "description": "Conflict or duplicate"
           }
         }
       }
@@ -795,25 +725,34 @@
     "/queue/{id}/complete": {
       "post": {
         "operationId": "completeIkonSEOPagePlan",
-        "summary": "Validate a generated page, create its draft and complete the plan",
-        "x-openai-isConsequential": true,
+        "summary": "Validate a completed page payload, create its WordPress draft and complete the page plan",
         "parameters": [
           {
-            "name": "X-Ikon-SEO-Key",
-            "in": "header",
+            "name": "id",
+            "in": "path",
             "required": true,
-            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
             "schema": {
-              "type": "string"
+              "type": "integer"
             }
-          },
-          {
-            "$ref": "#/components/parameters/PageId"
-          },
-          {
-            "$ref": "#/components/parameters/Idempotency"
           }
         ],
+        "responses": {
+          "200": {
+            "description": "Action completed"
+          },
+          "201": {
+            "description": "Resource created"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "403": {
+            "description": "Action or scope disabled"
+          },
+          "409": {
+            "description": "Conflict or duplicate"
+          }
+        },
         "requestBody": {
           "required": true,
           "content": {
@@ -823,428 +762,116 @@
               }
             }
           }
-        },
-        "responses": {
-          "201": {
-            "description": "Page draft created and plan completed"
-          },
-          "409": {
-            "description": "Claim expired or plan conflict"
-          }
         }
       }
     },
     "/monitoring": {
       "get": {
         "operationId": "readContentRefreshMonitor",
-        "summary": "Read scheduled reviews and meaningful Search Console declines",
+        "summary": "Read overdue reviews, upcoming refresh dates and meaningful Search Console declines",
         "responses": {
           "200": {
-            "description": "Recommendation-only refresh report"
+            "description": "Successful response"
           }
-        },
-        "parameters": [
-          {
-            "name": "X-Ikon-SEO-Key",
-            "in": "header",
-            "required": true,
-            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
+        }
       }
     },
-    "/local": {
-      "get": {
-        "operationId": "readIkonSEOLocalSummary",
-        "summary": "Read local profile, citation, rank and NAP status",
+    "/workspace-state": {
+      "post": {
+        "operationId": "syncIkonSEOProjectHistory",
+        "summary": "Read durable project history and optionally save one completed, pending or recommended project event",
+        "parameters": [],
         "responses": {
           "200": {
-            "description": "Local SEO summary"
+            "description": "Action completed"
+          },
+          "201": {
+            "description": "Resource created"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "403": {
+            "description": "Action or scope disabled"
+          },
+          "409": {
+            "description": "Conflict or duplicate"
           }
         },
-        "parameters": [
-          {
-            "name": "X-Ikon-SEO-Key",
-            "in": "header",
-            "required": true,
-            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
-            "schema": {
-              "type": "string"
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkspaceSync"
+              }
             }
           }
-        ]
+        }
+      }
+    },
+    "/local-growth": {
+      "post": {
+        "operationId": "syncIkonSEOLocalGrowth",
+        "summary": "Read local growth readiness; refresh approved evidence, synchronize review and conversion workflows, and store competitor-prominence observations without changing public profiles",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Action completed"
+          },
+          "201": {
+            "description": "Resource created"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "403": {
+            "description": "Action or scope disabled"
+          },
+          "409": {
+            "description": "Conflict or duplicate"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LocalGrowthSync"
+              }
+            }
+          }
+        }
       }
     },
     "/local/locations": {
       "get": {
         "operationId": "readIkonSEOLocations",
-        "summary": "Read profile-bound storefront, hybrid and service-area records",
+        "summary": "Read profile-bound storefront, hybrid and service-area records before preparing local content",
         "responses": {
           "200": {
-            "description": "Local location records"
+            "description": "Successful response"
           }
-        },
-        "parameters": [
-          {
-            "name": "X-Ikon-SEO-Key",
-            "in": "header",
-            "required": true,
-            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
+        }
       }
     },
-    "/local/nap-audit": {
-      "get": {
-        "operationId": "auditIkonSEONAP",
-        "summary": "Compare master NAP data with assigned pages and schema",
-        "responses": {
-          "200": {
-            "description": "NAP consistency report"
-          }
-        },
-        "parameters": [
-          {
-            "name": "X-Ikon-SEO-Key",
-            "in": "header",
-            "required": true,
-            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
-    "/local/citations": {
-      "get": {
-        "operationId": "readIkonSEOCitations",
-        "summary": "Read citation consistency records",
-        "responses": {
-          "200": {
-            "description": "Citation records"
-          }
-        },
-        "parameters": [
-          {
-            "name": "X-Ikon-SEO-Key",
-            "in": "header",
-            "required": true,
-            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
-    "/local/ranks": {
-      "get": {
-        "operationId": "readIkonSEOLocalRanks",
-        "summary": "Read manually imported organic and local-pack observations",
-        "responses": {
-          "200": {
-            "description": "Local rank observations"
-          }
-        },
-        "parameters": [
-          {
-            "name": "X-Ikon-SEO-Key",
-            "in": "header",
-            "required": true,
-            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
-    "/local/utm": {
+    "/portfolio-quality-guard": {
       "post": {
-        "operationId": "buildIkonSEOLocalUTM",
-        "summary": "Build a controlled same-site UTM URL",
-        "x-openai-isConsequential": false,
+        "operationId": "syncIkonSEOPortfolioQualityGuard",
+        "summary": "Read and manage privacy-preserving cross-site quality evidence, differentiation risks and review gates",
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UTMRequest"
+                "$ref": "#/components/schemas/PortfolioQualitySync"
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "Tracked same-site URL"
-          }
-        },
-        "parameters": [
-          {
-            "name": "X-Ikon-SEO-Key",
-            "in": "header",
-            "required": true,
-            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
-    "/local/gbp/status": {
-      "get": {
-        "operationId": "readGoogleBusinessProfileStatus",
-        "summary": "Read Business Profile connection and approval policy",
-        "responses": {
-          "200": {
-            "description": "Non-secret connection status"
-          }
-        },
-        "parameters": [
-          {
-            "name": "X-Ikon-SEO-Key",
-            "in": "header",
-            "required": true,
-            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
-    "/local/gbp/comparison": {
-      "get": {
-        "operationId": "compareGoogleBusinessProfileLocation",
-        "summary": "Compare a linked Google location with the website master record",
-        "parameters": [
-          {
-            "name": "X-Ikon-SEO-Key",
-            "in": "header",
-            "required": true,
-            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "location_id",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "refresh",
-            "in": "query",
-            "schema": {
-              "type": "boolean",
-              "default": false
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Location consistency comparison"
-          }
-        }
-      }
-    },
-    "/local/gbp/reviews": {
-      "get": {
-        "operationId": "readGoogleBusinessProfileReviews",
-        "summary": "Read recent reviews for a linked verified location",
-        "parameters": [
-          {
-            "name": "X-Ikon-SEO-Key",
-            "in": "header",
-            "required": true,
-            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "location_id",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "refresh",
-            "in": "query",
-            "schema": {
-              "type": "boolean",
-              "default": false
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Briefly cached review report"
-          }
-        }
-      }
-    },
-    "/local/gbp/performance": {
-      "get": {
-        "operationId": "readGoogleBusinessProfilePerformance",
-        "summary": "Read Maps and Search visibility and customer actions",
-        "parameters": [
-          {
-            "name": "X-Ikon-SEO-Key",
-            "in": "header",
-            "required": true,
-            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "location_id",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "days",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "minimum": 7,
-              "maximum": 90,
-              "default": 30
-            }
-          },
-          {
-            "name": "refresh",
-            "in": "query",
-            "schema": {
-              "type": "boolean",
-              "default": false
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Business Profile performance report"
-          }
-        }
-      }
-    },
-    "/local/gbp/search-keywords": {
-      "get": {
-        "operationId": "readGoogleBusinessProfileSearchKeywords",
-        "summary": "Read monthly search keyword impressions or privacy thresholds",
-        "parameters": [
-          {
-            "name": "X-Ikon-SEO-Key",
-            "in": "header",
-            "required": true,
-            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "location_id",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "months",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "minimum": 1,
-              "maximum": 18,
-              "default": 3
-            }
-          },
-          {
-            "name": "refresh",
-            "in": "query",
-            "schema": {
-              "type": "boolean",
-              "default": false
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Business Profile search keyword report"
-          }
-        }
-      }
-    },
-    "/local/gbp/drafts": {
-      "get": {
-        "operationId": "readGoogleBusinessProfileDrafts",
-        "summary": "Read staged posts and review replies",
-        "responses": {
-          "200": {
-            "description": "Local approval queue"
-          }
-        },
-        "parameters": [
-          {
-            "name": "X-Ikon-SEO-Key",
-            "in": "header",
-            "required": true,
-            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      },
-      "post": {
-        "operationId": "stageGoogleBusinessProfileDraft",
-        "summary": "Stage content for WordPress administrator approval without sending it to Google",
-        "x-openai-isConsequential": true,
-        "parameters": [
-          {
-            "name": "X-Ikon-SEO-Key",
-            "in": "header",
-            "required": true,
-            "description": "Connection key returned by pairIkonSEOWebsite. Keep it private and send it on every authenticated request.",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "$ref": "#/components/parameters/Idempotency"
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/GBPDraft"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Draft staged locally; not sent"
+            "description": "Successful operation"
           }
         }
       }
@@ -1253,32 +880,1514 @@
   "components": {
     "securitySchemes": {
       "IkonSEOKey": {
-        "type": "apiKey",
-        "in": "header",
-        "name": "X-Ikon-SEO-Key"
-      }
-    },
-    "parameters": {
-      "PageId": {
-        "name": "id",
-        "in": "path",
-        "required": true,
-        "schema": {
-          "type": "integer"
-        }
-      },
-      "Idempotency": {
-        "name": "X-Idempotency-Key",
-        "in": "header",
-        "required": false,
-        "schema": {
-          "type": "string",
-          "minLength": 8,
-          "maxLength": 128
-        }
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "Ikon SEO workflow key"
       }
     },
     "schemas": {
+      "ExperimentsClaimsRevenueSync": {
+        "type": "object",
+        "properties": {
+          "command": {
+            "type": "string",
+            "enum": [
+              "read",
+              "save_experiment",
+              "update_experiment",
+              "capture_measurement",
+              "save_claims",
+              "update_claim",
+              "import_revenue_events",
+              "save_settings",
+              "cleanup"
+            ],
+            "default": "read"
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 500,
+            "default": 100
+          },
+          "experiment_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "claim_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "source": {
+            "type": "string"
+          },
+          "experiment": {
+            "$ref": "#/components/schemas/SEOExperiment"
+          },
+          "measurement": {
+            "$ref": "#/components/schemas/ExperimentMeasurement"
+          },
+          "claim": {
+            "$ref": "#/components/schemas/ContentClaim"
+          },
+          "claims": {
+            "type": "array",
+            "maxItems": 200,
+            "items": {
+              "$ref": "#/components/schemas/ContentClaim"
+            }
+          },
+          "events": {
+            "type": "array",
+            "maxItems": 1000,
+            "items": {
+              "$ref": "#/components/schemas/RevenueEvent"
+            }
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "experiment_minimum_days": {
+            "type": "integer",
+            "minimum": 7,
+            "maximum": 180
+          },
+          "experiment_minimum_observations": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100000
+          },
+          "experiment_change_threshold_percent": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "claim_default_review_days": {
+            "type": "integer",
+            "minimum": 7,
+            "maximum": 730
+          },
+          "claim_high_risk_review_days": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 365
+          },
+          "revenue_default_currency": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 3
+          },
+          "revenue_reporting_days": {
+            "type": "integer",
+            "minimum": 7,
+            "maximum": 365
+          },
+          "retention_days": {
+            "type": "integer",
+            "minimum": 90,
+            "maximum": 1825
+          }
+        }
+      },
+      "SEOExperiment": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "hypothesis": {
+            "type": "string"
+          },
+          "change_type": {
+            "type": "string",
+            "enum": [
+              "content",
+              "title",
+              "internal_links",
+              "schema",
+              "template",
+              "media",
+              "conversion",
+              "technical",
+              "other"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "draft",
+              "approved",
+              "running",
+              "monitoring",
+              "completed",
+              "cancelled",
+              "archived"
+            ]
+          },
+          "primary_metric": {
+            "type": "string",
+            "enum": [
+              "clicks",
+              "impressions",
+              "ctr",
+              "position",
+              "sessions",
+              "active_users",
+              "views",
+              "key_events",
+              "qualified_leads",
+              "customers",
+              "revenue"
+            ]
+          },
+          "secondary_metrics": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "test_urls": {
+            "type": "array",
+            "maxItems": 200,
+            "items": {
+              "type": "string",
+              "format": "uri"
+            }
+          },
+          "comparison_urls": {
+            "type": "array",
+            "maxItems": 200,
+            "items": {
+              "type": "string",
+              "format": "uri"
+            }
+          },
+          "minimum_days": {
+            "type": "integer",
+            "minimum": 7,
+            "maximum": 180
+          },
+          "start_date": {
+            "type": "string"
+          },
+          "end_date": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          }
+        }
+      },
+      "ExperimentMeasurement": {
+        "type": "object",
+        "properties": {
+          "phase": {
+            "type": "string",
+            "enum": [
+              "baseline",
+              "checkpoint",
+              "outcome"
+            ]
+          },
+          "period_start": {
+            "type": "string"
+          },
+          "period_end": {
+            "type": "string"
+          },
+          "metrics": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "number"
+            }
+          },
+          "comparison_metrics": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "number"
+            }
+          },
+          "notes": {
+            "type": "string"
+          }
+        }
+      },
+      "ContentClaim": {
+        "type": "object",
+        "properties": {
+          "post_id": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "claim_text": {
+            "type": "string"
+          },
+          "claim_type": {
+            "type": "string",
+            "enum": [
+              "factual",
+              "statistic",
+              "legal",
+              "medical",
+              "financial",
+              "pricing",
+              "product",
+              "service",
+              "other"
+            ]
+          },
+          "risk_level": {
+            "type": "string",
+            "enum": [
+              "standard",
+              "sensitive",
+              "high"
+            ]
+          },
+          "source_url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "source_title": {
+            "type": "string"
+          },
+          "source_type": {
+            "type": "string",
+            "enum": [
+              "primary",
+              "secondary",
+              "official",
+              "internal",
+              "expert_review",
+              "other"
+            ]
+          },
+          "source_published_at": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "needs_review",
+              "verified",
+              "overdue",
+              "disputed",
+              "unsupported",
+              "retired",
+              "dismissed"
+            ]
+          },
+          "review_due_at": {
+            "type": "string"
+          },
+          "reviewer_id": {
+            "type": "integer"
+          },
+          "notes": {
+            "type": "string"
+          }
+        }
+      },
+      "RevenueEvent": {
+        "type": "object",
+        "properties": {
+          "event_ref": {
+            "type": "string",
+            "description": "An internal reference that is hashed before storage."
+          },
+          "event_type": {
+            "type": "string",
+            "enum": [
+              "lead",
+              "qualified_lead",
+              "appointment",
+              "proposal",
+              "sale",
+              "refund",
+              "affiliate",
+              "advertising",
+              "other"
+            ]
+          },
+          "occurred_at": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          },
+          "medium": {
+            "type": "string"
+          },
+          "campaign": {
+            "type": "string"
+          },
+          "landing_url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "post_id": {
+            "type": "integer"
+          },
+          "crm_stage": {
+            "type": "string"
+          },
+          "value": {
+            "type": "number"
+          },
+          "currency": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 3
+          },
+          "qualified": {
+            "type": "boolean"
+          },
+          "customer": {
+            "type": "boolean"
+          },
+          "metadata": {
+            "type": "object",
+            "description": "Optional non-identifying metadata. Do not include names, email addresses, phone numbers, addresses or message content.",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "StructuredMediaGovernanceSync": {
+        "type": "object",
+        "properties": {
+          "command": {
+            "type": "string",
+            "enum": [
+              "read",
+              "audit_schema_batch",
+              "audit_schema_url",
+              "audit_media_batch",
+              "audit_media_item",
+              "save_media_rights",
+              "run_all",
+              "save_settings",
+              "cleanup"
+            ],
+            "default": "read"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "attachment_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 500,
+            "default": 50
+          },
+          "schema_limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 10
+          },
+          "media_limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 500,
+            "default": 50
+          },
+          "report_limit": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 500,
+            "default": 100
+          },
+          "force": {
+            "type": "boolean",
+            "default": false
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "schema_batch_size": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "schema_stale_days": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 365
+          },
+          "media_batch_size": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 500
+          },
+          "media_stale_days": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 365
+          },
+          "large_file_kb": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 10000
+          },
+          "alt_max_chars": {
+            "type": "integer",
+            "minimum": 60,
+            "maximum": 300
+          },
+          "require_source_records": {
+            "type": "boolean"
+          },
+          "file_hashes": {
+            "type": "boolean"
+          },
+          "retention_days": {
+            "type": "integer",
+            "minimum": 30,
+            "maximum": 730
+          },
+          "rights": {
+            "type": "object",
+            "properties": {
+              "source_type": {
+                "type": "string",
+                "enum": [
+                  "original",
+                  "licensed",
+                  "client_supplied",
+                  "generated",
+                  "public_domain",
+                  "unknown"
+                ]
+              },
+              "source_url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "license_name": {
+                "type": "string"
+              },
+              "license_url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "creator": {
+                "type": "string"
+              },
+              "rights_notes": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "IndexationSync": {
+        "type": "object",
+        "properties": {
+          "command": {
+            "type": "string",
+            "enum": [
+              "read",
+              "seed",
+              "queue",
+              "inspect_batch",
+              "inspect_url",
+              "run_health",
+              "save_settings",
+              "cleanup"
+            ],
+            "default": "read"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "urls": {
+            "type": "array",
+            "maxItems": 1000,
+            "items": {
+              "type": "string",
+              "format": "uri"
+            }
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5000,
+            "default": 100
+          },
+          "report_limit": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 500,
+            "default": 100
+          },
+          "priority": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 80
+          },
+          "force": {
+            "type": "boolean",
+            "default": false
+          },
+          "refresh_inventory": {
+            "type": "boolean",
+            "default": false
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "reinspect_after_change": {
+            "type": "boolean"
+          },
+          "daily_budget": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2000
+          },
+          "inspection_batch": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "seed_batch": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 5000
+          },
+          "stale_days": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 365
+          },
+          "retention_days": {
+            "type": "integer",
+            "minimum": 30,
+            "maximum": 730
+          }
+        }
+      },
+      "ClosedLoopSync": {
+        "type": "object",
+        "properties": {
+          "command": {
+            "type": "string",
+            "enum": [
+              "read",
+              "refresh_plan",
+              "approve",
+              "start",
+              "complete",
+              "dismiss",
+              "measure",
+              "run_due_measurements",
+              "create_checkpoint"
+            ],
+            "default": "read"
+          },
+          "recommendation_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "window_days": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 365
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 500,
+            "default": 100
+          },
+          "refresh_sources": {
+            "type": "boolean",
+            "default": false
+          },
+          "notes": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          }
+        }
+      },
+      "VisibilityBrandSync": {
+        "type": "object",
+        "properties": {
+          "command": {
+            "type": "string",
+            "enum": [
+              "read",
+              "save_observations",
+              "save_mentions",
+              "update_mention",
+              "refresh_snapshot"
+            ],
+            "default": "read"
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 500,
+            "default": 100
+          },
+          "mention_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "observations": {
+            "type": "array",
+            "maxItems": 500,
+            "items": {
+              "$ref": "#/components/schemas/VisibilityObservation"
+            }
+          },
+          "mentions": {
+            "type": "array",
+            "maxItems": 500,
+            "items": {
+              "$ref": "#/components/schemas/BrandMention"
+            }
+          },
+          "mention": {
+            "$ref": "#/components/schemas/BrandMentionUpdate"
+          }
+        }
+      },
+      "VisibilityObservation": {
+        "type": "object",
+        "properties": {
+          "observation_type": {
+            "type": "string",
+            "enum": [
+              "organic_search",
+              "local_search",
+              "answer_engine",
+              "news",
+              "editorial",
+              "directory",
+              "video",
+              "social",
+              "other"
+            ]
+          },
+          "query": {
+            "type": "string"
+          },
+          "brand_role": {
+            "type": "string",
+            "enum": [
+              "own_brand",
+              "competitor",
+              "neutral_source"
+            ]
+          },
+          "brand_name": {
+            "type": "string"
+          },
+          "competitor_domain": {
+            "type": "string"
+          },
+          "mention_status": {
+            "type": "string",
+            "enum": [
+              "mentioned",
+              "cited",
+              "absent",
+              "unclear"
+            ]
+          },
+          "cited_url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "source_name": {
+            "type": "string"
+          },
+          "source_url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "sentiment": {
+            "type": "string",
+            "enum": [
+              "positive",
+              "neutral",
+              "negative",
+              "mixed",
+              "unknown"
+            ]
+          },
+          "prominence": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "position_text": {
+            "type": "string"
+          },
+          "evidence_excerpt": {
+            "type": "string"
+          },
+          "confidence": {
+            "type": "string",
+            "enum": [
+              "low",
+              "medium",
+              "high"
+            ]
+          },
+          "observed_at": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          }
+        }
+      },
+      "BrandMention": {
+        "type": "object",
+        "required": [
+          "mention_url"
+        ],
+        "properties": {
+          "mention_url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "mention_type": {
+            "type": "string",
+            "enum": [
+              "editorial",
+              "news",
+              "directory",
+              "review",
+              "resource",
+              "forum",
+              "social",
+              "video",
+              "podcast",
+              "other"
+            ]
+          },
+          "brand_name": {
+            "type": "string"
+          },
+          "mention_title": {
+            "type": "string"
+          },
+          "mention_excerpt": {
+            "type": "string"
+          },
+          "linked": {
+            "type": "boolean"
+          },
+          "target_url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "sentiment": {
+            "type": "string",
+            "enum": [
+              "positive",
+              "neutral",
+              "negative",
+              "mixed",
+              "unknown"
+            ]
+          },
+          "relevance": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "source_strength": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "status": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          }
+        }
+      },
+      "BrandMentionUpdate": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "new",
+              "reviewed",
+              "opportunity",
+              "outreach_planned",
+              "correction_planned",
+              "converted",
+              "dismissed",
+              "archived"
+            ]
+          },
+          "linked": {
+            "type": "boolean"
+          },
+          "target_url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "notes": {
+            "type": "string"
+          }
+        }
+      },
+      "AgencyCommandSync": {
+        "type": "object",
+        "properties": {
+          "command": {
+            "type": "string",
+            "enum": [
+              "read",
+              "refresh_site",
+              "refresh_all",
+              "record_usage",
+              "resolve_alert"
+            ],
+            "default": "read"
+          },
+          "site_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "alert_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 200,
+            "default": 100
+          },
+          "usage": {
+            "type": "object",
+            "properties": {
+              "category": {
+                "type": "string",
+                "enum": [
+                  "research",
+                  "serp_data",
+                  "backlinks",
+                  "content",
+                  "performance",
+                  "reporting",
+                  "other"
+                ]
+              },
+              "amount": {
+                "type": "number",
+                "minimum": 0
+              },
+              "currency": {
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 3
+              },
+              "units": {
+                "type": "number",
+                "minimum": 0
+              },
+              "note": {
+                "type": "string"
+              },
+              "event_date": {
+                "type": "string",
+                "format": "date"
+              }
+            }
+          }
+        }
+      },
+      "PublisherSync": {
+        "type": "object",
+        "properties": {
+          "command": {
+            "type": "string",
+            "enum": [
+              "read",
+              "save_keyword",
+              "save_hub",
+              "save_item",
+              "save_contributor",
+              "evaluate_post",
+              "generate_calendar",
+              "review_lifecycle",
+              "save_signature"
+            ],
+            "default": "read"
+          },
+          "keyword": {
+            "type": "object",
+            "properties": {
+              "keyword": {
+                "type": "string",
+                "maxLength": 255
+              },
+              "cluster": {
+                "type": "string",
+                "maxLength": 255
+              },
+              "intent": {
+                "type": "string",
+                "enum": [
+                  "local_service",
+                  "transactional",
+                  "commercial",
+                  "informational",
+                  "navigational",
+                  "mixed"
+                ]
+              },
+              "page_type": {
+                "type": "string",
+                "enum": [
+                  "article",
+                  "guide",
+                  "comparison",
+                  "review",
+                  "news",
+                  "service",
+                  "location",
+                  "category",
+                  "product",
+                  "tool",
+                  "hub",
+                  "other"
+                ]
+              },
+              "demand_band": {
+                "type": "string",
+                "enum": [
+                  "unknown",
+                  "very_low",
+                  "low",
+                  "medium",
+                  "high",
+                  "very_high"
+                ]
+              },
+              "difficulty_band": {
+                "type": "string",
+                "enum": [
+                  "unknown",
+                  "low",
+                  "medium",
+                  "high",
+                  "very_high"
+                ]
+              },
+              "business_value": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 100
+              },
+              "target_post_id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "notes": {
+                "type": "string"
+              }
+            }
+          },
+          "hub": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "target_audience": {
+                "type": "string"
+              },
+              "pillar_post_id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "keyword_ids": {
+                "type": "array",
+                "items": {
+                  "type": "integer"
+                }
+              },
+              "supporting_post_ids": {
+                "type": "array",
+                "items": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "item": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "title": {
+                "type": "string"
+              },
+              "keyword_id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "hub_id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "content_type": {
+                "type": "string"
+              },
+              "intent": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string",
+                "enum": [
+                  "idea",
+                  "research",
+                  "planned",
+                  "brief",
+                  "approved",
+                  "drafting",
+                  "review",
+                  "revision",
+                  "ready",
+                  "published",
+                  "refresh",
+                  "consolidate",
+                  "retire",
+                  "archived"
+                ]
+              },
+              "priority": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 100
+              },
+              "author_id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "reviewer_id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "due_at": {
+                "type": "string"
+              },
+              "target_post_id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "source_requirements": {
+                "type": "string"
+              },
+              "originality_required": {
+                "type": "boolean"
+              },
+              "disclosure_required": {
+                "type": "boolean"
+              },
+              "brief": {
+                "type": "object",
+                "additionalProperties": true
+              }
+            }
+          },
+          "contributor": {
+            "type": "object",
+            "properties": {
+              "user_id": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "roles": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "author",
+                    "editor",
+                    "reviewer",
+                    "fact_checker",
+                    "subject_expert"
+                  ]
+                }
+              },
+              "expertise": {
+                "type": "string"
+              },
+              "evidence": {
+                "type": "string"
+              },
+              "active": {
+                "type": "boolean"
+              }
+            }
+          },
+          "post_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "item_id": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "weeks": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 52
+          },
+          "capacity_per_month": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 250
+          },
+          "signature": {
+            "type": "object",
+            "properties": {
+              "site_label": {
+                "type": "string"
+              },
+              "site_url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "content_url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "content_title": {
+                "type": "string"
+              },
+              "content_type": {
+                "type": "string"
+              },
+              "signature": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "topics": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "WorkflowAutomationSync": {
+        "type": "object",
+        "properties": {
+          "command": {
+            "type": "string",
+            "enum": [
+              "read",
+              "create_workflow",
+              "update_task",
+              "approve_task",
+              "run_safe_tasks",
+              "generate_briefing"
+            ],
+            "default": "read"
+          },
+          "template": {
+            "type": "string",
+            "enum": [
+              "local_growth",
+              "editorial_growth",
+              "ecommerce_growth",
+              "hybrid_growth"
+            ]
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "owner_id": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "start_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "allow_duplicate": {
+            "type": "boolean",
+            "default": false
+          },
+          "task_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "changes": {
+            "type": "object",
+            "properties": {
+              "status": {
+                "type": "string",
+                "enum": [
+                  "pending",
+                  "ready",
+                  "in_progress",
+                  "pending_approval",
+                  "approved",
+                  "completed",
+                  "failed",
+                  "blocked",
+                  "skipped"
+                ]
+              },
+              "owner_id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "due_at": {
+                "type": "string"
+              },
+              "notes": {
+                "type": "string"
+              }
+            }
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50,
+            "default": 50
+          },
+          "period": {
+            "type": "string",
+            "enum": [
+              "daily",
+              "weekly"
+            ],
+            "default": "daily"
+          }
+        }
+      },
+      "StrategySync": {
+        "type": "object",
+        "properties": {
+          "save": {
+            "type": "boolean",
+            "default": false,
+            "description": "Leave false to read strategy. Set true only after an approved strategy update."
+          },
+          "strategy": {
+            "type": "object",
+            "properties": {
+              "mode": {
+                "type": "string",
+                "enum": [
+                  "local_business",
+                  "editorial",
+                  "ecommerce",
+                  "hybrid"
+                ]
+              },
+              "primary_goal": {
+                "type": "string",
+                "enum": [
+                  "leads",
+                  "calls",
+                  "bookings",
+                  "ecommerce_sales",
+                  "affiliate_revenue",
+                  "ad_revenue",
+                  "subscriptions",
+                  "brand_visibility",
+                  "mixed"
+                ]
+              },
+              "secondary_goals": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "target_audience": {
+                "type": "string"
+              },
+              "value_proposition": {
+                "type": "string"
+              },
+              "main_offerings": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "excluded_topics": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "primary_conversions": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "monetization_model": {
+                "type": "string",
+                "enum": [
+                  "service_revenue",
+                  "lead_generation",
+                  "ecommerce",
+                  "affiliate",
+                  "advertising",
+                  "subscription",
+                  "sponsorship",
+                  "mixed",
+                  "none"
+                ]
+              },
+              "publishing_capacity": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 200
+              },
+              "content_owner": {
+                "type": "string"
+              },
+              "review_owner": {
+                "type": "string"
+              },
+              "editorial_standards": {
+                "type": "string"
+              },
+              "evidence_requirements": {
+                "type": "string"
+              },
+              "author_policy": {
+                "type": "string"
+              },
+              "disclosure_policy": {
+                "type": "string"
+              },
+              "success_metrics": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "automation_level": {
+                "type": "string",
+                "enum": [
+                  "audit_only",
+                  "drafts_only",
+                  "controlled_changes"
+                ]
+              },
+              "risk_tolerance": {
+                "type": "string",
+                "enum": [
+                  "conservative",
+                  "balanced",
+                  "growth"
+                ]
+              },
+              "quality_gate_threshold": {
+                "type": "integer",
+                "minimum": 50,
+                "maximum": 100
+              },
+              "local_lead_channels": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "local_review_target": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 500
+              },
+              "local_service_area_policy": {
+                "type": "string"
+              },
+              "local_proof_requirements": {
+                "type": "string"
+              },
+              "editorial_primary_topics": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "editorial_hubs": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "editorial_refresh_days": {
+                "type": "integer",
+                "minimum": 30,
+                "maximum": 730
+              },
+              "editorial_originality": {
+                "type": "string"
+              },
+              "ecommerce_categories": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "ecommerce_conversion_events": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "ecommerce_trust_requirements": {
+                "type": "string"
+              },
+              "ecommerce_feed_policy": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
       "Button": {
         "type": "object",
         "properties": {
@@ -1302,6 +2411,26 @@
             "type": "string"
           },
           "answer": {
+            "type": "string"
+          }
+        }
+      },
+      "SectionItem": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          },
+          "url": {
             "type": "string"
           }
         }
@@ -1351,8 +2480,39 @@
           "content": {
             "type": "string"
           },
-          "map_query": {
+          "aside": {
             "type": "string"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SectionItem"
+            }
+          },
+          "headers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "rows": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "image_id": {
+            "type": "integer"
+          },
+          "image_alt": {
+            "type": "string"
+          },
+          "map_query": {
+            "type": "string",
+            "description": "Verified address or place query for the native Elementor map widget."
           },
           "map_url": {
             "type": "string",
@@ -1370,28 +2530,6 @@
             "type": "integer",
             "minimum": 5,
             "maximum": 20
-          },
-          "items": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "additionalProperties": true
-            }
-          },
-          "headers": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "rows": {
-            "type": "array",
-            "items": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            }
           },
           "button": {
             "$ref": "#/components/schemas/Button"
@@ -1424,75 +2562,149 @@
             "items": {
               "type": "string"
             }
+          },
+          "facebook_title": {
+            "type": "string"
+          },
+          "facebook_description": {
+            "type": "string"
+          },
+          "facebook_image": {
+            "type": "string",
+            "format": "uri"
+          },
+          "twitter_title": {
+            "type": "string"
+          },
+          "twitter_description": {
+            "type": "string"
+          },
+          "twitter_image": {
+            "type": "string",
+            "format": "uri"
+          },
+          "twitter_use_facebook": {
+            "type": "boolean"
           }
         }
       },
-      "SchemaConfig": {
+      "PagePayload": {
         "type": "object",
+        "required": [
+          "profile_id",
+          "title",
+          "sections",
+          "seo"
+        ],
         "properties": {
-          "page_type": {
+          "profile_id": {
+            "type": "string",
+            "description": "Current profile_id returned by GET /profile. Prevents cross-client writes."
+          },
+          "mode": {
             "type": "string",
             "enum": [
-              "webpage",
-              "service",
-              "article",
-              "profile",
-              "collection",
-              "tool",
-              "about",
-              "contact",
-              "location",
-              "howto"
+              "create",
+              "improve"
             ]
           },
-          "semantic_faq": {
-            "type": "boolean"
+          "source_page_id": {
+            "type": "integer"
           },
-          "service": {
+          "title": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "excerpt": {
+            "type": "string"
+          },
+          "language": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "draft",
+              "pending",
+              "publish"
+            ]
+          },
+          "parent_id": {
+            "type": "integer"
+          },
+          "page_template": {
+            "type": "string",
+            "enum": [
+              "default",
+              "elementor_header_footer",
+              "elementor_canvas"
+            ]
+          },
+          "featured_media_id": {
+            "type": "integer"
+          },
+          "social_media_id": {
+            "type": "integer"
+          },
+          "hero": {
             "type": "object",
-            "additionalProperties": true
-          },
-          "business_entity": {
-            "type": "object",
-            "description": "Type is always controlled by the active Website Profile.",
-            "additionalProperties": true
-          },
-          "breadcrumbs": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "additionalProperties": true
+            "properties": {
+              "eyebrow": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "image_id": {
+                "type": "integer"
+              },
+              "image_alt": {
+                "type": "string"
+              },
+              "primary_cta": {
+                "$ref": "#/components/schemas/Button"
+              },
+              "secondary_cta": {
+                "$ref": "#/components/schemas/Button"
+              }
             }
           },
-          "article": {
-            "type": "object",
-            "additionalProperties": true
+          "sections": {
+            "type": "array",
+            "maxItems": 40,
+            "items": {
+              "$ref": "#/components/schemas/Section"
+            }
           },
-          "person": {
-            "type": "object",
-            "additionalProperties": true
+          "faq": {
+            "type": "array",
+            "maxItems": 30,
+            "items": {
+              "$ref": "#/components/schemas/FAQ"
+            }
           },
-          "collection": {
-            "type": "object",
-            "additionalProperties": true
+          "seo": {
+            "$ref": "#/components/schemas/SEO"
           },
-          "application": {
-            "type": "object",
-            "additionalProperties": true
+          "schema": {
+            "$ref": "#/components/schemas/SchemaConfig"
           },
-          "howto": {
-            "type": "object",
-            "additionalProperties": true
+          "local": {
+            "$ref": "#/components/schemas/LocalPage"
           },
-          "video": {
-            "type": "object",
-            "additionalProperties": true
+          "content_review": {
+            "$ref": "#/components/schemas/ContentReview"
           }
         }
       },
       "LocalPage": {
         "type": "object",
-        "description": "Required for local location pages. Service areas cannot expose an address or location entity.",
+        "description": "Required for schema.page_type=location. Verified locations and service areas use different safety policies.",
         "required": [
           "location_id",
           "page_kind",
@@ -1501,7 +2713,8 @@
         ],
         "properties": {
           "location_id": {
-            "type": "integer"
+            "type": "integer",
+            "description": "ID returned by GET /local/locations."
           },
           "page_kind": {
             "type": "string",
@@ -1539,89 +2752,134 @@
           "parking": {
             "type": "string"
           },
+          "staff": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
           "map_url": {
             "type": "string",
             "format": "uri"
           },
           "show_address": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Must be false for service-area pages."
           },
           "emit_location_entity": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Must be false for service-area pages."
           }
         }
       },
-      "PagePayload": {
+      "SchemaConfig": {
         "type": "object",
-        "required": [
-          "profile_id",
-          "title",
-          "sections",
-          "seo"
-        ],
+        "description": "Allow-listed schema configuration. FAQ rich results are retired; semantic FAQ markup is optional.",
         "properties": {
-          "profile_id": {
-            "type": "string",
-            "description": "Current value returned by GET /profile."
-          },
-          "mode": {
+          "page_type": {
             "type": "string",
             "enum": [
-              "create",
-              "improve"
+              "webpage",
+              "service",
+              "article",
+              "profile",
+              "collection",
+              "tool",
+              "about",
+              "contact",
+              "location",
+              "howto"
             ]
           },
-          "source_page_id": {
-            "type": "integer"
+          "semantic_faq": {
+            "type": "boolean"
           },
-          "title": {
-            "type": "string"
-          },
-          "slug": {
-            "type": "string"
-          },
-          "excerpt": {
-            "type": "string"
-          },
-          "language": {
-            "type": "string"
-          },
-          "hero": {
+          "service": {
             "type": "object",
             "additionalProperties": true
           },
-          "sections": {
+          "breadcrumbs": {
             "type": "array",
-            "maxItems": 40,
             "items": {
-              "$ref": "#/components/schemas/Section"
+              "type": "object",
+              "additionalProperties": true
             }
           },
-          "faq": {
-            "type": "array",
-            "maxItems": 30,
-            "items": {
-              "$ref": "#/components/schemas/FAQ"
-            }
-          },
-          "seo": {
-            "$ref": "#/components/schemas/SEO"
-          },
-          "schema": {
-            "$ref": "#/components/schemas/SchemaConfig"
-          },
-          "local": {
-            "$ref": "#/components/schemas/LocalPage"
-          },
-          "content_review": {
+          "article": {
             "type": "object",
             "additionalProperties": true
           },
-          "featured_media_id": {
-            "type": "integer"
+          "person": {
+            "type": "object",
+            "additionalProperties": true
           },
-          "social_media_id": {
-            "type": "integer"
+          "collection": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "application": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "business_entity": {
+            "type": "object",
+            "description": "Optional explicit entity node. Its type is always taken from the active Website Profile.",
+            "additionalProperties": true
+          },
+          "accounting_service": {
+            "type": "object",
+            "deprecated": true,
+            "description": "v0.2 compatibility only; rejected outside an AccountingService profile.",
+            "additionalProperties": true
+          },
+          "howto": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "video": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      },
+      "ContentReview": {
+        "type": "object",
+        "properties": {
+          "ymyl": {
+            "type": "boolean"
+          },
+          "sources": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uri"
+            }
+          },
+          "reviewed_by": {
+            "type": "string"
+          },
+          "fact_checked_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "applicable_period": {
+            "type": "string"
+          },
+          "jurisdiction": {
+            "type": "string"
+          },
+          "disclaimer": {
+            "type": "string"
+          },
+          "next_review_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "show_on_page": {
+            "type": "boolean"
+          },
+          "heading": {
+            "type": "string"
           }
         }
       },
@@ -1644,6 +2902,12 @@
           },
           "alt_text": {
             "type": "string"
+          },
+          "caption": {
+            "type": "string"
+          },
+          "parent_id": {
+            "type": "integer"
           }
         }
       },
@@ -1657,10 +2921,462 @@
           "claim_token": {
             "type": "string",
             "minLength": 32,
-            "description": "One-time token returned by the claim operation. Expires after one hour."
+            "description": "One-time token returned by the claim action. It expires after one hour."
           },
           "page": {
             "$ref": "#/components/schemas/PagePayload"
+          }
+        }
+      },
+      "LocalGrowthSync": {
+        "type": "object",
+        "description": "Call with command read to inspect the Local Growth System. Refresh and synchronization commands remain read-only toward public profiles. Review workflow updates and prominence observations store planning evidence only.",
+        "properties": {
+          "command": {
+            "type": "string",
+            "enum": [
+              "read",
+              "refresh",
+              "sync_reviews",
+              "sync_conversions",
+              "save_prominence",
+              "update_review_task"
+            ],
+            "default": "read"
+          },
+          "days": {
+            "type": "integer",
+            "minimum": 7,
+            "maximum": 90,
+            "default": 30
+          },
+          "remote_refresh": {
+            "type": "boolean",
+            "default": false
+          },
+          "review_task_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "changes": {
+            "type": "object",
+            "properties": {
+              "status": {
+                "type": "string",
+                "enum": [
+                  "open",
+                  "in_progress",
+                  "draft_staged",
+                  "responded",
+                  "dismissed"
+                ]
+              },
+              "owner_id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "notes": {
+                "type": "string",
+                "maxLength": 3000
+              }
+            }
+          },
+          "prominence": {
+            "type": "object",
+            "properties": {
+              "competitor_name": {
+                "type": "string",
+                "maxLength": 255
+              },
+              "competitor_domain": {
+                "type": "string",
+                "maxLength": 255
+              },
+              "query": {
+                "type": "string",
+                "maxLength": 255
+              },
+              "source_type": {
+                "type": "string",
+                "enum": [
+                  "local_pack",
+                  "organic",
+                  "reviews",
+                  "citations",
+                  "backlinks",
+                  "brand_mentions",
+                  "directories",
+                  "manual"
+                ]
+              },
+              "source_url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "evidence": {
+                "type": "string",
+                "maxLength": 5000
+              },
+              "metric_name": {
+                "type": "string",
+                "maxLength": 100
+              },
+              "metric_value": {
+                "type": "number"
+              },
+              "confidence": {
+                "type": "string",
+                "enum": [
+                  "low",
+                  "medium",
+                  "high"
+                ]
+              },
+              "observed_at": {
+                "type": "string",
+                "format": "date"
+              }
+            }
+          }
+        }
+      },
+      "WorkspaceSync": {
+        "type": "object",
+        "description": "Call with an empty object to resume project context. Optionally include one event or one status update, then receive the refreshed project state.",
+        "properties": {
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 200,
+            "default": 50
+          },
+          "event": {
+            "type": "object",
+            "required": [
+              "title",
+              "summary"
+            ],
+            "properties": {
+              "category": {
+                "type": "string",
+                "enum": [
+                  "audit",
+                  "research",
+                  "recommendation",
+                  "page_plan",
+                  "draft",
+                  "change",
+                  "approval",
+                  "note",
+                  "system"
+                ]
+              },
+              "status": {
+                "type": "string",
+                "enum": [
+                  "open",
+                  "completed",
+                  "dismissed"
+                ],
+                "default": "open"
+              },
+              "title": {
+                "type": "string"
+              },
+              "summary": {
+                "type": "string"
+              },
+              "related_post_id": {
+                "type": "integer"
+              },
+              "details": {
+                "type": "object",
+                "additionalProperties": true
+              }
+            }
+          },
+          "status_update": {
+            "type": "object",
+            "required": [
+              "id",
+              "status"
+            ],
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "status": {
+                "type": "string",
+                "enum": [
+                  "open",
+                  "completed",
+                  "dismissed"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "AuthoritySync": {
+        "type": "object",
+        "description": "Call with an empty object to read imported authority evidence. Optionally store approved link observations. Imported provider metrics remain labelled evidence and are never converted into a proprietary authority score.",
+        "properties": {
+          "limit": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 500,
+            "default": 100
+          },
+          "provider": {
+            "type": "string",
+            "enum": [
+              "generic",
+              "ahrefs",
+              "semrush",
+              "majestic",
+              "search_console",
+              "manual",
+              "connected_research",
+              "licensed_provider",
+              "import"
+            ]
+          },
+          "relationship": {
+            "type": "string",
+            "enum": [
+              "site_backlink",
+              "competitor_backlink"
+            ],
+            "default": "site_backlink"
+          },
+          "competitor_domain": {
+            "type": "string",
+            "description": "Required when relationship is competitor_backlink unless it can be inferred from every target URL."
+          },
+          "links": {
+            "type": "array",
+            "maxItems": 1000,
+            "items": {
+              "type": "object",
+              "required": [
+                "source_url",
+                "target_url"
+              ],
+              "properties": {
+                "source_url": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "target_url": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "source_title": {
+                  "type": "string"
+                },
+                "anchor_text": {
+                  "type": "string"
+                },
+                "link_type": {
+                  "type": "string",
+                  "enum": [
+                    "follow",
+                    "nofollow",
+                    "sponsored",
+                    "ugc",
+                    "unknown"
+                  ]
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "active",
+                    "lost",
+                    "new"
+                  ]
+                },
+                "source_strength": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100,
+                  "description": "Optional provider metric retained without cross-provider normalization."
+                },
+                "source_traffic": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "first_seen": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "last_seen": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "observed_at": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "notes": {
+                  "type": "string"
+                },
+                "raw_metrics": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          }
+        }
+      },
+      "CompetitorContentSync": {
+        "type": "object",
+        "description": "Call with an empty object to read the current competitor and content intelligence state. Optionally store up to 50 current competitor observations and/or create one page-level brief. Never copy competitor content or treat competitor claims as facts about the connected business.",
+        "properties": {
+          "limit": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 250,
+            "default": 100
+          },
+          "research": {
+            "type": "array",
+            "maxItems": 50,
+            "items": {
+              "type": "object",
+              "required": [
+                "query",
+                "url"
+              ],
+              "properties": {
+                "query": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "intent": {
+                  "type": "string",
+                  "enum": [
+                    "informational",
+                    "commercial_investigation",
+                    "local_service",
+                    "transactional",
+                    "navigational",
+                    "mixed"
+                  ]
+                },
+                "result_type": {
+                  "type": "string",
+                  "enum": [
+                    "service_page",
+                    "article",
+                    "category_page",
+                    "comparison_page",
+                    "product_or_booking_page",
+                    "location_page",
+                    "homepage",
+                    "tool",
+                    "video",
+                    "mixed_results"
+                  ]
+                },
+                "title": {
+                  "type": "string"
+                },
+                "meta_description": {
+                  "type": "string"
+                },
+                "h1": {
+                  "type": "string"
+                },
+                "word_count": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "headings": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "entities": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "topics": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "trust_elements": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "conversion_elements": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "search_features": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "evidence_notes": {
+                  "type": "string"
+                },
+                "differentiation_notes": {
+                  "type": "string"
+                },
+                "source": {
+                  "type": "string",
+                  "enum": [
+                    "connected_research",
+                    "manual",
+                    "licensed_provider",
+                    "import"
+                  ]
+                },
+                "observed_at": {
+                  "type": "string",
+                  "format": "date"
+                }
+              }
+            }
+          },
+          "analyse": {
+            "type": "object",
+            "required": [
+              "post_id"
+            ],
+            "properties": {
+              "post_id": {
+                "type": "integer"
+              },
+              "target_query": {
+                "type": "string"
+              },
+              "intent": {
+                "type": "string",
+                "enum": [
+                  "informational",
+                  "commercial_investigation",
+                  "local_service",
+                  "transactional",
+                  "navigational",
+                  "mixed"
+                ]
+              }
+            }
           }
         }
       },
@@ -1682,7 +3398,8 @@
         "properties": {
           "url": {
             "type": "string",
-            "format": "uri"
+            "format": "uri",
+            "description": "Must be on the current WordPress website."
           },
           "source": {
             "type": "string",
@@ -1705,16 +3422,17 @@
       },
       "GBPDraft": {
         "type": "object",
-        "description": "Stages content locally. Sending is only available from WordPress after exact administrator approval.",
         "required": [
           "profile_id",
           "location_id",
           "draft_type",
           "content"
         ],
+        "description": "Stages content locally. It cannot send, publish or reply until a WordPress administrator approves the exact draft.",
         "properties": {
           "profile_id": {
-            "type": "string"
+            "type": "string",
+            "description": "Current profile_id returned by GET /profile."
           },
           "location_id": {
             "type": "integer"
@@ -1741,6 +3459,9 @@
               "OFFER"
             ]
           },
+          "language_code": {
+            "type": "string"
+          },
           "call_to_action": {
             "type": "string"
           },
@@ -1758,6 +3479,228 @@
           "end_time": {
             "type": "string",
             "format": "date-time"
+          },
+          "coupon_code": {
+            "type": "string"
+          },
+          "redeem_online_url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "terms_conditions": {
+            "type": "string"
+          }
+        }
+      },
+      "InternationalServerSync": {
+        "type": "object",
+        "properties": {
+          "command": {
+            "type": "string",
+            "enum": [
+              "read",
+              "audit_international_batch",
+              "audit_url",
+              "import_log_events",
+              "save_settings",
+              "cleanup"
+            ],
+            "default": "read"
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 500,
+            "default": 100
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "refresh_inventory": {
+            "type": "boolean",
+            "default": false
+          },
+          "source": {
+            "type": "string",
+            "enum": [
+              "workspace",
+              "manual",
+              "csv",
+              "combined"
+            ]
+          },
+          "events": {
+            "type": "array",
+            "maxItems": 1000,
+            "items": {
+              "type": "object",
+              "properties": {
+                "occurred_at": {
+                  "type": "string"
+                },
+                "method": {
+                  "type": "string"
+                },
+                "request_path": {
+                  "type": "string"
+                },
+                "status_code": {
+                  "type": "integer",
+                  "minimum": 100,
+                  "maximum": 599
+                },
+                "bytes_sent": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "response_ms": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "user_agent": {
+                  "type": "string"
+                },
+                "ip": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "audit_batch": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50
+          },
+          "stale_days": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 365
+          },
+          "locale_map": {
+            "type": "string"
+          },
+          "x_default_url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "retention_days": {
+            "type": "integer",
+            "minimum": 30,
+            "maximum": 730
+          },
+          "max_rows": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 50000
+          },
+          "verify_crawlers": {
+            "type": "boolean"
+          },
+          "slow_ms": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 60000
+          },
+          "store_query_keys": {
+            "type": "boolean"
+          }
+        }
+      },
+      "PortfolioQualitySync": {
+        "type": "object",
+        "properties": {
+          "command": {
+            "type": "string",
+            "enum": [
+              "read",
+              "scan_local",
+              "evaluate",
+              "import_bundle",
+              "export_bundle",
+              "update_finding",
+              "save_settings",
+              "cleanup"
+            ],
+            "default": "read"
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 500,
+            "default": 100
+          },
+          "force": {
+            "type": "boolean",
+            "default": false
+          },
+          "finding_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "open",
+              "reviewed",
+              "accepted",
+              "resolved",
+              "dismissed"
+            ]
+          },
+          "notes": {
+            "type": "string"
+          },
+          "bundle": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "scan_batch": {
+            "type": "integer",
+            "minimum": 5,
+            "maximum": 200
+          },
+          "content_threshold": {
+            "type": "integer",
+            "minimum": 55,
+            "maximum": 98
+          },
+          "topic_threshold": {
+            "type": "integer",
+            "minimum": 55,
+            "maximum": 98
+          },
+          "template_threshold": {
+            "type": "integer",
+            "minimum": 50,
+            "maximum": 100
+          },
+          "thin_words": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 2000
+          },
+          "cluster_min": {
+            "type": "integer",
+            "minimum": 3,
+            "maximum": 50
+          },
+          "block_review_ready": {
+            "type": "boolean"
+          },
+          "media_hashing": {
+            "type": "boolean"
+          },
+          "retention_days": {
+            "type": "integer",
+            "minimum": 90,
+            "maximum": 1095
           }
         }
       }

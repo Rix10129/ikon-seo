@@ -1,6 +1,6 @@
 # Page-Plan Queue
 
-The page-plan queue separates planning from content generation. It does not contain an AI/model API and cannot write pages while ChatGPT/Codex is closed.
+The page-plan queue separates planning from content generation. It does not contain an workflow/model API and cannot write pages while the private operator workspace is closed.
 
 ## CSV columns
 

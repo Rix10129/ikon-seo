@@ -82,7 +82,28 @@ class Ikon_SEO_Inventory {
 		);
 
 		set_transient( self::CACHE_KEY, $result, 10 * MINUTE_IN_SECONDS );
+		update_option( 'ikon_seo_inventory_status', array( 'generated_at' => $result['generated_at'], 'summary' => $result['summary'] ), false );
 		return $result;
+	}
+
+	public function status() {
+		$cached = get_transient( self::CACHE_KEY );
+		$stored = get_option( 'ikon_seo_inventory_status', array() );
+		$source = is_array( $cached ) ? $cached : ( is_array( $stored ) ? $stored : array() );
+
+		if ( empty( $source['generated_at'] ) ) {
+			return array(
+				'scanned'      => false,
+				'generated_at' => '',
+				'summary'      => array(),
+			);
+		}
+
+		return array(
+			'scanned'      => true,
+			'generated_at' => sanitize_text_field( $source['generated_at'] ),
+			'summary'      => is_array( $source['summary'] ?? null ) ? $source['summary'] : array(),
+		);
 	}
 
 	public function candidates( $query, $exclude_id = 0, $limit = 12 ) {

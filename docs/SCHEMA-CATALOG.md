@@ -1,4 +1,4 @@
-# Ikon SEO v0.6 Schema Policy
+# Ikon SEO Schema Policy
 
 Ikon SEO uses an allow-listed schema graph. The active Website Profile—not the page request—controls the business entity.
 
@@ -91,3 +91,7 @@ Service-area and online-only records may contribute `areaServed` to a page or se
 ```
 
 `business_entity.type` is unnecessary and cannot override the active profile.
+
+## Visibility and Brand action
+
+`syncIkonSEOVisibilityBrandIntelligence` uses `VisibilityBrandSync` to read combined visibility evidence, store reviewed observations and mentions, update mention workflow state and refresh evidence snapshots. It is an operating-system action, not structured data rendered on public pages.

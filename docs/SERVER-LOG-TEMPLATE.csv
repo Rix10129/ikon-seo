@@ -1,0 +1,2 @@
+occurred_at,method,request,status,bytes,user_agent,ip,response_ms
+2026-08-03 04:30:00,GET,/example-page/?utm_source=sample,200,1234,DeclaredCrawler,192.0.2.1,250
