@@ -21,6 +21,86 @@ class Ikon_SEO_Auth {
 		return $this->check( $request, 'draft' );
 	}
 
+	public function can_publishing_readiness( WP_REST_Request $request ) {
+		$payload = $request->get_json_params();
+		$command = sanitize_key( is_array( $payload ) ? ( $payload['command'] ?? 'read' ) : 'read' );
+		$approval_commands = array( 'mark_ready', 'record_manual_publication', 'complete_monitoring', 'block', 'unblock' );
+		return $this->check( $request, in_array( $command, $approval_commands, true ) ? 'approve' : 'draft' );
+	}
+
+	public function can_search_impact( WP_REST_Request $request ) {
+		$payload = $request->get_json_params();
+		$command = sanitize_key( is_array( $payload ) ? ( $payload['command'] ?? 'read' ) : 'read' );
+		$approval_commands = array( 'assess', 'acknowledge', 'block', 'unblock' );
+		return $this->check( $request, in_array( $command, $approval_commands, true ) ? 'approve' : 'draft' );
+	}
+
+	public function can_pattern_library( WP_REST_Request $request ) {
+		$payload = $request->get_json_params();
+		$command = sanitize_key( is_array( $payload ) ? ( $payload['command'] ?? 'read' ) : 'read' );
+		$approval_commands = array( 'validate', 'limit', 'reject', 'retire', 'restore' );
+		return $this->check( $request, in_array( $command, $approval_commands, true ) ? 'approve' : 'draft' );
+	}
+
+	public function can_agency_service_levels( WP_REST_Request $request ) {
+		$payload = $request->get_json_params();
+		$command = sanitize_key( is_array( $payload ) ? ( $payload['command'] ?? 'read' ) : 'read' );
+		$approval_commands = array( 'approve_plan', 'retire_plan', 'assign_plan', 'update_assignment', 'approve_report', 'mark_report_delivered' );
+		return $this->check( $request, in_array( $command, $approval_commands, true ) ? 'approve' : 'draft' );
+	}
+
+	public function can_portfolio_governance( WP_REST_Request $request ) {
+		$payload = $request->get_json_params();
+		$command = sanitize_key( is_array( $payload ) ? ( $payload['command'] ?? 'read' ) : 'read' );
+		$approval_commands = array( 'approve_policy', 'retire_policy', 'accept_proposal', 'reject_proposal' );
+		return $this->check( $request, in_array( $command, $approval_commands, true ) ? 'approve' : 'draft' );
+	}
+
+
+	public function can_executive_command( WP_REST_Request $request ) {
+		$payload = $request->get_json_params();
+		$command = sanitize_key( is_array( $payload ) ? ( $payload['command'] ?? 'read' ) : 'read' );
+		$approval_commands = array( 'assign_risk', 'resolve_risk', 'reopen_risk', 'acknowledge_notification', 'dismiss_notification' );
+		return $this->check( $request, in_array( $command, $approval_commands, true ) ? 'approve' : 'draft' );
+	}
+
+
+
+	public function can_client_portal_admin( WP_REST_Request $request ) {
+		$payload = $request->get_json_params();
+		$command = sanitize_key( is_array( $payload ) ? ( $payload['command'] ?? 'read' ) : 'read' );
+		$approval_commands = array( 'read', 'preview_user', 'create_access', 'activate_access', 'revoke_access', 'refresh_snapshot' );
+		return $this->check( $request, in_array( $command, $approval_commands, true ) ? 'approve' : 'draft' );
+	}
+
+	public function can_platform_hardening( WP_REST_Request $request ) {
+		$payload = $request->get_json_params();
+		$command = sanitize_key( is_array( $payload ) ? ( $payload['command'] ?? 'read' ) : 'read' );
+		$approval_commands = array( 'restore_archive', 'repair_scheduler', 'cleanup' );
+		return $this->check( $request, in_array( $command, $approval_commands, true ) ? 'approve' : 'draft' );
+	}
+
+	public function can_deployment_control( WP_REST_Request $request ) {
+		$payload = $request->get_json_params();
+		$command = sanitize_key( is_array( $payload ) ? ( $payload['command'] ?? 'read' ) : 'read' );
+		$approval_commands = array( 'create_evaluation', 'import_entitlement', 'revoke_entitlement', 'approve_plan', 'record_manual_deployment', 'close_plan' );
+		return $this->check( $request, in_array( $command, $approval_commands, true ) ? 'approve' : 'draft' );
+	}
+
+
+	public function can_production_certification( WP_REST_Request $request ) {
+		$payload = $request->get_json_params();
+		$command = sanitize_key( is_array( $payload ) ? ( $payload['command'] ?? 'read' ) : 'read' );
+		$approval_commands = array( 'approve_contract', 'approve_certification', 'approve_rollout', 'record_rollout_result', 'close_rollout' );
+		return $this->check( $request, in_array( $command, $approval_commands, true ) ? 'approve' : 'draft' );
+	}
+
+	public function can_staging_validation( WP_REST_Request $request ) {
+		$payload = $request->get_json_params();
+		$command = sanitize_key( is_array( $payload ) ? ( $payload['command'] ?? 'read' ) : 'read' );
+		return $this->check( $request, 'approve_run' === $command ? 'approve' : 'draft' );
+	}
+
 	public function can_approve( WP_REST_Request $request ) {
 		$settings = Ikon_SEO_Plugin::settings();
 		if ( empty( $settings['remote_merge'] ) ) {

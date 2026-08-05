@@ -26,6 +26,7 @@ class Ikon_SEO_Connection {
 		$settings['token_hash']             = wp_hash_password( $token );
 		$settings['token_hint']             = '••••••' . substr( $token, -6 );
 		$settings['remote_actions']         = 1;
+		$settings['connection_owner_user_id'] = $user_id;
 		$settings['connection_verified_at'] = '';
 		$settings['connection_last_seen_at']= '';
 		update_option( Ikon_SEO_Plugin::OPTION_KEY, $settings, false );
@@ -61,6 +62,7 @@ class Ikon_SEO_Connection {
 		$settings['token_hash']               = wp_hash_password( $token );
 		$settings['token_hint']               = '••••••' . substr( $token, -6 );
 		$settings['remote_actions']           = 1;
+		$settings['connection_owner_user_id'] = absint( $user_id );
 		$settings['connection_verified_at']   = '';
 		$settings['connection_last_seen_at']  = '';
 		update_option( Ikon_SEO_Plugin::OPTION_KEY, $settings, false );
@@ -152,6 +154,7 @@ class Ikon_SEO_Connection {
 		$settings                             = Ikon_SEO_Plugin::settings();
 		$settings['token_hash']               = '';
 		$settings['token_hint']               = '';
+		$settings['connection_owner_user_id'] = 0;
 		$settings['connection_verified_at']   = '';
 		$settings['connection_last_seen_at']  = '';
 		update_option( Ikon_SEO_Plugin::OPTION_KEY, $settings, false );

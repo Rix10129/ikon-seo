@@ -19,6 +19,10 @@ class Ikon_SEO_Admin {
 	private $technical;
 	private $indexation;
 	private $production_health;
+	private $platform_hardening;
+	private $deployment_control;
+	private $production_certification;
+	private $staging_validation;
 	private $competitor_content;
 	private $authority;
 	private $strategy;
@@ -32,10 +36,22 @@ class Ikon_SEO_Admin {
 	private $visibility_brand;
 	private $closed_loop;
 	private $agency_command;
+	private $portfolio_governance;
+	private $agency_service_levels;
+	private $executive_command;
 	private $structured_media_governance;
 	private $experiments_claims_revenue;
 	private $international_server;
 	private $portfolio_quality_guard;
+	private $auto_discovery;
+	private $discovery_review;
+	private $guided_launch;
+	private $opportunity_engine;
+	private $content_workbench;
+	private $editorial_review;
+	private $publishing_readiness;
+	private $search_impact;
+	private $pattern_library;
 	private $local;
 	private $gbp;
 
@@ -56,6 +72,10 @@ class Ikon_SEO_Admin {
 		Ikon_SEO_Technical_Intelligence $technical,
 		Ikon_SEO_Indexation_Intelligence $indexation,
 		Ikon_SEO_Production_Health $production_health,
+		Ikon_SEO_Platform_Hardening $platform_hardening,
+		Ikon_SEO_Deployment_Control $deployment_control,
+		Ikon_SEO_Production_Certification $production_certification,
+		Ikon_SEO_Staging_Validation $staging_validation,
 		Ikon_SEO_Competitor_Content_Intelligence $competitor_content,
 		Ikon_SEO_Authority_Intelligence $authority,
 		Ikon_SEO_Strategy $strategy,
@@ -69,10 +89,22 @@ class Ikon_SEO_Admin {
 		Ikon_SEO_Visibility_Brand_Intelligence $visibility_brand,
 		Ikon_SEO_Closed_Loop $closed_loop,
 		Ikon_SEO_Agency_Command_Centre $agency_command,
+		Ikon_SEO_Portfolio_Governance $portfolio_governance,
+		Ikon_SEO_Agency_Service_Levels $agency_service_levels,
+		Ikon_SEO_Executive_Command_Centre $executive_command,
 		Ikon_SEO_Structured_Media_Governance $structured_media_governance,
 		Ikon_SEO_Experiments_Claims_Revenue $experiments_claims_revenue,
 		Ikon_SEO_International_Server_Intelligence $international_server,
 		Ikon_SEO_Portfolio_Quality_Guard $portfolio_quality_guard,
+		Ikon_SEO_Auto_Discovery $auto_discovery,
+		Ikon_SEO_Discovery_Review $discovery_review,
+		Ikon_SEO_Guided_Launch $guided_launch,
+		Ikon_SEO_Opportunity_Engine $opportunity_engine,
+		Ikon_SEO_Content_Workbench $content_workbench,
+		Ikon_SEO_Editorial_Review $editorial_review,
+		Ikon_SEO_Publishing_Readiness $publishing_readiness,
+		Ikon_SEO_Search_Impact $search_impact,
+		Ikon_SEO_Pattern_Library $pattern_library,
 		Ikon_SEO_Local $local,
 		Ikon_SEO_GBP $gbp
 	) {
@@ -92,6 +124,10 @@ class Ikon_SEO_Admin {
 		$this->technical      = $technical;
 		$this->indexation     = $indexation;
 		$this->production_health = $production_health;
+		$this->platform_hardening = $platform_hardening;
+		$this->deployment_control = $deployment_control;
+		$this->production_certification = $production_certification;
+		$this->staging_validation = $staging_validation;
 		$this->competitor_content = $competitor_content;
 		$this->authority       = $authority;
 		$this->strategy        = $strategy;
@@ -105,10 +141,22 @@ class Ikon_SEO_Admin {
 		$this->visibility_brand = $visibility_brand;
 		$this->closed_loop = $closed_loop;
 		$this->agency_command = $agency_command;
+		$this->portfolio_governance = $portfolio_governance;
+		$this->agency_service_levels = $agency_service_levels;
+		$this->executive_command = $executive_command;
 		$this->structured_media_governance = $structured_media_governance;
 		$this->experiments_claims_revenue = $experiments_claims_revenue;
 		$this->international_server = $international_server;
 		$this->portfolio_quality_guard = $portfolio_quality_guard;
+		$this->auto_discovery = $auto_discovery;
+		$this->discovery_review = $discovery_review;
+		$this->guided_launch = $guided_launch;
+		$this->opportunity_engine = $opportunity_engine;
+		$this->content_workbench = $content_workbench;
+		$this->editorial_review = $editorial_review;
+		$this->publishing_readiness = $publishing_readiness;
+		$this->search_impact = $search_impact;
+		$this->pattern_library = $pattern_library;
 		$this->local          = $local;
 		$this->gbp            = $gbp;
 
@@ -119,6 +167,29 @@ class Ikon_SEO_Admin {
 		add_action( 'admin_post_ikon_seo_save_settings', array( $this, 'save_settings' ) );
 		add_action( 'admin_post_ikon_seo_save_profile', array( $this, 'save_profile' ) );
 		add_action( 'admin_post_ikon_seo_save_strategy', array( $this, 'save_strategy' ) );
+		add_action( 'admin_post_ikon_seo_run_auto_discovery', array( $this, 'run_auto_discovery' ) );
+		add_action( 'admin_post_ikon_seo_apply_auto_discovery', array( $this, 'apply_auto_discovery' ) );
+		add_action( 'admin_post_ikon_seo_save_auto_discovery_settings', array( $this, 'save_auto_discovery_settings' ) );
+		add_action( 'admin_post_ikon_seo_update_discovery_fact', array( $this, 'update_discovery_fact' ) );
+		add_action( 'admin_post_ikon_seo_accept_high_confidence_facts', array( $this, 'accept_high_confidence_facts' ) );
+		add_action( 'admin_post_ikon_seo_resolve_discovery_conflict', array( $this, 'resolve_discovery_conflict' ) );
+		add_action( 'admin_post_ikon_seo_apply_confirmed_discovery_facts', array( $this, 'apply_confirmed_discovery_facts' ) );
+		add_action( 'admin_post_ikon_seo_run_guided_launch', array( $this, 'run_guided_launch' ) );
+		add_action( 'admin_post_ikon_seo_acknowledge_discovery_conflicts', array( $this, 'acknowledge_discovery_conflicts' ) );
+		add_action( 'admin_post_ikon_seo_rebuild_opportunity_engine', array( $this, 'rebuild_opportunity_engine' ) );
+		add_action( 'admin_post_ikon_seo_import_opportunity_evidence', array( $this, 'import_opportunity_evidence' ) );
+		add_action( 'admin_post_ikon_seo_update_opportunity_status', array( $this, 'update_opportunity_status' ) );
+		add_action( 'admin_post_ikon_seo_save_opportunity_engine_settings', array( $this, 'save_opportunity_engine_settings' ) );
+		add_action( 'admin_post_ikon_seo_create_content_brief', array( $this, 'create_content_brief' ) );
+		add_action( 'admin_post_ikon_seo_approve_content_brief', array( $this, 'approve_content_brief' ) );
+		add_action( 'admin_post_ikon_seo_reject_content_brief', array( $this, 'reject_content_brief' ) );
+		add_action( 'admin_post_ikon_seo_create_content_scaffold', array( $this, 'create_content_scaffold' ) );
+		add_action( 'admin_post_ikon_seo_evaluate_content_draft', array( $this, 'evaluate_content_draft' ) );
+		add_action( 'admin_post_ikon_seo_mark_content_ready', array( $this, 'mark_content_ready' ) );
+		add_action( 'admin_post_ikon_seo_editorial_action', array( $this, 'editorial_action' ) );
+		add_action( 'admin_post_ikon_seo_publishing_action', array( $this, 'publishing_action' ) );
+		add_action( 'admin_post_ikon_seo_search_impact_action', array( $this, 'search_impact_action' ) );
+		add_action( 'admin_post_ikon_seo_pattern_library_action', array( $this, 'pattern_library_action' ) );
 		add_action( 'admin_post_ikon_seo_export_profile', array( $this, 'export_profile' ) );
 		add_action( 'admin_post_ikon_seo_import_profile', array( $this, 'import_profile' ) );
 		add_action( 'admin_post_ikon_seo_preview_migration', array( $this, 'preview_migration' ) );
@@ -153,6 +224,10 @@ class Ikon_SEO_Admin {
 		add_action( 'admin_post_ikon_seo_run_indexation_batch', array( $this, 'run_indexation_batch' ) );
 		add_action( 'admin_post_ikon_seo_inspect_indexation_url', array( $this, 'inspect_indexation_url' ) );
 		add_action( 'admin_post_ikon_seo_run_production_health', array( $this, 'run_production_health' ) );
+		add_action( 'admin_post_ikon_seo_platform_hardening_action', array( $this, 'platform_hardening_action' ) );
+		add_action( 'admin_post_ikon_seo_deployment_control_action', array( $this, 'deployment_control_action' ) );
+		add_action( 'admin_post_ikon_seo_production_certification_action', array( $this, 'production_certification_action' ) );
+		add_action( 'admin_post_ikon_seo_staging_validation_action', array( $this, 'staging_validation_action' ) );
 		add_action( 'admin_post_ikon_seo_save_governance_settings', array( $this, 'save_governance_settings' ) );
 		add_action( 'admin_post_ikon_seo_run_schema_governance', array( $this, 'run_schema_governance' ) );
 		add_action( 'admin_post_ikon_seo_run_media_governance', array( $this, 'run_media_governance' ) );
@@ -228,6 +303,9 @@ class Ikon_SEO_Admin {
 		add_action( 'admin_post_ikon_seo_create_closed_loop_checkpoint', array( $this, 'create_closed_loop_checkpoint' ) );
 		add_action( 'admin_post_ikon_seo_restore_closed_loop_checkpoint', array( $this, 'restore_closed_loop_checkpoint' ) );
 		add_action( 'admin_post_ikon_seo_save_agency_command_settings', array( $this, 'save_agency_command_settings' ) );
+		add_action( 'admin_post_ikon_seo_portfolio_governance_action', array( $this, 'portfolio_governance_action' ) );
+		add_action( 'admin_post_ikon_seo_agency_service_levels_action', array( $this, 'agency_service_levels_action' ) );
+		add_action( 'admin_post_ikon_seo_download_client_service_report', array( $this, 'download_client_service_report' ) );
 		add_action( 'admin_post_ikon_seo_generate_agency_agent_key', array( $this, 'generate_agency_agent_key' ) );
 		add_action( 'admin_post_ikon_seo_revoke_agency_agent_key', array( $this, 'revoke_agency_agent_key' ) );
 		add_action( 'admin_post_ikon_seo_add_managed_site', array( $this, 'add_managed_site' ) );
@@ -237,6 +315,9 @@ class Ikon_SEO_Admin {
 		add_action( 'admin_post_ikon_seo_refresh_all_managed_sites', array( $this, 'refresh_all_managed_sites' ) );
 		add_action( 'admin_post_ikon_seo_record_agency_usage', array( $this, 'record_agency_usage' ) );
 		add_action( 'admin_post_ikon_seo_resolve_agency_alert', array( $this, 'resolve_agency_alert' ) );
+		add_action( 'admin_post_ikon_seo_refresh_executive_command', array( $this, 'refresh_executive_command' ) );
+		add_action( 'admin_post_ikon_seo_update_executive_risk', array( $this, 'update_executive_risk' ) );
+		add_action( 'admin_post_ikon_seo_update_executive_notification', array( $this, 'update_executive_notification' ) );
 		add_action( 'admin_post_ikon_seo_export_agency_report', array( $this, 'export_agency_report' ) );
 		add_action( 'admin_post_ikon_seo_export_agency_portfolio', array( $this, 'export_agency_portfolio' ) );
 		add_action( 'admin_post_ikon_seo_local_save_location', array( $this, 'local_save_location' ) );
@@ -273,15 +354,40 @@ class Ikon_SEO_Admin {
 			'dashicons-chart-line',
 			58
 		);
+
+		add_submenu_page(
+			'edit.php',
+			__( 'Ikon SEO Editorial Review', 'ikon-seo' ),
+			__( 'Ikon SEO Review', 'ikon-seo' ),
+			'edit_posts',
+			'ikon-seo-editorial',
+			array( $this, 'render_editorial_portal' )
+		);
 	}
 
 	public function assets( $hook ) {
-		if ( 'toplevel_page_ikon-seo' !== $hook ) {
+		if ( ! in_array( $hook, array( 'toplevel_page_ikon-seo', 'posts_page_ikon-seo-editorial' ), true ) ) {
 			return;
 		}
 
 		wp_enqueue_style( 'ikon-seo-admin', IKON_SEO_URL . 'assets/admin.css', array(), IKON_SEO_VERSION );
 		wp_enqueue_script( 'ikon-seo-admin', IKON_SEO_URL . 'assets/admin.js', array(), IKON_SEO_VERSION, true );
+	}
+
+
+	public function render_editorial_portal() {
+		if ( ! current_user_can( 'edit_posts' ) ) {
+			return;
+		}
+		?><div class="wrap ikon-seo-wrap"><div class="ikon-seo-header"><div><p class="ikon-seo-kicker"><?php esc_html_e( 'IKON DIGITALS', 'ikon-seo' ); ?></p><h1><?php esc_html_e( 'Ikon SEO Editorial Review', 'ikon-seo' ); ?></h1><p><?php esc_html_e( 'Your assigned controlled drafts, review rounds and revision decisions.', 'ikon-seo' ); ?></p></div><span class="ikon-seo-version">v<?php echo esc_html( IKON_SEO_VERSION ); ?></span></div><?php
+		if ( ! empty( $_GET['editorial-review-updated'] ) ) {
+			?><div class="notice notice-success inline"><p><?php esc_html_e( 'Editorial review was updated. No content was published.', 'ikon-seo' ); ?></p></div><?php
+		}
+		if ( ! empty( $_GET['ikon-error'] ) ) {
+			?><div class="notice notice-error inline"><p><?php echo esc_html( sanitize_text_field( wp_unslash( $_GET['ikon-error'] ) ) ); ?></p></div><?php
+		}
+		$this->render_editorial_review();
+		?></div><?php
 	}
 
 	public function plugin_links( $links ) {
@@ -298,7 +404,7 @@ class Ikon_SEO_Admin {
 
 		$agency = Ikon_SEO_Agency::can_manage();
 		$tab = sanitize_key( $_GET['tab'] ?? 'dashboard' );
-		$all_tabs = array( 'dashboard', 'strategy', 'workflow-automation', 'publisher-intelligence', 'profile', 'connection', 'reviews', 'history', 'inventory', 'seo-health', 'diagnostics', 'search-intelligence', 'content-intelligence', 'authority-intelligence', 'visibility-brand', 'closed-loop', 'indexation', 'governance', 'experiments-claims-revenue', 'international-server', 'portfolio-quality', 'technical-intelligence', 'analytics', 'image-audit', 'redirects', 'local-growth', 'local-seo', 'business-profile', 'search-console', 'queue', 'monitor', 'agency-command-centre', 'migration', 'settings', 'activity', 'agency' );
+		$all_tabs = array( 'dashboard', 'auto-discovery', 'discovery-review', 'guided-launch', 'strategy', 'workflow-automation', 'publisher-intelligence', 'profile', 'connection', 'reviews', 'history', 'inventory', 'seo-health', 'diagnostics', 'search-intelligence', 'opportunity-engine', 'content-workbench', 'editorial-review', 'publishing-readiness', 'search-impact', 'pattern-library', 'agency-governance', 'agency-service-levels', 'content-intelligence', 'authority-intelligence', 'visibility-brand', 'closed-loop', 'platform-health', 'deployment-control', 'production-certification', 'staging-validation', 'indexation', 'governance', 'experiments-claims-revenue', 'international-server', 'portfolio-quality', 'technical-intelligence', 'analytics', 'image-audit', 'redirects', 'local-growth', 'local-seo', 'business-profile', 'search-console', 'queue', 'monitor', 'agency-command-centre', 'migration', 'settings', 'activity', 'agency' );
 		if ( ! in_array( $tab, $all_tabs, true ) || ( ! $agency && ! in_array( $tab, Ikon_SEO_Agency::customer_tabs(), true ) ) ) {
 			$tab = 'dashboard';
 		}
@@ -318,6 +424,11 @@ class Ikon_SEO_Admin {
 			<nav class="nav-tab-wrapper">
 				<?php
 				$this->tab_link( 'dashboard', 'Overview', $tab );
+				if ( $agency ) {
+					$this->tab_link( 'auto-discovery', 'Auto Discovery', $tab );
+					$this->tab_link( 'discovery-review', 'Fact Review', $tab );
+					$this->tab_link( 'guided-launch', 'Guided Launch', $tab );
+				}
 				$this->tab_link( 'strategy', 'Website Strategy', $tab );
 				$this->tab_link( 'workflow-automation', 'Workflow Automation', $tab );
 				$this->tab_link( 'publisher-intelligence', 'Publisher Intelligence', $tab );
@@ -327,10 +438,19 @@ class Ikon_SEO_Admin {
 				$this->tab_link( 'seo-health', 'SEO Health', $tab );
 				$this->tab_link( 'diagnostics', 'Page Diagnostics', $tab );
 				$this->tab_link( 'search-intelligence', 'Search Intelligence', $tab );
+				$this->tab_link( 'opportunity-engine', 'Opportunity Engine', $tab );
+				$this->tab_link( 'content-workbench', 'Content Workbench', $tab );
+				$this->tab_link( 'editorial-review', 'Editorial Review', $tab );
+				$this->tab_link( 'publishing-readiness', 'Publishing Readiness', $tab );
+				$this->tab_link( 'search-impact', 'Search Impact', $tab );
+				$this->tab_link( 'pattern-library', 'Pattern Library', $tab );
+				$this->tab_link( 'agency-governance', 'Portfolio Governance', $tab );
+				$this->tab_link( 'agency-service-levels', 'Service Levels', $tab );
 				$this->tab_link( 'content-intelligence', 'Content Intelligence', $tab );
 				$this->tab_link( 'authority-intelligence', 'Authority Intelligence', $tab );
 				$this->tab_link( 'visibility-brand', 'Visibility & Brand', $tab );
 				$this->tab_link( 'closed-loop', 'Operating Plan', $tab );
+				if ( $agency ) { $this->tab_link( 'platform-health', 'Platform Health', $tab ); $this->tab_link( 'deployment-control', 'Deployment Control', $tab ); $this->tab_link( 'production-certification', 'Production Certification', $tab ); $this->tab_link( 'staging-validation', 'Staging Validation', $tab ); }
 				$this->tab_link( 'indexation', 'Indexation Intelligence', $tab );
 				$this->tab_link( 'governance', 'Structured Data & Media', $tab );
 				$this->tab_link( 'experiments-claims-revenue', 'Experiments, Claims & Revenue', $tab );
@@ -369,6 +489,16 @@ class Ikon_SEO_Admin {
 					<div class="notice notice-success inline"><p><?php esc_html_e( 'The website was disconnected and the old key is no longer valid.', 'ikon-seo' ); ?></p></div>
 				<?php elseif ( ! empty( $_GET['strategy-updated'] ) ) : ?>
 					<div class="notice notice-success inline"><p><?php esc_html_e( 'The Website Strategy was saved. Audits and drafts will now use the updated operating mode and quality policy.', 'ikon-seo' ); ?></p></div>
+				<?php elseif ( ! empty( $_GET['auto-discovery-run'] ) ) : ?>
+					<div class="notice notice-success inline"><p><?php esc_html_e( 'Auto Discovery reviewed the website and prepared strategy suggestions. No live content or public settings were changed.', 'ikon-seo' ); ?></p></div>
+				<?php elseif ( ! empty( $_GET['auto-discovery-applied'] ) ) : ?>
+					<div class="notice notice-success inline"><p><?php esc_html_e( 'The selected Auto Discovery suggestions were applied. Existing confirmed values were preserved unless overwrite was explicitly selected.', 'ikon-seo' ); ?></p></div>
+				<?php elseif ( ! empty( $_GET['auto-discovery-settings'] ) ) : ?>
+					<div class="notice notice-success inline"><p><?php esc_html_e( 'Auto Discovery settings were saved.', 'ikon-seo' ); ?></p></div>
+				<?php elseif ( ! empty( $_GET['discovery-review-updated'] ) ) : ?>
+					<div class="notice notice-success inline"><p><?php esc_html_e( 'The fact-level discovery decision was saved. Confirmed business information will not be silently replaced by a later rescan.', 'ikon-seo' ); ?></p></div>
+				<?php elseif ( ! empty( $_GET['discovery-review-applied'] ) ) : ?>
+					<div class="notice notice-success inline"><p><?php esc_html_e( 'Confirmed and corrected discovery facts were applied to the Website Profile and Strategy.', 'ikon-seo' ); ?></p></div>
 				<?php elseif ( ! empty( $_GET['workflow-created'] ) ) : ?>
 					<div class="notice notice-success inline"><p><?php esc_html_e( 'The approval-first workflow was created.', 'ikon-seo' ); ?></p></div>
 				<?php elseif ( ! empty( $_GET['workflow-updated'] ) ) : ?>
@@ -405,6 +535,14 @@ class Ikon_SEO_Admin {
 					<div class="notice notice-success inline"><p><?php esc_html_e( 'Page diagnostics were refreshed.', 'ikon-seo' ); ?></p></div>
 				<?php elseif ( ! empty( $_GET['search-intelligence-refreshed'] ) ) : ?>
 					<div class="notice notice-success inline"><p><?php esc_html_e( 'Search Intelligence was refreshed and stored.', 'ikon-seo' ); ?></p></div>
+				<?php elseif ( ! empty( $_GET['opportunity-engine-rebuilt'] ) ) : ?>
+					<div class="notice notice-success inline"><p><?php esc_html_e( 'The evidence-based opportunity queue was rebuilt. No live website changes were made.', 'ikon-seo' ); ?></p></div>
+				<?php elseif ( ! empty( $_GET['opportunity-evidence-imported'] ) ) : ?>
+					<div class="notice notice-success inline"><p><?php esc_html_e( 'The approved keyword evidence file was imported.', 'ikon-seo' ); ?></p></div>
+				<?php elseif ( ! empty( $_GET['opportunity-updated'] ) ) : ?>
+					<div class="notice notice-success inline"><p><?php esc_html_e( 'The opportunity review status was saved.', 'ikon-seo' ); ?></p></div>
+				<?php elseif ( ! empty( $_GET['content-workbench-updated'] ) ) : ?>
+					<div class="notice notice-success inline"><p><?php esc_html_e( 'The controlled content workflow was updated. No public page was changed.', 'ikon-seo' ); ?></p></div>
 				<?php elseif ( ! empty( $_GET['authority-imported'] ) ) : ?>
 					<div class="notice notice-success inline"><p><?php esc_html_e( 'Authority and off-site evidence was imported.', 'ikon-seo' ); ?></p></div>
 				<?php elseif ( ! empty( $_GET['publisher-updated'] ) ) : ?>
@@ -435,8 +573,26 @@ class Ikon_SEO_Admin {
 					<div class="notice notice-success inline"><p><?php esc_html_e( 'International and server evidence was updated. No public page, redirect or indexing setting was changed.', 'ikon-seo' ); ?></p></div>
 				<?php elseif ( ! empty( $_GET['portfolio-quality-updated'] ) ) : ?>
 					<div class="notice notice-success inline"><p><?php esc_html_e( 'Portfolio quality evidence and review gates were updated. No public page was changed.', 'ikon-seo' ); ?></p></div>
+				<?php elseif ( ! empty( $_GET['guided-launch-updated'] ) ) : ?>
+					<div class="notice notice-success inline"><p><?php esc_html_e( 'Guided Launch updated the workflow and Operating Plan using bounded read-only tasks. No live page or external profile was changed.', 'ikon-seo' ); ?></p></div>
 				<?php elseif ( ! empty( $_GET['closed-loop-updated'] ) ) : ?>
 					<div class="notice notice-success inline"><p><?php esc_html_e( 'The operating plan was updated. Live pages and public profiles were not changed.', 'ikon-seo' ); ?></p></div>
+				<?php elseif ( ! empty( $_GET['editorial-review-updated'] ) ) : ?>
+					<div class="notice notice-success inline"><p><?php esc_html_e( 'Editorial review was updated. No content was published.', 'ikon-seo' ); ?></p></div>
+				<?php elseif ( ! empty( $_GET['search-impact-updated'] ) ) : ?>
+					<div class="notice notice-success inline"><p><?php esc_html_e( 'Search impact evidence was updated. No public page or external system was changed.', 'ikon-seo' ); ?></p></div>
+				<?php elseif ( ! empty( $_GET['pattern-library-updated'] ) ) : ?>
+					<div class="notice notice-success inline"><p><?php esc_html_e( 'Pattern Library evidence or review status was updated. No pattern was applied to a public page.', 'ikon-seo' ); ?></p></div>
+				<?php elseif ( ! empty( $_GET['portfolio-governance-updated'] ) ) : ?>
+					<div class="notice notice-success inline"><p><?php esc_html_e( 'Portfolio Governance was updated. Remote policies remain proposals until a local administrator accepts them, and no public content was changed.', 'ikon-seo' ); ?></p></div>
+				<?php elseif ( ! empty( $_GET['agency-service-levels-updated'] ) ) : ?>
+					<div class="notice notice-success inline"><p><?php esc_html_e( 'Agency service levels, capacity or report records were updated. No client message was sent and no public website was changed.', 'ikon-seo' ); ?></p></div>
+				<?php elseif ( ! empty( $_GET['platform-health-updated'] ) ) : ?>
+					<div class="notice notice-success inline"><p><?php esc_html_e( 'Platform health, release integrity or recovery records were updated. No live content was changed.', 'ikon-seo' ); ?></p></div>
+				<?php elseif ( ! empty( $_GET['production-certification-updated'] ) ) : ?>
+					<div class="notice notice-success inline"><p><?php esc_html_e( 'Production certification or controlled rollout evidence was updated. No plugin, page or public website was changed automatically.', 'ikon-seo' ); ?></p></div>
+				<?php elseif ( ! empty( $_GET['staging-validation-updated'] ) ) : ?>
+					<div class="notice notice-success inline"><p><?php esc_html_e( 'Staging validation evidence was updated. Temporary self-test artefacts were removed, and no public content was changed.', 'ikon-seo' ); ?></p></div>
 				<?php elseif ( ! empty( $_GET['agency-command-updated'] ) ) : ?>
 					<div class="notice notice-success inline"><p><?php esc_html_e( 'The Agency Command Centre was updated. Remote websites remain read-only.', 'ikon-seo' ); ?></p></div>
 				<?php elseif ( ! empty( $_GET['agency-site-refreshed'] ) ) : ?>
@@ -461,7 +617,13 @@ class Ikon_SEO_Admin {
 					<div class="notice notice-success inline"><p><?php esc_html_e( 'Your Google Business Profile preference was saved.', 'ikon-seo' ); ?></p></div>
 				<?php endif; ?>
 				<?php
-				if ( 'strategy' === $tab ) {
+				if ( 'auto-discovery' === $tab ) {
+					$this->render_auto_discovery();
+				} elseif ( 'discovery-review' === $tab ) {
+					$this->render_discovery_review();
+				} elseif ( 'guided-launch' === $tab ) {
+					$this->render_guided_launch();
+				} elseif ( 'strategy' === $tab ) {
 					$this->render_strategy();
 				} elseif ( 'workflow-automation' === $tab ) {
 					$this->render_workflow_automation();
@@ -483,6 +645,22 @@ class Ikon_SEO_Admin {
 					$this->render_diagnostics();
 				} elseif ( 'search-intelligence' === $tab ) {
 					$this->render_search_intelligence();
+				} elseif ( 'opportunity-engine' === $tab ) {
+					$this->render_opportunity_engine();
+				} elseif ( 'content-workbench' === $tab ) {
+					$this->render_content_workbench();
+				} elseif ( 'editorial-review' === $tab ) {
+					$this->render_editorial_review();
+				} elseif ( 'publishing-readiness' === $tab ) {
+					$this->render_publishing_readiness();
+				} elseif ( 'search-impact' === $tab ) {
+					$this->render_search_impact();
+				} elseif ( 'pattern-library' === $tab ) {
+					$this->render_pattern_library();
+				} elseif ( 'agency-governance' === $tab ) {
+					$this->render_portfolio_governance();
+				} elseif ( 'agency-service-levels' === $tab ) {
+					$this->render_agency_service_levels();
 				} elseif ( 'content-intelligence' === $tab ) {
 					$this->render_content_intelligence();
 				} elseif ( 'authority-intelligence' === $tab ) {
@@ -491,6 +669,14 @@ class Ikon_SEO_Admin {
 					$this->render_visibility_brand();
 				} elseif ( 'closed-loop' === $tab ) {
 					$this->render_closed_loop();
+				} elseif ( 'platform-health' === $tab ) {
+					$this->render_platform_health();
+				} elseif ( 'deployment-control' === $tab ) {
+					$this->render_deployment_control();
+				} elseif ( 'production-certification' === $tab ) {
+					$this->render_production_certification();
+				} elseif ( 'staging-validation' === $tab ) {
+					$this->render_staging_validation();
 				} elseif ( 'indexation' === $tab ) {
 					$this->render_indexation();
 				} elseif ( 'governance' === $tab ) {
@@ -551,6 +737,7 @@ class Ikon_SEO_Admin {
 		$queue            = $this->queue->counts();
 		$automation       = $this->automation->summary( 20 );
 		$inventory_status = $this->inventory->status();
+		$discovery        = $this->auto_discovery->report();
 		$connection_status = $this->connection->status( $settings );
 		$gbp_availability  = sanitize_key( $settings['gbp_availability'] ?? 'unknown' );
 
@@ -665,7 +852,15 @@ class Ikon_SEO_Admin {
 		</div>
 
 		<?php
-		if ( empty( $profile['configured'] ) ) {
+		if ( empty( $discovery['generated_at'] ) && ( empty( $profile['configured'] ) || empty( $strategy['configured'] ) ) ) {
+			$next_label = __( 'Research and Configure Website', 'ikon-seo' );
+			$next_text  = __( 'Automatically inspect the website, propose profile and strategy values, and show which business decisions still need confirmation.', 'ikon-seo' );
+			$next_url   = admin_url( 'admin.php?page=ikon-seo&tab=auto-discovery' );
+		} elseif ( ! empty( $discovery['generated_at'] ) && ( empty( $profile['configured'] ) || empty( $strategy['configured'] ) || absint( $strategy['readiness']['score'] ?? 0 ) < 60 ) ) {
+			$next_label = __( 'Review Detected Strategy', 'ikon-seo' );
+			$next_text  = __( 'Review the detected facts, resolve conflicts and apply selected suggestions.', 'ikon-seo' );
+			$next_url   = admin_url( 'admin.php?page=ikon-seo&tab=auto-discovery' );
+		} elseif ( empty( $profile['configured'] ) ) {
 			$next_label = __( 'Complete Website Profile', 'ikon-seo' );
 			$next_text  = __( 'Add the website identity, industry and publishing rules first.', 'ikon-seo' );
 			$next_url   = admin_url( 'admin.php?page=ikon-seo&tab=profile' );
@@ -1640,6 +1835,383 @@ class Ikon_SEO_Admin {
 		<?php
 	}
 
+	private function render_auto_discovery() {
+		$report   = $this->auto_discovery->report();
+		$settings = Ikon_SEO_Plugin::settings();
+		$summary  = (array) ( $report['summary'] ?? array() );
+		$facts    = (array) ( $report['facts'] ?? array() );
+		$conflicts = (array) ( $report['conflicts'] ?? array() );
+		?>
+		<div class="ikon-seo-section-header">
+			<div>
+				<h2><?php esc_html_e( 'Auto Discovery & Strategy Builder', 'ikon-seo' ); ?></h2>
+				<p class="description"><?php esc_html_e( 'Inspect the existing website, propose profile and strategy values, show confidence and evidence, and request confirmation before anything is applied.', 'ikon-seo' ); ?></p>
+			</div>
+			<?php if ( ! empty( $report['generated_at'] ) ) : ?>
+				<span class="ikon-seo-pill is-connected"><?php echo esc_html( 'Last run: ' . $report['generated_at'] . ' UTC' ); ?></span>
+			<?php endif; ?>
+		</div>
+
+		<div class="notice notice-info inline">
+			<p><strong><?php esc_html_e( 'Review-first automation:', 'ikon-seo' ); ?></strong> <?php esc_html_e( 'The scan reads WordPress, public same-site pages and available read-only connections. It does not publish, edit pages, create redirects, change indexation, contact competitors or invent business facts.', 'ikon-seo' ); ?></p>
+		</div>
+
+		<div class="ikon-seo-grid ikon-seo-grid-3">
+			<div class="ikon-seo-card">
+				<h3><?php esc_html_e( '1. Research', 'ikon-seo' ); ?></h3>
+				<p><?php esc_html_e( 'Review page titles, visible content, contact paths, website plugins, products, posts, language and regional signals.', 'ikon-seo' ); ?></p>
+			</div>
+			<div class="ikon-seo-card">
+				<h3><?php esc_html_e( '2. Confirm', 'ikon-seo' ); ?></h3>
+				<p><?php esc_html_e( 'High-confidence technical facts may be selected immediately. Services, audiences, locations and positioning remain confirmation-controlled.', 'ikon-seo' ); ?></p>
+			</div>
+			<div class="ikon-seo-card">
+				<h3><?php esc_html_e( '3. Prepare', 'ikon-seo' ); ?></h3>
+				<p><?php esc_html_e( 'Apply selected values, optionally create the recommended workflow and run one bounded read-only task.', 'ikon-seo' ); ?></p>
+			</div>
+		</div>
+
+		<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" class="ikon-seo-card">
+			<input type="hidden" name="action" value="ikon_seo_run_auto_discovery">
+			<?php wp_nonce_field( 'ikon_seo_run_auto_discovery' ); ?>
+			<h3><?php echo empty( $report['generated_at'] ) ? esc_html__( 'Research this website', 'ikon-seo' ) : esc_html__( 'Refresh website research', 'ikon-seo' ); ?></h3>
+			<p><?php esc_html_e( 'Use a bounded page count for shared hosting. The first run should normally review 50 to 100 pages.', 'ikon-seo' ); ?></p>
+			<label>
+				<strong><?php esc_html_e( 'Maximum public pages to review', 'ikon-seo' ); ?></strong>
+				<input type="number" name="max_pages" min="10" max="300" value="<?php echo esc_attr( absint( $settings['auto_discovery_max_pages'] ?? 100 ) ); ?>">
+			</label>
+			<?php submit_button( empty( $report['generated_at'] ) ? __( 'Research and Configure This Website', 'ikon-seo' ) : __( 'Refresh Auto Discovery', 'ikon-seo' ), 'primary', 'submit', false ); ?>
+		</form>
+
+		<?php if ( ! empty( $report['generated_at'] ) ) : ?>
+			<div class="ikon-seo-metrics">
+				<div class="ikon-seo-metric"><strong><?php echo absint( $summary['pages_reviewed'] ?? 0 ); ?></strong><span><?php esc_html_e( 'Pages reviewed', 'ikon-seo' ); ?></span></div>
+				<div class="ikon-seo-metric"><strong><?php echo absint( $summary['high_confidence'] ?? 0 ); ?></strong><span><?php esc_html_e( 'High-confidence values', 'ikon-seo' ); ?></span></div>
+				<div class="ikon-seo-metric"><strong><?php echo absint( $summary['needs_confirmation'] ?? 0 ); ?></strong><span><?php esc_html_e( 'Need confirmation', 'ikon-seo' ); ?></span></div>
+				<div class="ikon-seo-metric"><strong><?php echo absint( $summary['conflicts'] ?? 0 ); ?></strong><span><?php esc_html_e( 'Conflicts detected', 'ikon-seo' ); ?></span></div>
+				<div class="ikon-seo-metric"><strong><?php echo esc_html( $summary['operating_mode_label'] ?? '—' ); ?></strong><span><?php esc_html_e( 'Suggested mode', 'ikon-seo' ); ?></span></div>
+			</div>
+
+			<?php if ( $conflicts ) : ?>
+				<div class="notice notice-warning inline"><p><strong><?php esc_html_e( 'Resolve these conflicts before accepting related values.', 'ikon-seo' ); ?></strong></p></div>
+				<table class="widefat striped">
+					<thead><tr><th><?php esc_html_e( 'Area', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Finding', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Detected values', 'ikon-seo' ); ?></th></tr></thead>
+					<tbody>
+					<?php foreach ( $conflicts as $conflict ) : ?>
+						<tr>
+							<td><strong><?php echo esc_html( $conflict['area'] ?? '' ); ?></strong></td>
+							<td><?php echo esc_html( $conflict['message'] ?? '' ); ?></td>
+							<td><?php echo esc_html( implode( ', ', (array) ( $conflict['values'] ?? array() ) ) ); ?></td>
+						</tr>
+					<?php endforeach; ?>
+					</tbody>
+				</table>
+			<?php endif; ?>
+
+			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
+				<input type="hidden" name="action" value="ikon_seo_apply_auto_discovery">
+				<?php wp_nonce_field( 'ikon_seo_apply_auto_discovery' ); ?>
+				<h3><?php esc_html_e( 'Review detected values', 'ikon-seo' ); ?></h3>
+				<p class="description"><?php esc_html_e( 'Only checked values will be applied. Existing confirmed values remain unchanged unless overwrite is explicitly enabled.', 'ikon-seo' ); ?></p>
+
+				<table class="widefat striped ikon-seo-log">
+					<thead>
+						<tr>
+							<th><?php esc_html_e( 'Use', 'ikon-seo' ); ?></th>
+							<th><?php esc_html_e( 'Field', 'ikon-seo' ); ?></th>
+							<th><?php esc_html_e( 'Suggested value', 'ikon-seo' ); ?></th>
+							<th><?php esc_html_e( 'Confidence', 'ikon-seo' ); ?></th>
+							<th><?php esc_html_e( 'Evidence', 'ikon-seo' ); ?></th>
+							<th><?php esc_html_e( 'Current value', 'ikon-seo' ); ?></th>
+						</tr>
+					</thead>
+					<tbody>
+					<?php foreach ( $facts as $fact ) : ?>
+						<?php
+						$checked = 'high' === ( $fact['confidence'] ?? '' ) && empty( $fact['needs_confirmation'] ) && empty( $fact['identity_sensitive'] );
+						$current = is_array( $fact['current_value'] ?? null ) ? implode( "\n", $fact['current_value'] ) : (string) ( $fact['current_value'] ?? '' );
+						?>
+						<tr>
+							<td><input type="checkbox" name="fields[]" value="<?php echo esc_attr( $fact['id'] ); ?>" <?php checked( $checked ); ?>></td>
+							<td>
+								<strong><?php echo esc_html( $fact['label'] ); ?></strong>
+								<br><small><?php echo esc_html( ucfirst( $fact['group'] ) ); ?></small>
+								<?php if ( ! empty( $fact['identity_sensitive'] ) ) : ?><br><span class="ikon-seo-pill is-failed"><?php esc_html_e( 'May reset workflow identity', 'ikon-seo' ); ?></span><?php endif; ?>
+							</td>
+							<td><div style="white-space:pre-line;max-width:420px"><?php echo esc_html( $fact['display_value'] ); ?></div></td>
+							<td>
+								<span class="ikon-seo-pill <?php echo 'high' === $fact['confidence'] ? 'is-connected' : ( 'low' === $fact['confidence'] ? 'is-failed' : '' ); ?>"><?php echo esc_html( ucfirst( $fact['confidence'] ) . ' · ' . absint( $fact['score'] ) . '/100' ); ?></span>
+								<?php if ( ! empty( $fact['needs_confirmation'] ) ) : ?><br><small><?php esc_html_e( 'Business confirmation required', 'ikon-seo' ); ?></small><?php endif; ?>
+							</td>
+							<td><?php echo esc_html( implode( '; ', (array) $fact['sources'] ) ); ?></td>
+							<td><div style="white-space:pre-line;max-width:300px"><?php echo esc_html( $current ? $current : '—' ); ?></div></td>
+						</tr>
+					<?php endforeach; ?>
+					</tbody>
+				</table>
+
+				<div class="ikon-seo-card" style="margin-top:20px">
+					<label><input type="checkbox" name="overwrite" value="1"> <?php esc_html_e( 'Overwrite existing confirmed values selected above', 'ikon-seo' ); ?></label><br>
+					<label><input type="checkbox" name="create_workflow" value="1" checked> <?php esc_html_e( 'Create the recommended workflow when no active workflow exists', 'ikon-seo' ); ?></label><br>
+					<label><input type="checkbox" name="run_safe_task" value="1"> <?php esc_html_e( 'Run one bounded read-only workflow task after applying', 'ikon-seo' ); ?></label>
+					<p class="description"><?php esc_html_e( 'Identity-sensitive changes can invalidate the existing workflow key. Leave those unchecked unless the current Website Profile is incorrect.', 'ikon-seo' ); ?></p>
+				</div>
+
+				<?php submit_button( __( 'Apply Selected Suggestions', 'ikon-seo' ), 'primary' ); ?>
+			</form>
+
+			<div class="ikon-seo-next-step">
+				<div><strong><?php esc_html_e( 'Next: review uncertain facts', 'ikon-seo' ); ?></strong><p><?php esc_html_e( 'Confirm, correct or reject business facts and resolve conflicts before Guided Launch can activate the workflow.', 'ikon-seo' ); ?></p></div>
+				<a class="button button-primary" href="<?php echo esc_url( admin_url( 'admin.php?page=ikon-seo&tab=discovery-review' ) ); ?>"><?php esc_html_e( 'Open Fact Review', 'ikon-seo' ); ?></a>
+			</div>
+		<?php endif; ?>
+
+		<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" class="ikon-seo-card">
+			<input type="hidden" name="action" value="ikon_seo_save_auto_discovery_settings">
+			<?php wp_nonce_field( 'ikon_seo_save_auto_discovery_settings' ); ?>
+			<h3><?php esc_html_e( 'Auto Discovery settings', 'ikon-seo' ); ?></h3>
+			<label><input type="checkbox" name="enabled" value="1" <?php checked( ! empty( $settings['auto_discovery_enabled'] ) ); ?>> <?php esc_html_e( 'Schedule the first local discovery after installation or upgrade', 'ikon-seo' ); ?></label><br>
+			<label><input type="checkbox" name="include_connected" value="1" <?php checked( ! empty( $settings['auto_discovery_include_connected'] ) ); ?>> <?php esc_html_e( 'Use available read-only Search Console and Analytics connection status when suggesting metrics', 'ikon-seo' ); ?></label><br>
+			<label><?php esc_html_e( 'Default page limit', 'ikon-seo' ); ?> <input type="number" name="max_pages" min="10" max="300" value="<?php echo esc_attr( absint( $settings['auto_discovery_max_pages'] ?? 100 ) ); ?>"></label>
+			<?php submit_button( __( 'Save Auto Discovery Settings', 'ikon-seo' ), 'secondary' ); ?>
+		</form>
+
+		<div class="notice notice-info inline">
+			<p><?php esc_html_e( 'Competitor and keyword research still requires stored competitor evidence, approved imports, Search Console data or a separately configured research workflow. This module does not scrape search engines from the WordPress host.', 'ikon-seo' ); ?></p>
+		</div>
+		<?php
+	}
+
+
+
+	private function render_discovery_review() {
+		$report    = $this->discovery_review->report();
+		$sections  = (array) ( $report['sections'] ?? array() );
+		$counts    = (array) ( $report['counts'] ?? array() );
+		$rescan    = (array) ( $report['rescan'] ?? array() );
+		$conflicts = (array) ( $report['conflicts'] ?? array() );
+		$generated = sanitize_text_field( $report['generated_at'] ?? '' );
+		$status_labels = array(
+			'detected'           => __( 'Detected', 'ikon-seo' ),
+			'confirmed'          => __( 'Confirmed', 'ikon-seo' ),
+			'edited'             => __( 'Edited by user', 'ikon-seo' ),
+			'rejected'           => __( 'Rejected', 'ikon-seo' ),
+			'needs_confirmation' => __( 'Needs confirmation', 'ikon-seo' ),
+		);
+		?>
+		<div class="ikon-seo-section-header">
+			<div>
+				<h2><?php esc_html_e( 'Fact-Level Strategy Review', 'ikon-seo' ); ?></h2>
+				<p class="description"><?php esc_html_e( 'Confirm, correct or reject each detected fact. A later rescan marks changed confirmed evidence as outdated instead of overwriting your decision.', 'ikon-seo' ); ?></p>
+			</div>
+			<?php if ( $generated ) : ?><span class="ikon-seo-pill is-connected"><?php echo esc_html( 'Discovery: ' . $generated . ' UTC' ); ?></span><?php endif; ?>
+		</div>
+
+		<?php if ( ! $generated ) : ?>
+			<div class="notice notice-warning inline"><p><?php esc_html_e( 'Run Auto Discovery before reviewing facts.', 'ikon-seo' ); ?></p></div>
+			<a class="button button-primary" href="<?php echo esc_url( admin_url( 'admin.php?page=ikon-seo&tab=auto-discovery' ) ); ?>"><?php esc_html_e( 'Open Auto Discovery', 'ikon-seo' ); ?></a>
+			<?php return; ?>
+		<?php endif; ?>
+
+		<div class="ikon-seo-metrics">
+			<div class="ikon-seo-metric"><strong><?php echo absint( $counts['confirmed'] ?? 0 ); ?></strong><span><?php esc_html_e( 'Confirmed', 'ikon-seo' ); ?></span></div>
+			<div class="ikon-seo-metric"><strong><?php echo absint( $counts['edited'] ?? 0 ); ?></strong><span><?php esc_html_e( 'Corrected', 'ikon-seo' ); ?></span></div>
+			<div class="ikon-seo-metric"><strong><?php echo absint( $counts['needs_confirmation'] ?? 0 ); ?></strong><span><?php esc_html_e( 'Need confirmation', 'ikon-seo' ); ?></span></div>
+			<div class="ikon-seo-metric"><strong><?php echo absint( $counts['outdated'] ?? 0 ); ?></strong><span><?php esc_html_e( 'Changed after rescan', 'ikon-seo' ); ?></span></div>
+			<div class="ikon-seo-metric"><strong><?php echo absint( $report['unresolved_conflicts'] ?? 0 ); ?></strong><span><?php esc_html_e( 'Unresolved conflicts', 'ikon-seo' ); ?></span></div>
+		</div>
+
+		<div class="ikon-seo-card">
+			<h3><?php esc_html_e( 'Latest rescan comparison', 'ikon-seo' ); ?></h3>
+			<p><?php echo esc_html( sprintf( '%d new facts, %d changed facts, %d unchanged facts and %d outdated or removed facts.', absint( $rescan['new_facts'] ?? 0 ), absint( $rescan['changed_facts'] ?? 0 ), absint( $rescan['unchanged_facts'] ?? 0 ), absint( $rescan['outdated_facts'] ?? 0 ) ) ); ?></p>
+		</div>
+
+		<div class="ikon-seo-card">
+			<h3><?php esc_html_e( 'Safe bulk review', 'ikon-seo' ); ?></h3>
+			<p><?php esc_html_e( 'Accept only high-confidence, non-sensitive technical facts. Identity-sensitive fields, business decisions and conflicting evidence are excluded.', 'ikon-seo' ); ?></p>
+			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
+				<input type="hidden" name="action" value="ikon_seo_accept_high_confidence_facts">
+				<input type="hidden" name="generated_at" value="<?php echo esc_attr( $generated ); ?>">
+				<?php wp_nonce_field( 'ikon_seo_accept_high_confidence_facts' ); ?>
+				<button class="button" type="submit"><?php esc_html_e( 'Accept High-Confidence Technical Facts', 'ikon-seo' ); ?></button>
+			</form>
+		</div>
+
+		<?php if ( $conflicts ) : ?>
+			<h3><?php esc_html_e( 'Conflict resolution', 'ikon-seo' ); ?></h3>
+			<?php foreach ( $conflicts as $conflict ) : ?>
+				<div class="ikon-seo-card">
+					<h4><?php echo esc_html( $conflict['area'] ?? __( 'Detected conflict', 'ikon-seo' ) ); ?> <span class="ikon-seo-pill <?php echo 'resolved' === ( $conflict['status'] ?? '' ) ? 'is-connected' : 'is-failed'; ?>"><?php echo esc_html( ucfirst( $conflict['status'] ?? 'unresolved' ) ); ?></span></h4>
+					<p><?php echo esc_html( $conflict['message'] ?? '' ); ?></p>
+					<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
+						<input type="hidden" name="action" value="ikon_seo_resolve_discovery_conflict">
+						<input type="hidden" name="conflict_id" value="<?php echo esc_attr( $conflict['id'] ?? '' ); ?>">
+						<input type="hidden" name="generated_at" value="<?php echo esc_attr( $generated ); ?>">
+						<?php wp_nonce_field( 'ikon_seo_resolve_discovery_conflict' ); ?>
+						<p><select name="selected_value"><option value=""><?php esc_html_e( 'Choose the correct detected value', 'ikon-seo' ); ?></option><?php foreach ( (array) ( $conflict['values'] ?? array() ) as $value ) : ?><option value="<?php echo esc_attr( $value ); ?>" <?php selected( $conflict['selected_value'] ?? '', $value ); ?>><?php echo esc_html( $value ); ?></option><?php endforeach; ?><option value="multiple_valid" <?php selected( $conflict['selected_value'] ?? '', 'multiple_valid' ); ?>><?php esc_html_e( 'Multiple values are valid', 'ikon-seo' ); ?></option></select></p>
+						<p><input class="regular-text" type="text" name="custom_value" value="<?php echo esc_attr( $conflict['custom_value'] ?? '' ); ?>" placeholder="<?php esc_attr_e( 'Or enter the correct value', 'ikon-seo' ); ?>"></p>
+						<button class="button" type="submit"><?php esc_html_e( 'Resolve conflict', 'ikon-seo' ); ?></button>
+					</form>
+				</div>
+			<?php endforeach; ?>
+		<?php endif; ?>
+
+		<?php $section_labels = array( 'business_identity' => __( 'Business identity', 'ikon-seo' ), 'website_model' => __( 'Website model', 'ikon-seo' ), 'services_locations' => __( 'Services and locations', 'ikon-seo' ), 'audience' => __( 'Target audience', 'ikon-seo' ), 'conversions_goals' => __( 'Conversions and goals', 'ikon-seo' ), 'claims_governance' => __( 'Claims and quality governance', 'ikon-seo' ) ); ?>
+		<?php foreach ( $sections as $section => $facts ) : ?>
+			<h3><?php echo esc_html( $section_labels[ $section ] ?? ucwords( str_replace( '_', ' ', $section ) ) ); ?></h3>
+			<table class="widefat striped ikon-seo-log">
+				<thead><tr><th><?php esc_html_e( 'Field', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Detected value and evidence', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Current decision', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Review', 'ikon-seo' ); ?></th></tr></thead>
+				<tbody>
+				<?php foreach ( (array) $facts as $fact ) :
+					$approved = $fact['approved_value'] ?? '';
+					$approved_text = is_array( $approved ) ? implode( "\n", $approved ) : (string) $approved;
+					$status = sanitize_key( $fact['status'] ?? 'detected' );
+				?>
+					<tr>
+						<td><strong><?php echo esc_html( $fact['label'] ?? '' ); ?></strong><br><code><?php echo esc_html( $fact['id'] ?? '' ); ?></code></td>
+						<td><?php echo nl2br( esc_html( $fact['display_value'] ?? '' ) ); ?><br><small><?php echo esc_html( implode( ' · ', (array) ( $fact['sources'] ?? array() ) ) ); ?></small><br><span class="ikon-seo-pill"><?php echo esc_html( ucfirst( $fact['confidence'] ?? 'low' ) . ' · ' . absint( $fact['score'] ?? 0 ) . '/100' ); ?></span></td>
+						<td><span class="ikon-seo-pill <?php echo in_array( $status, array( 'confirmed', 'edited' ), true ) ? 'is-connected' : ( 'outdated' === $status ? 'is-failed' : '' ); ?>"><?php echo esc_html( ucwords( str_replace( '_', ' ', $status ) ) ); ?></span><?php if ( $approved_text ) : ?><br><small><?php echo nl2br( esc_html( $approved_text ) ); ?></small><?php endif; ?></td>
+						<td>
+							<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
+								<input type="hidden" name="action" value="ikon_seo_update_discovery_fact">
+								<input type="hidden" name="fact_id" value="<?php echo esc_attr( $fact['id'] ?? '' ); ?>">
+								<input type="hidden" name="generated_at" value="<?php echo esc_attr( $generated ); ?>">
+								<?php wp_nonce_field( 'ikon_seo_update_discovery_fact' ); ?>
+								<select name="status"><?php foreach ( $status_labels as $key => $label ) : ?><option value="<?php echo esc_attr( $key ); ?>" <?php selected( $status, $key ); ?>><?php echo esc_html( $label ); ?></option><?php endforeach; ?></select>
+								<textarea class="large-text" rows="2" name="value" placeholder="<?php esc_attr_e( 'Corrected value, required only for Edited by user', 'ikon-seo' ); ?>"><?php echo esc_textarea( 'edited' === $status ? $approved_text : '' ); ?></textarea>
+								<button class="button" type="submit"><?php esc_html_e( 'Save decision', 'ikon-seo' ); ?></button>
+							</form>
+						</td>
+					</tr>
+				<?php endforeach; ?>
+				</tbody>
+			</table>
+		<?php endforeach; ?>
+
+		<div class="ikon-seo-card">
+			<h3><?php esc_html_e( 'Apply reviewed facts', 'ikon-seo' ); ?></h3>
+			<p><?php esc_html_e( 'Only facts marked Confirmed or Edited by user will be applied. Rejected, uncertain and outdated facts remain excluded.', 'ikon-seo' ); ?></p>
+			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
+				<input type="hidden" name="action" value="ikon_seo_apply_confirmed_discovery_facts">
+				<?php wp_nonce_field( 'ikon_seo_apply_confirmed_discovery_facts' ); ?>
+				<button class="button button-primary" type="submit"><?php esc_html_e( 'Apply Confirmed Values', 'ikon-seo' ); ?></button>
+				<a class="button" href="<?php echo esc_url( admin_url( 'admin.php?page=ikon-seo&tab=guided-launch' ) ); ?>"><?php esc_html_e( 'Open Guided Launch', 'ikon-seo' ); ?></a>
+			</form>
+		</div>
+		<?php
+	}
+
+	private function render_guided_launch() {
+		$report   = $this->guided_launch->report();
+		$stages   = (array) ( $report['stages'] ?? array() );
+		$actions  = (array) ( $report['next_actions'] ?? array() );
+		$last_run = (array) ( $report['last_run'] ?? array() );
+		$score    = absint( $report['score'] ?? 0 );
+		$status   = sanitize_key( $report['status'] ?? 'setup_required' );
+		$discovery = (array) ( $this->auto_discovery->report() );
+		$conflicts = (array) ( $discovery['conflicts'] ?? array() );
+		?>
+		<div class="ikon-seo-section-header">
+			<div>
+				<h2><?php esc_html_e( 'Guided Launch & Strategy Activation', 'ikon-seo' ); ?></h2>
+				<p class="description"><?php esc_html_e( 'Turn confirmed discovery evidence into a mode-specific workflow, bounded read-only audits and the initial approval-controlled Operating Plan.', 'ikon-seo' ); ?></p>
+			</div>
+			<span class="ikon-seo-pill <?php echo 100 === $score ? 'is-connected' : ( $score < 40 ? 'is-failed' : '' ); ?>"><?php echo esc_html( $score . '/100 activated' ); ?></span>
+		</div>
+
+		<div class="notice notice-info inline">
+			<p><strong><?php esc_html_e( 'Safe activation:', 'ikon-seo' ); ?></strong> <?php esc_html_e( 'This process can create an internal workflow, run read-only evidence tasks and refresh recommendations. It cannot publish, edit live pages, create redirects, change canonicals or indexation, update Business Profile information or perform outreach.', 'ikon-seo' ); ?></p>
+		</div>
+
+		<div class="ikon-seo-metrics">
+			<div class="ikon-seo-metric"><strong><?php echo esc_html( $score . '%' ); ?></strong><span><?php esc_html_e( 'Launch progress', 'ikon-seo' ); ?></span></div>
+			<div class="ikon-seo-metric"><strong><?php echo absint( $report['strategy']['readiness_score'] ?? 0 ); ?></strong><span><?php esc_html_e( 'Strategy readiness', 'ikon-seo' ); ?></span></div>
+			<div class="ikon-seo-metric"><strong><?php echo absint( $report['workflow']['completed_tasks'] ?? 0 ); ?></strong><span><?php esc_html_e( 'Safe tasks completed', 'ikon-seo' ); ?></span></div>
+			<div class="ikon-seo-metric"><strong><?php echo absint( $report['operating_plan']['recommendations'] ?? 0 ); ?></strong><span><?php esc_html_e( 'Plan recommendations', 'ikon-seo' ); ?></span></div>
+		</div>
+
+		<h3><?php esc_html_e( 'Activation stages', 'ikon-seo' ); ?></h3>
+		<div class="ikon-seo-grid ikon-seo-grid-3">
+			<?php foreach ( $stages as $index => $stage ) : ?>
+				<div class="ikon-seo-card">
+					<p class="ikon-seo-kicker"><?php echo esc_html( sprintf( 'STAGE %d', $index + 1 ) ); ?></p>
+					<h3><?php echo esc_html( $stage['label'] ); ?></h3>
+					<p><?php echo esc_html( $stage['description'] ); ?></p>
+					<p><span class="ikon-seo-pill <?php echo ! empty( $stage['complete'] ) ? 'is-connected' : 'is-failed'; ?>"><?php echo ! empty( $stage['complete'] ) ? esc_html__( 'Complete', 'ikon-seo' ) : esc_html__( 'Action required', 'ikon-seo' ); ?></span></p>
+					<a class="button" href="<?php echo esc_url( $stage['url'] ); ?>"><?php esc_html_e( 'Review stage', 'ikon-seo' ); ?></a>
+				</div>
+			<?php endforeach; ?>
+		</div>
+
+		<?php if ( empty( $discovery['generated_at'] ) ) : ?>
+			<div class="ikon-seo-next-step">
+				<div><strong><?php esc_html_e( 'Start with website research', 'ikon-seo' ); ?></strong><p><?php esc_html_e( 'Guided Launch requires an Auto Discovery report so it can preserve uncertain business decisions for confirmation.', 'ikon-seo' ); ?></p></div>
+				<a class="button button-primary" href="<?php echo esc_url( admin_url( 'admin.php?page=ikon-seo&tab=auto-discovery' ) ); ?>"><?php esc_html_e( 'Open Auto Discovery', 'ikon-seo' ); ?></a>
+			</div>
+		<?php else : ?>
+			<div class="ikon-seo-two-columns">
+				<section class="ikon-seo-card">
+					<h3><?php esc_html_e( 'Activate the confirmed strategy', 'ikon-seo' ); ?></h3>
+					<p><?php esc_html_e( 'Run the onboarding handoff in a controlled batch. The Operating Plan uses evidence currently available in Ikon SEO and does not refresh external sources during this action.', 'ikon-seo' ); ?></p>
+					<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
+						<input type="hidden" name="action" value="ikon_seo_run_guided_launch">
+						<?php wp_nonce_field( 'ikon_seo_run_guided_launch' ); ?>
+						<p><label><input type="checkbox" name="create_workflow" value="1" checked> <?php esc_html_e( 'Create the recommended workflow if none exists', 'ikon-seo' ); ?></label></p>
+						<p><label><input type="checkbox" name="run_safe_tasks" value="1" checked> <?php esc_html_e( 'Run an initial read-only task batch', 'ikon-seo' ); ?></label></p>
+						<p><label><?php esc_html_e( 'Safe tasks in this batch', 'ikon-seo' ); ?> <input type="number" min="1" max="5" name="task_batch" value="3"></label></p>
+						<p><label><input type="checkbox" name="build_plan" value="1" checked> <?php esc_html_e( 'Build or refresh the initial Operating Plan', 'ikon-seo' ); ?></label></p>
+						<?php submit_button( __( 'Start Safe Strategy Activation', 'ikon-seo' ), 'primary' ); ?>
+					</form>
+				</section>
+
+				<section class="ikon-seo-card">
+					<h3><?php esc_html_e( 'Latest activation run', 'ikon-seo' ); ?></h3>
+					<?php if ( empty( $last_run['run_at'] ) ) : ?>
+						<p><?php esc_html_e( 'No activation run has been recorded yet.', 'ikon-seo' ); ?></p>
+					<?php else : ?>
+						<p><strong><?php echo esc_html( $last_run['run_at'] . ' UTC' ); ?></strong></p>
+						<ul>
+							<li><?php echo esc_html( sprintf( 'Safe tasks processed: %d', absint( $last_run['safe_tasks_processed'] ?? 0 ) ) ); ?></li>
+							<li><?php echo esc_html( sprintf( 'Operating Plan items generated: %d', absint( $last_run['plan_items_generated'] ?? 0 ) ) ); ?></li>
+						</ul>
+						<?php if ( ! empty( $last_run['errors'] ) ) : ?><div class="notice notice-warning inline"><p><?php echo esc_html( implode( ' ', (array) $last_run['errors'] ) ); ?></p></div><?php endif; ?>
+					<?php endif; ?>
+					<p><span class="ikon-seo-pill <?php echo 'activated' === $status ? 'is-connected' : ''; ?>"><?php echo esc_html( ucwords( str_replace( '_', ' ', $status ) ) ); ?></span></p>
+				</section>
+			</div>
+		<?php endif; ?>
+
+		<?php if ( $conflicts ) : ?>
+			<section class="ikon-seo-card">
+				<h3><?php esc_html_e( 'Discovery conflicts', 'ikon-seo' ); ?></h3>
+				<p><?php esc_html_e( 'Resolve these in the Website Profile or explicitly acknowledge that they were reviewed. Acknowledgement does not select a value or change the website.', 'ikon-seo' ); ?></p>
+				<table class="widefat striped"><thead><tr><th><?php esc_html_e( 'Area', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Issue', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Detected values', 'ikon-seo' ); ?></th></tr></thead><tbody>
+				<?php foreach ( $conflicts as $conflict ) : ?><tr><td><strong><?php echo esc_html( $conflict['area'] ?? '' ); ?></strong></td><td><?php echo esc_html( $conflict['message'] ?? '' ); ?></td><td><?php echo esc_html( implode( ', ', (array) ( $conflict['values'] ?? array() ) ) ); ?></td></tr><?php endforeach; ?>
+				</tbody></table>
+				<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" style="margin-top:16px">
+					<input type="hidden" name="action" value="ikon_seo_acknowledge_discovery_conflicts">
+					<?php wp_nonce_field( 'ikon_seo_acknowledge_discovery_conflicts' ); ?>
+					<label><input type="checkbox" name="acknowledged" value="1" <?php checked( ! empty( $report['conflicts_acknowledged'] ) ); ?>> <?php esc_html_e( 'I reviewed these conflicts and confirmed the correct values separately', 'ikon-seo' ); ?></label>
+					<?php submit_button( __( 'Save Conflict Review', 'ikon-seo' ), 'secondary' ); ?>
+				</form>
+			</section>
+		<?php endif; ?>
+
+		<h3><?php esc_html_e( 'Next five actions', 'ikon-seo' ); ?></h3>
+		<div class="ikon-seo-grid ikon-seo-grid-3">
+			<?php if ( ! $actions ) : ?><div class="ikon-seo-card"><h3><?php esc_html_e( 'Launch complete', 'ikon-seo' ); ?></h3><p><?php esc_html_e( 'Review the active workflow and Operating Plan for approval-controlled execution.', 'ikon-seo' ); ?></p></div><?php endif; ?>
+			<?php foreach ( $actions as $index => $action ) : ?>
+				<div class="ikon-seo-card">
+					<p class="ikon-seo-kicker"><?php echo esc_html( sprintf( 'ACTION %d', $index + 1 ) ); ?></p>
+					<h3><?php echo esc_html( $action['title'] ); ?></h3>
+					<p><?php echo esc_html( $action['reason'] ); ?></p>
+					<a class="button" href="<?php echo esc_url( $action['url'] ); ?>"><?php esc_html_e( 'Open action', 'ikon-seo' ); ?></a>
+				</div>
+			<?php endforeach; ?>
+		</div>
+		<?php
+	}
+
 	private function render_strategy() {
 		$strategy = $this->strategy->get();
 		$agency   = Ikon_SEO_Agency::can_manage();
@@ -1655,6 +2227,13 @@ class Ikon_SEO_Admin {
 			</div>
 			<span class="ikon-seo-pill <?php echo 'ready' === $level ? 'is-connected' : 'is-failed'; ?>"><?php echo esc_html( absint( $readiness['score'] ?? 0 ) . '/100 strategy readiness' ); ?></span>
 		</div>
+
+		<?php if ( $agency ) : ?>
+		<div class="ikon-seo-next-step">
+			<div><strong><?php esc_html_e( 'Prefer automatic setup?', 'ikon-seo' ); ?></strong><p><?php esc_html_e( 'Scan the website, review detected facts and apply selected strategy suggestions instead of completing every field manually.', 'ikon-seo' ); ?></p></div>
+			<a class="button button-primary" href="<?php echo esc_url( admin_url( 'admin.php?page=ikon-seo&tab=auto-discovery' ) ); ?>"><?php esc_html_e( 'Open Auto Discovery', 'ikon-seo' ); ?></a>
+		</div>
+		<?php endif; ?>
 
 		<div class="notice notice-info inline"><p><?php esc_html_e( 'Strategy readiness is a setup and governance measure—not a ranking score. Published pages, redirects, canonicals and external actions still require explicit approval.', 'ikon-seo' ); ?></p></div>
 
@@ -2291,6 +2870,450 @@ class Ikon_SEO_Admin {
 	}
 
 
+
+	private function render_opportunity_engine() {
+		$report = $this->opportunity_engine->report( array( 'limit' => 150 ) );
+		$status = (array) ( $report['status'] ?? array() );
+		$summary = (array) ( $report['summary'] ?? array() );
+		$agency = Ikon_SEO_Agency::can_manage();
+		$settings = Ikon_SEO_Plugin::settings();
+		?>
+		<div class="ikon-seo-section-heading">
+			<div><h2><?php esc_html_e( 'Evidence Intelligence & Opportunity Engine', 'ikon-seo' ); ?></h2><p class="description"><?php esc_html_e( 'Combines Search Console, stored Analytics, technical, indexation, competitor, authority and approved provider evidence into one prioritised review queue.', 'ikon-seo' ); ?></p></div>
+			<?php if ( $agency ) : ?><form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_rebuild_opportunity_engine"><?php wp_nonce_field( 'ikon_seo_rebuild_opportunity_engine' ); ?><input type="hidden" name="limit" value="<?php echo absint( $settings['opportunity_engine_max_items'] ?? 300 ); ?>"><button class="button button-primary"><?php esc_html_e( 'Rebuild Opportunity Queue', 'ikon-seo' ); ?></button></form><?php endif; ?>
+		</div>
+		<div class="notice notice-info inline"><p><?php esc_html_e( 'This module performs read-only analysis. It cannot publish, redirect, delete, noindex or change canonical settings.', 'ikon-seo' ); ?></p></div>
+		<div class="ikon-seo-metrics">
+			<?php foreach ( array(
+				array( 'value' => absint( $summary['current_opportunities'] ?? 0 ), 'label' => 'Current opportunities' ),
+				array( 'value' => absint( $summary['actionable'] ?? 0 ), 'label' => 'Actionable items' ),
+				array( 'value' => absint( $status['imported_evidence'] ?? 0 ), 'label' => 'Imported keyword rows' ),
+				array( 'value' => absint( $summary['priority_bands']['critical'] ?? 0 ), 'label' => 'Critical priority' ),
+			) as $metric ) : ?><div class="ikon-seo-metric"><strong><?php echo absint( $metric['value'] ); ?></strong><span><?php echo esc_html( $metric['label'] ); ?></span></div><?php endforeach; ?>
+		</div>
+		<p class="description"><?php echo esc_html( 'Last rebuild: ' . ( $status['last_rebuild'] ?: 'Not run yet' ) ); ?></p>
+
+		<?php if ( $agency ) : ?>
+		<div class="ikon-seo-grid ikon-seo-grid-2">
+			<div class="ikon-seo-card">
+				<h3><?php esc_html_e( 'Import keyword evidence', 'ikon-seo' ); ?></h3>
+				<p class="description"><?php esc_html_e( 'Upload a CSV export from Semrush, Ahrefs or another licensed provider. The file is stored as evidence and does not trigger content changes.', 'ikon-seo' ); ?></p>
+				<form method="post" enctype="multipart/form-data" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
+					<input type="hidden" name="action" value="ikon_seo_import_opportunity_evidence"><?php wp_nonce_field( 'ikon_seo_import_opportunity_evidence' ); ?>
+					<p><label><strong><?php esc_html_e( 'Evidence source', 'ikon-seo' ); ?></strong><br><select name="source"><option value="semrush">Semrush</option><option value="ahrefs">Ahrefs</option><option value="licensed_provider">Licensed provider</option><option value="manual">Manual export</option></select></label></p>
+					<p><input type="file" name="evidence_csv" accept=".csv,text/csv" required></p>
+					<?php submit_button( __( 'Import Evidence CSV', 'ikon-seo' ), 'secondary', 'submit', false ); ?>
+				</form>
+			</div>
+			<div class="ikon-seo-card">
+				<h3><?php esc_html_e( 'Engine settings', 'ikon-seo' ); ?></h3>
+				<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
+					<input type="hidden" name="action" value="ikon_seo_save_opportunity_engine_settings"><?php wp_nonce_field( 'ikon_seo_save_opportunity_engine_settings' ); ?>
+					<p><label><input type="checkbox" name="enabled" value="1" <?php checked( ! empty( $settings['opportunity_engine_enabled'] ) ); ?>> <?php esc_html_e( 'Enable weekly queue rebuilds', 'ikon-seo' ); ?></label></p>
+					<p><label><strong><?php esc_html_e( 'Maximum current opportunities', 'ikon-seo' ); ?></strong><br><input type="number" min="25" max="1000" name="max_items" value="<?php echo absint( $settings['opportunity_engine_max_items'] ?? 300 ); ?>"></label></p>
+					<p><label><strong><?php esc_html_e( 'Imported evidence stale after days', 'ikon-seo' ); ?></strong><br><input type="number" min="7" max="365" name="stale_days" value="<?php echo absint( $settings['opportunity_engine_stale_days'] ?? 60 ); ?>"></label></p>
+					<?php submit_button( __( 'Save Engine Settings', 'ikon-seo' ), 'secondary', 'submit', false ); ?>
+				</form>
+			</div>
+		</div>
+		<?php endif; ?>
+
+		<h3><?php esc_html_e( 'Highest-priority opportunities', 'ikon-seo' ); ?></h3>
+		<table class="widefat striped"><thead><tr><th><?php esc_html_e( 'Priority', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Opportunity', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Evidence', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Review', 'ikon-seo' ); ?></th></tr></thead><tbody>
+		<?php if ( empty( $report['opportunities'] ) ) : ?><tr><td colspan="4"><?php esc_html_e( 'No current opportunities are stored. Connect evidence sources or import an approved keyword export, then rebuild the queue.', 'ikon-seo' ); ?></td></tr><?php endif; ?>
+		<?php foreach ( (array) ( $report['opportunities'] ?? array() ) as $item ) : ?>
+		<tr>
+			<td><strong><?php echo absint( $item['priority'] ?? 0 ); ?></strong><br><small><?php echo esc_html( ucfirst( $item['confidence'] ?? 'medium' ) . ' confidence' ); ?></small></td>
+			<td><strong><?php echo esc_html( $item['title'] ?? '' ); ?></strong><br><?php echo esc_html( $item['summary'] ?? '' ); ?><?php if ( ! empty( $item['target_url'] ) ) : ?><br><a href="<?php echo esc_url( $item['target_url'] ); ?>" target="_blank" rel="noopener noreferrer"><?php echo esc_html( wp_parse_url( $item['target_url'], PHP_URL_PATH ) ?: $item['target_url'] ); ?></a><?php endif; ?><?php if ( ! empty( $item['keyword'] ) ) : ?><br><small><?php echo esc_html( 'Keyword: ' . $item['keyword'] ); ?></small><?php endif; ?></td>
+			<td><?php echo esc_html( ucwords( str_replace( '_', ' ', $item['primary_source'] ?? '' ) ) ); ?><br><small><?php echo esc_html( ucwords( str_replace( '_', ' ', $item['category'] ?? '' ) ) ); ?> · <?php echo esc_html( ucfirst( $item['effort'] ?? 'medium' ) . ' effort · ' . ucfirst( $item['risk'] ?? 'low' ) . ' risk' ); ?></small><?php if ( ! empty( $item['actions'][0] ) ) : ?><p class="description"><?php echo esc_html( $item['actions'][0] ); ?></p><?php endif; ?></td>
+			<td><?php if ( $agency ) : ?><form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_update_opportunity_status"><input type="hidden" name="opportunity_id" value="<?php echo absint( $item['id'] ); ?>"><?php wp_nonce_field( 'ikon_seo_update_opportunity_status_' . absint( $item['id'] ) ); ?><select name="status"><option value="open" <?php selected( $item['status'], 'open' ); ?>>Open</option><option value="reviewed" <?php selected( $item['status'], 'reviewed' ); ?>>Reviewed</option><option value="planned" <?php selected( $item['status'], 'planned' ); ?>>Planned</option><option value="completed" <?php selected( $item['status'], 'completed' ); ?>>Completed</option><option value="dismissed" <?php selected( $item['status'], 'dismissed' ); ?>>Dismissed</option></select><br><textarea name="notes" rows="2" placeholder="Review notes"><?php echo esc_textarea( $item['review_notes'] ?? '' ); ?></textarea><br><button class="button button-small"><?php esc_html_e( 'Save', 'ikon-seo' ); ?></button></form><?php else : ?><?php echo esc_html( ucfirst( $item['status'] ?? 'open' ) ); ?><?php endif; ?></td>
+		</tr>
+		<?php endforeach; ?>
+		</tbody></table>
+		<h3><?php esc_html_e( 'Evidence source health', 'ikon-seo' ); ?></h3>
+		<table class="widefat striped"><thead><tr><th><?php esc_html_e( 'Source', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'State', 'ikon-seo' ); ?></th></tr></thead><tbody><?php foreach ( (array) ( $report['source_health'] ?? array() ) as $source => $details ) : ?><tr><td><?php echo esc_html( ucwords( str_replace( '_', ' ', $source ) ) ); ?></td><td><code><?php echo esc_html( wp_json_encode( $details ) ); ?></code></td></tr><?php endforeach; ?></tbody></table>
+		<?php
+	}
+
+
+	private function render_content_workbench() {
+		$report = $this->content_workbench->report( 150, false );
+		$status = (array) ( $report['status'] ?? array() );
+		$counts = (array) ( $status['counts'] ?? array() );
+		$agency = Ikon_SEO_Agency::can_manage();
+		?>
+		<div class="ikon-seo-section-heading">
+			<div><h2><?php esc_html_e( 'Content Planning & Controlled Draft Generation', 'ikon-seo' ); ?></h2><p class="description"><?php esc_html_e( 'Convert only Planned opportunities into evidence-led, versioned briefs and separate unpublished WordPress drafts.', 'ikon-seo' ); ?></p></div>
+			<span class="ikon-seo-pill <?php echo ! empty( $status['database_ready'] ) ? 'is-connected' : 'is-failed'; ?>"><?php echo esc_html( ! empty( $status['database_ready'] ) ? 'Draft-only controls active' : 'Database update required' ); ?></span>
+		</div>
+		<div class="notice notice-info inline"><p><strong><?php esc_html_e( 'Approval boundary:', 'ikon-seo' ); ?></strong> <?php esc_html_e( 'Brief approval is required before a separate draft can be created. This workbench cannot publish, edit live pages, redirect, delete, noindex or change canonicals.', 'ikon-seo' ); ?></p></div>
+		<div class="ikon-seo-metrics">
+			<?php foreach ( array( array( $counts['proposed'] ?? 0, 'Proposed briefs' ), array( $counts['approved'] ?? 0, 'Approved briefs' ), array( $counts['draft_created'] ?? 0, 'Controlled drafts' ), array( $counts['ready'] ?? 0, 'Ready for human review' ) ) as $metric ) : ?><div class="ikon-seo-metric"><strong><?php echo absint( $metric[0] ); ?></strong><span><?php echo esc_html( $metric[1] ); ?></span></div><?php endforeach; ?>
+		</div>
+
+		<h3><?php esc_html_e( 'Planned opportunities awaiting a brief', 'ikon-seo' ); ?></h3>
+		<table class="widefat striped"><thead><tr><th><?php esc_html_e( 'Priority', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Opportunity', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Action', 'ikon-seo' ); ?></th></tr></thead><tbody>
+		<?php if ( empty( $report['eligible_opportunities'] ) ) : ?><tr><td colspan="3"><?php esc_html_e( 'No eligible Planned content opportunities are waiting for a brief.', 'ikon-seo' ); ?></td></tr><?php endif; ?>
+		<?php foreach ( (array) ( $report['eligible_opportunities'] ?? array() ) as $item ) : ?><tr><td><strong><?php echo absint( $item['priority'] ?? 0 ); ?></strong></td><td><strong><?php echo esc_html( $item['title'] ?? '' ); ?></strong><br><?php echo esc_html( $item['summary'] ?? '' ); ?><?php if ( ! empty( $item['keyword'] ) ) : ?><br><small><?php echo esc_html( 'Target: ' . $item['keyword'] ); ?></small><?php endif; ?></td><td><?php if ( $agency ) : ?><form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_create_content_brief"><input type="hidden" name="opportunity_id" value="<?php echo absint( $item['id'] ); ?>"><?php wp_nonce_field( 'ikon_seo_create_content_brief_' . absint( $item['id'] ) ); ?><button class="button button-primary"><?php esc_html_e( 'Build Proposed Brief', 'ikon-seo' ); ?></button></form><?php else : ?><?php esc_html_e( 'Agency approval required', 'ikon-seo' ); ?><?php endif; ?></td></tr><?php endforeach; ?>
+		</tbody></table>
+
+		<h3><?php esc_html_e( 'Versioned content briefs and drafts', 'ikon-seo' ); ?></h3>
+		<table class="widefat striped"><thead><tr><th><?php esc_html_e( 'Brief', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Evidence and plan', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Controlled action', 'ikon-seo' ); ?></th></tr></thead><tbody>
+		<?php if ( empty( $report['briefs'] ) ) : ?><tr><td colspan="3"><?php esc_html_e( 'No Content Workbench briefs have been created.', 'ikon-seo' ); ?></td></tr><?php endif; ?>
+		<?php foreach ( (array) ( $report['briefs'] ?? array() ) as $brief ) : $plan = (array) ( $brief['brief'] ?? array() ); ?>
+		<tr>
+			<td><strong><?php echo esc_html( $brief['page_title'] ?? '' ); ?></strong><br><span class="ikon-seo-pill"><?php echo esc_html( ucfirst( str_replace( '_', ' ', $brief['status'] ?? 'proposed' ) ) ); ?></span><br><small><?php echo esc_html( 'Brief #' . absint( $brief['id'] ) . ' · v' . absint( $brief['brief_version'] ) . ' · Priority ' . absint( $brief['gap_priority'] ) ); ?></small><?php if ( ! empty( $brief['draft_edit_url'] ) ) : ?><p><a class="button button-small" href="<?php echo esc_url( $brief['draft_edit_url'] ); ?>"><?php esc_html_e( 'Edit Draft', 'ikon-seo' ); ?></a> <a class="button button-small" target="_blank" rel="noopener" href="<?php echo esc_url( $brief['draft_preview_url'] ); ?>"><?php esc_html_e( 'Preview', 'ikon-seo' ); ?></a></p><?php endif; ?></td>
+			<td><strong><?php echo esc_html( $brief['target_query'] ?? '' ); ?></strong><br><small><?php echo esc_html( ucfirst( $brief['target_intent'] ?? 'mixed' ) . ' intent · ' . ucfirst( $brief['evidence_confidence'] ?? 'low' ) . ' confidence' ); ?></small><p class="description"><?php echo esc_html( $brief['direct_evidence'][0] ?? 'Evidence summary unavailable.' ); ?></p><?php if ( ! empty( $plan['section_plan'] ) ) : ?><details><summary><?php echo esc_html( count( $plan['section_plan'] ) . ' planned sections' ); ?></summary><ol><?php foreach ( array_slice( (array) $plan['section_plan'], 0, 12 ) as $section ) : ?><li><?php echo esc_html( $section['heading'] ?? '' ); ?></li><?php endforeach; ?></ol></details><?php endif; ?></td>
+			<td><?php if ( ! $agency ) : ?><?php esc_html_e( 'Agency approval required', 'ikon-seo' ); ?><?php elseif ( 'proposed' === $brief['status'] ) : ?>
+				<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_approve_content_brief"><input type="hidden" name="brief_id" value="<?php echo absint( $brief['id'] ); ?>"><input type="hidden" name="evidence_hash" value="<?php echo esc_attr( $brief['evidence_hash'] ); ?>"><?php wp_nonce_field( 'ikon_seo_approve_content_brief_' . absint( $brief['id'] ) ); ?><button class="button button-primary"><?php esc_html_e( 'Approve Current Brief', 'ikon-seo' ); ?></button></form>
+				<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" style="margin-top:8px"><input type="hidden" name="action" value="ikon_seo_reject_content_brief"><input type="hidden" name="brief_id" value="<?php echo absint( $brief['id'] ); ?>"><?php wp_nonce_field( 'ikon_seo_reject_content_brief_' . absint( $brief['id'] ) ); ?><textarea name="notes" rows="2" placeholder="Reason for rejection"></textarea><br><button class="button button-small"><?php esc_html_e( 'Reject', 'ikon-seo' ); ?></button></form>
+			<?php elseif ( in_array( $brief['status'], array( 'outdated','rejected' ), true ) ) : ?><form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_create_content_brief"><input type="hidden" name="opportunity_id" value="<?php echo absint( $brief['opportunity_id'] ); ?>"><?php wp_nonce_field( 'ikon_seo_create_content_brief_' . absint( $brief['opportunity_id'] ) ); ?><button class="button button-primary"><?php esc_html_e( 'Regenerate From Current Evidence', 'ikon-seo' ); ?></button></form>
+			<?php elseif ( 'approved' === $brief['status'] ) : ?><form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_create_content_scaffold"><input type="hidden" name="brief_id" value="<?php echo absint( $brief['id'] ); ?>"><input type="hidden" name="evidence_hash" value="<?php echo esc_attr( $brief['evidence_hash'] ); ?>"><?php wp_nonce_field( 'ikon_seo_create_content_scaffold_' . absint( $brief['id'] ) ); ?><button class="button button-primary"><?php esc_html_e( 'Create Unpublished Scaffold', 'ikon-seo' ); ?></button></form>
+			<?php elseif ( 'draft_created' === $brief['status'] ) : ?><form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_evaluate_content_draft"><input type="hidden" name="brief_id" value="<?php echo absint( $brief['id'] ); ?>"><?php wp_nonce_field( 'ikon_seo_evaluate_content_draft_' . absint( $brief['id'] ) ); ?><button class="button"><?php esc_html_e( 'Run Quality Gate', 'ikon-seo' ); ?></button></form><form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" style="margin-top:8px"><input type="hidden" name="action" value="ikon_seo_mark_content_ready"><input type="hidden" name="brief_id" value="<?php echo absint( $brief['id'] ); ?>"><?php wp_nonce_field( 'ikon_seo_mark_content_ready_' . absint( $brief['id'] ) ); ?><button class="button button-primary"><?php esc_html_e( 'Mark Ready After Pass', 'ikon-seo' ); ?></button></form>
+			<?php elseif ( 'ready' === $brief['status'] ) : ?><strong><?php esc_html_e( 'Ready for human review', 'ikon-seo' ); ?></strong><p class="description"><?php esc_html_e( 'Publishing remains a separate WordPress decision.', 'ikon-seo' ); ?></p><?php else : ?><span><?php echo esc_html( ucfirst( $brief['status'] ?? '' ) ); ?></span><?php endif; ?></td>
+		</tr><?php endforeach; ?>
+		</tbody></table>
+		<?php
+	}
+
+
+	private function render_editorial_review() {
+		$can_manage = current_user_can( 'manage_options' );
+		$report = $this->editorial_review->report( array( 'limit' => 100, 'user_id' => $can_manage ? 0 : get_current_user_id() ), false );
+		$users = get_users( array( 'capability' => 'edit_posts', 'orderby' => 'display_name', 'order' => 'ASC' ) );
+		$status = (array) ( $report['status'] ?? array() );
+		$summary = (array) ( $report['summary'] ?? array() );
+		?>
+		<div class="ikon-seo-section-header"><div><h2><?php esc_html_e( 'Editorial Review & Revision Control', 'ikon-seo' ); ?></h2><p class="description"><?php esc_html_e( 'Assign writers and reviewers, store immutable review snapshots, verify sources and claims, request revisions and record final human sign-off without automatic publishing.', 'ikon-seo' ); ?></p></div><span class="ikon-seo-pill <?php echo ! empty( $status['database_ready'] ) ? 'is-connected' : 'is-failed'; ?>"><?php echo esc_html( ! empty( $status['database_ready'] ) ? 'Approval-first' : 'Database update required' ); ?></span></div>
+		<div class="notice notice-info inline"><p><strong><?php esc_html_e( 'Publishing boundary:', 'ikon-seo' ); ?></strong> <?php esc_html_e( 'Final sign-off changes only the internal workflow status. The WordPress draft remains unpublished until a separate authorised publishing decision.', 'ikon-seo' ); ?></p></div>
+		<?php if ( empty( $status['database_ready'] ) ) : ?><div class="notice notice-warning inline"><p><?php esc_html_e( 'Reactivate or update Ikon SEO to create the editorial review tables.', 'ikon-seo' ); ?></p></div><?php return; endif; ?>
+		<div class="ikon-seo-metrics">
+			<div class="ikon-seo-metric"><strong><?php echo absint( $summary['active'] ?? 0 ); ?></strong><span><?php esc_html_e( 'Active reviews', 'ikon-seo' ); ?></span></div>
+			<div class="ikon-seo-metric"><strong><?php echo absint( $summary['awaiting_review'] ?? 0 ); ?></strong><span><?php esc_html_e( 'Awaiting review', 'ikon-seo' ); ?></span></div>
+			<div class="ikon-seo-metric"><strong><?php echo absint( $summary['overdue'] ?? 0 ); ?></strong><span><?php esc_html_e( 'Overdue', 'ikon-seo' ); ?></span></div>
+			<div class="ikon-seo-metric"><strong><?php echo absint( $summary['blocked'] ?? 0 ); ?></strong><span><?php esc_html_e( 'Blocked', 'ikon-seo' ); ?></span></div>
+			<div class="ikon-seo-metric"><strong><?php echo absint( $summary['open_comments'] ?? 0 ); ?></strong><span><?php esc_html_e( 'Open comments', 'ikon-seo' ); ?></span></div>
+			<div class="ikon-seo-metric"><strong><?php echo absint( $summary['signed_off'] ?? 0 ); ?></strong><span><?php esc_html_e( 'Signed off', 'ikon-seo' ); ?></span></div>
+		</div>
+
+		<?php if ( $can_manage ) : ?>
+		<h3><?php esc_html_e( 'Drafts Ready for Editorial Assignment', 'ikon-seo' ); ?></h3>
+		<table class="widefat striped"><thead><tr><th><?php esc_html_e( 'Draft', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Assignment', 'ikon-seo' ); ?></th></tr></thead><tbody>
+		<?php if ( empty( $report['startable_briefs'] ) ) : ?><tr><td colspan="2"><?php esc_html_e( 'No unassigned controlled drafts are available.', 'ikon-seo' ); ?></td></tr><?php endif; ?>
+		<?php foreach ( (array) ( $report['startable_briefs'] ?? array() ) as $brief ) : ?>
+		<tr><td><strong><?php echo esc_html( $brief['page_title'] ?? 'Controlled draft' ); ?></strong><br><small><?php echo esc_html( 'Brief #' . absint( $brief['id'] ) . ' · Draft #' . absint( $brief['draft_post_id'] ) . ' · ' . ucfirst( $brief['status'] ?? '' ) ); ?></small></td><td>
+		<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_editorial_action"><input type="hidden" name="command" value="start_review"><input type="hidden" name="brief_id" value="<?php echo absint( $brief['id'] ); ?>"><?php wp_nonce_field( 'ikon_seo_editorial_start_review_' . absint( $brief['id'] ) ); ?>
+		<label><?php esc_html_e( 'Writer', 'ikon-seo' ); ?> <select name="writer_id"><option value="0"><?php esc_html_e( 'Unassigned', 'ikon-seo' ); ?></option><?php foreach ( $users as $user ) : ?><option value="<?php echo absint( $user->ID ); ?>"><?php echo esc_html( $user->display_name ); ?></option><?php endforeach; ?></select></label>
+		<label><?php esc_html_e( 'Reviewer', 'ikon-seo' ); ?> <select name="reviewer_id"><option value="0"><?php esc_html_e( 'Unassigned', 'ikon-seo' ); ?></option><?php foreach ( $users as $user ) : ?><option value="<?php echo absint( $user->ID ); ?>"><?php echo esc_html( $user->display_name ); ?></option><?php endforeach; ?></select></label>
+		<label><?php esc_html_e( 'Writing due', 'ikon-seo' ); ?> <input type="datetime-local" name="due_at"></label> <label><?php esc_html_e( 'Review due', 'ikon-seo' ); ?> <input type="datetime-local" name="review_due_at"></label> <button class="button button-primary"><?php esc_html_e( 'Start Review', 'ikon-seo' ); ?></button></form>
+		</td></tr><?php endforeach; ?></tbody></table>
+		<?php endif; ?>
+
+		<h3><?php esc_html_e( 'Editorial Queue', 'ikon-seo' ); ?></h3>
+		<?php if ( empty( $report['reviews'] ) ) : ?><p><?php esc_html_e( 'No editorial reviews have been started.', 'ikon-seo' ); ?></p><?php endif; ?>
+		<?php foreach ( (array) ( $report['reviews'] ?? array() ) as $review ) : $nonce_id = absint( $review['id'] ); ?>
+		<div class="ikon-seo-card" style="margin-bottom:16px">
+			<div class="ikon-seo-section-header"><div><h3 style="margin:0"><?php echo esc_html( $review['brief']['page_title'] ?? ( 'Review #' . $nonce_id ) ); ?></h3><p class="description"><?php echo esc_html( 'Round ' . absint( $review['round_number'] ) . ' · Draft #' . absint( $review['draft_post_id'] ) . ' · ' . ucfirst( str_replace( '_', ' ', $review['status'] ) ) ); ?><?php if ( ! empty( $review['is_overdue'] ) ) : ?> · <strong><?php esc_html_e( 'Overdue', 'ikon-seo' ); ?></strong><?php endif; ?></p></div><div><?php if ( ! empty( $review['edit_url'] ) ) : ?><a class="button" href="<?php echo esc_url( $review['edit_url'] ); ?>"><?php esc_html_e( 'Edit Draft', 'ikon-seo' ); ?></a><?php endif; ?> <?php if ( ! empty( $review['preview_url'] ) ) : ?><a class="button" target="_blank" rel="noopener" href="<?php echo esc_url( $review['preview_url'] ); ?>"><?php esc_html_e( 'Preview', 'ikon-seo' ); ?></a><?php endif; ?></div></div>
+			<?php if ( ! empty( $review['draft_changed_after_snapshot'] ) ) : ?><div class="notice notice-warning inline"><p><?php esc_html_e( 'The draft changed after the latest snapshot. Submit a new review request or revision before approval.', 'ikon-seo' ); ?></p></div><?php endif; ?>
+			<?php if ( 'blocked' === $review['status'] ) : ?><div class="notice notice-error inline"><p><strong><?php esc_html_e( 'Blocked:', 'ikon-seo' ); ?></strong> <?php echo esc_html( $review['blocked_reason'] ); ?></p></div><?php endif; ?>
+			<p><strong><?php esc_html_e( 'Writer:', 'ikon-seo' ); ?></strong> <?php echo esc_html( $review['writer']['name'] ?? 'Unassigned' ); ?> &nbsp; <strong><?php esc_html_e( 'Reviewer:', 'ikon-seo' ); ?></strong> <?php echo esc_html( $review['reviewer']['name'] ?? 'Unassigned' ); ?> &nbsp; <strong><?php esc_html_e( 'Open comments:', 'ikon-seo' ); ?></strong> <?php echo absint( $review['open_comment_count'] ); ?> &nbsp; <strong><?php esc_html_e( 'Pending checks:', 'ikon-seo' ); ?></strong> <?php echo absint( $review['pending_required_check_count'] ); ?></p>
+
+			<details><summary><strong><?php esc_html_e( 'Assignment, deadlines and workflow actions', 'ikon-seo' ); ?></strong></summary>
+			<?php if ( $can_manage ) : ?>
+			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" style="margin:12px 0"><input type="hidden" name="action" value="ikon_seo_editorial_action"><input type="hidden" name="command" value="assign"><input type="hidden" name="review_id" value="<?php echo $nonce_id; ?>"><?php wp_nonce_field( 'ikon_seo_editorial_assign_' . $nonce_id ); ?>
+			<select name="writer_id"><option value="0"><?php esc_html_e( 'Writer: unassigned', 'ikon-seo' ); ?></option><?php foreach ( $users as $user ) : ?><option value="<?php echo absint( $user->ID ); ?>" <?php selected( absint( $review['writer_id'] ), absint( $user->ID ) ); ?>><?php echo esc_html( 'Writer: ' . $user->display_name ); ?></option><?php endforeach; ?></select>
+			<select name="reviewer_id"><option value="0"><?php esc_html_e( 'Reviewer: unassigned', 'ikon-seo' ); ?></option><?php foreach ( $users as $user ) : ?><option value="<?php echo absint( $user->ID ); ?>" <?php selected( absint( $review['reviewer_id'] ), absint( $user->ID ) ); ?>><?php echo esc_html( 'Reviewer: ' . $user->display_name ); ?></option><?php endforeach; ?></select>
+			<input type="datetime-local" name="due_at" value="<?php echo esc_attr( $review['due_at'] ? get_date_from_gmt( $review['due_at'], 'Y-m-d\TH:i' ) : '' ); ?>"> <input type="datetime-local" name="review_due_at" value="<?php echo esc_attr( $review['review_due_at'] ? get_date_from_gmt( $review['review_due_at'], 'Y-m-d\TH:i' ) : '' ); ?>"> <button class="button"><?php esc_html_e( 'Update Assignment', 'ikon-seo' ); ?></button></form>
+			<?php endif; ?>
+			<div style="display:flex;gap:8px;flex-wrap:wrap">
+			<?php $this->editorial_command_form( $review, 'request_review', 'Submit for Review', true ); ?>
+			<?php $this->editorial_command_form( $review, 'request_changes', 'Request Changes', false, true ); ?>
+			<?php $this->editorial_command_form( $review, 'submit_revision', 'Submit Revision', true, true ); ?>
+			<?php $this->editorial_command_form( $review, 'approve_round', 'Approve Round', true, true ); ?>
+			<?php $this->editorial_command_form( $review, 'sign_off', 'Record Final Sign-off', true, true ); ?>
+			<?php if ( 'blocked' === $review['status'] ) : $this->editorial_command_form( $review, 'unblock', 'Reopen Review', false, true ); else : $this->editorial_command_form( $review, 'block', 'Block Review', false, true ); endif; ?>
+			</div></details>
+
+			<details><summary><strong><?php esc_html_e( 'Source and claim verification', 'ikon-seo' ); ?></strong></summary>
+			<table class="widefat striped" style="margin-top:10px"><thead><tr><th><?php esc_html_e( 'Type', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Requirement', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Decision', 'ikon-seo' ); ?></th></tr></thead><tbody><?php foreach ( (array) $review['checks'] as $check ) : ?><tr><td><?php echo esc_html( ucfirst( $check['type'] ) ); ?></td><td><strong><?php echo esc_html( $check['label'] ); ?></strong><?php if ( ! empty( $check['evidence'] ) ) : ?><br><small><?php echo esc_html( $check['evidence'] ); ?></small><?php endif; ?></td><td><form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_editorial_action"><input type="hidden" name="command" value="update_check"><input type="hidden" name="review_id" value="<?php echo $nonce_id; ?>"><input type="hidden" name="check_id" value="<?php echo absint( $check['id'] ); ?>"><?php wp_nonce_field( 'ikon_seo_editorial_update_check_' . $nonce_id ); ?><select name="check_status"><option value="pending" <?php selected( $check['status'], 'pending' ); ?>>Pending</option><option value="verified" <?php selected( $check['status'], 'verified' ); ?>>Verified</option><option value="failed" <?php selected( $check['status'], 'failed' ); ?>>Failed</option><option value="not_applicable" <?php selected( $check['status'], 'not_applicable' ); ?>>Not applicable</option></select><input type="text" name="notes" value="<?php echo esc_attr( $check['notes'] ); ?>" placeholder="Evidence or note"><button class="button button-small"><?php esc_html_e( 'Save', 'ikon-seo' ); ?></button></form></td></tr><?php endforeach; ?></tbody></table></details>
+
+			<details><summary><strong><?php esc_html_e( 'Comments and revision requests', 'ikon-seo' ); ?></strong></summary>
+			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" style="margin:10px 0"><input type="hidden" name="action" value="ikon_seo_editorial_action"><input type="hidden" name="command" value="add_comment"><input type="hidden" name="review_id" value="<?php echo $nonce_id; ?>"><?php wp_nonce_field( 'ikon_seo_editorial_add_comment_' . $nonce_id ); ?><select name="comment_type"><option value="general">General</option><option value="inline">Inline</option><option value="source">Source</option><option value="claim">Claim</option><option value="structure">Structure</option><option value="seo">SEO</option><option value="accessibility">Accessibility</option></select> <input type="text" name="anchor_text" placeholder="Quoted text or section anchor"> <textarea name="comment_text" rows="2" style="width:100%" placeholder="Specific revision request"></textarea><button class="button"><?php esc_html_e( 'Add Comment', 'ikon-seo' ); ?></button></form>
+			<?php if ( empty( $review['comments'] ) ) : ?><p><?php esc_html_e( 'No comments recorded.', 'ikon-seo' ); ?></p><?php endif; ?>
+			<?php foreach ( (array) $review['comments'] as $comment ) : ?><div style="border-left:3px solid #ccd0d4;padding:8px 12px;margin:8px 0"><strong><?php echo esc_html( ucfirst( $comment['type'] ) . ' · ' . ucfirst( $comment['status'] ) ); ?></strong><?php if ( $comment['anchor_text'] ) : ?> <code><?php echo esc_html( $comment['anchor_text'] ); ?></code><?php endif; ?><p><?php echo esc_html( $comment['text'] ); ?></p><?php if ( 'open' === $comment['status'] ) : ?><form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_editorial_action"><input type="hidden" name="command" value="resolve_comment"><input type="hidden" name="review_id" value="<?php echo $nonce_id; ?>"><input type="hidden" name="comment_id" value="<?php echo absint( $comment['id'] ); ?>"><?php wp_nonce_field( 'ikon_seo_editorial_resolve_comment_' . $nonce_id ); ?><select name="resolution"><option value="resolved">Resolved</option><option value="dismissed">Dismissed</option></select><input type="text" name="notes" placeholder="Resolution note"><button class="button button-small"><?php esc_html_e( 'Close Comment', 'ikon-seo' ); ?></button></form><?php endif; ?></div><?php endforeach; ?></details>
+
+			<details><summary><strong><?php esc_html_e( 'Revision history and comparison', 'ikon-seo' ); ?></strong></summary><p><?php echo esc_html( count( (array) $review['snapshots'] ) . ' immutable snapshots stored.' ); ?></p><?php if ( ! empty( $review['latest_comparison']['available'] ) ) : $comparison = $review['latest_comparison']['summary']; ?><p><?php echo esc_html( sprintf( 'Latest change: %d words, %d added paragraphs, %d removed paragraphs.', intval( $comparison['word_count_change'] ), absint( $comparison['added_paragraphs'] ), absint( $comparison['removed_paragraphs'] ) ) ); ?></p><?php endif; ?><ol><?php foreach ( (array) $review['events'] as $event ) : ?><li><strong><?php echo esc_html( ucfirst( str_replace( '_', ' ', $event['event_type'] ) ) ); ?></strong> — <?php echo esc_html( $event['notes'] ); ?> <small><?php echo esc_html( $event['created_at'] ); ?></small></li><?php endforeach; ?></ol></details>
+		</div>
+		<?php endforeach;
+	}
+
+
+	private function render_publishing_readiness() {
+		$report = $this->publishing_readiness->report( array( 'limit' => 100 ), false );
+		$status = (array) ( $report['status'] ?? array() );
+		$summary = (array) ( $report['summary'] ?? array() );
+		?>
+		<div class="ikon-seo-section-header"><div><h2><?php esc_html_e( 'Controlled Publishing Readiness', 'ikon-seo' ); ?></h2><p class="description"><?php esc_html_e( 'Turn final editorial sign-off into an immutable release candidate, run launch preflight, record a separate readiness approval and verify the public result after a manual WordPress publishing decision.', 'ikon-seo' ); ?></p></div><span class="ikon-seo-pill <?php echo ! empty( $status['database_ready'] ) ? 'is-connected' : 'is-failed'; ?>"><?php echo esc_html( ! empty( $status['database_ready'] ) ? 'Manual publishing boundary' : 'Database update required' ); ?></span></div>
+		<div class="notice notice-info inline"><p><strong><?php esc_html_e( 'Safety boundary:', 'ikon-seo' ); ?></strong> <?php esc_html_e( 'This screen never publishes, schedules, merges, redirects, deletes, or changes canonical and indexing settings. It prepares and verifies a separate human publishing action.', 'ikon-seo' ); ?></p></div>
+		<?php if ( empty( $status['database_ready'] ) ) : ?><div class="notice notice-warning inline"><p><?php esc_html_e( 'Reactivate or update Ikon SEO to create the v1.11.0 publishing readiness tables.', 'ikon-seo' ); ?></p></div><?php return; endif; ?>
+		<div class="ikon-seo-metrics">
+			<div class="ikon-seo-metric"><strong><?php echo absint( $summary['active'] ?? 0 ); ?></strong><span><?php esc_html_e( 'Active releases', 'ikon-seo' ); ?></span></div>
+			<div class="ikon-seo-metric"><strong><?php echo absint( $summary['ready_for_manual_publish'] ?? 0 ); ?></strong><span><?php esc_html_e( 'Ready to publish manually', 'ikon-seo' ); ?></span></div>
+			<div class="ikon-seo-metric"><strong><?php echo absint( $summary['awaiting_verification'] ?? 0 ); ?></strong><span><?php esc_html_e( 'Awaiting verification', 'ikon-seo' ); ?></span></div>
+			<div class="ikon-seo-metric"><strong><?php echo absint( $summary['issues_found'] ?? 0 ); ?></strong><span><?php esc_html_e( 'Launch issues', 'ikon-seo' ); ?></span></div>
+			<div class="ikon-seo-metric"><strong><?php echo absint( $summary['blockers'] ?? 0 ); ?></strong><span><?php esc_html_e( 'Current blockers', 'ikon-seo' ); ?></span></div>
+			<div class="ikon-seo-metric"><strong><?php echo absint( $summary['completed'] ?? 0 ); ?></strong><span><?php esc_html_e( 'Completed', 'ikon-seo' ); ?></span></div>
+		</div>
+
+		<h3><?php esc_html_e( 'Signed-off Drafts Ready for a Release Candidate', 'ikon-seo' ); ?></h3>
+		<table class="widefat striped"><thead><tr><th><?php esc_html_e( 'Signed-off draft', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Release setup', 'ikon-seo' ); ?></th></tr></thead><tbody>
+		<?php if ( empty( $report['eligible_reviews'] ) ) : ?><tr><td colspan="2"><?php esc_html_e( 'No current signed-off editorial drafts are waiting for release preparation.', 'ikon-seo' ); ?></td></tr><?php endif; ?>
+		<?php foreach ( (array) ( $report['eligible_reviews'] ?? array() ) as $review ) : $brief = (array) ( $review['brief'] ?? array() ); ?>
+		<tr><td><strong><?php echo esc_html( $brief['page_title'] ?? 'Controlled draft' ); ?></strong><br><small><?php echo esc_html( 'Editorial review #' . absint( $review['id'] ) . ' · Draft #' . absint( $review['draft_post_id'] ) ); ?></small><p><a class="button button-small" href="<?php echo esc_url( $review['edit_url'] ?? '' ); ?>"><?php esc_html_e( 'Review Draft', 'ikon-seo' ); ?></a></p></td><td>
+		<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_publishing_action"><input type="hidden" name="command" value="create_release"><input type="hidden" name="review_id" value="<?php echo absint( $review['id'] ); ?>"><?php wp_nonce_field( 'ikon_seo_publishing_create_release_' . absint( $review['id'] ) ); ?><label><?php esc_html_e( 'Proposed slug', 'ikon-seo' ); ?> <input type="text" name="slug" value="<?php echo esc_attr( sanitize_title( $brief['page_title'] ?? '' ) ); ?>"></label> <button class="button button-primary"><?php esc_html_e( 'Create Release Candidate', 'ikon-seo' ); ?></button></form>
+		</td></tr><?php endforeach; ?>
+		</tbody></table>
+
+		<h3><?php esc_html_e( 'Release Candidates and Launch Monitoring', 'ikon-seo' ); ?></h3>
+		<?php if ( empty( $report['releases'] ) ) : ?><p><?php esc_html_e( 'No publishing releases have been created.', 'ikon-seo' ); ?></p><?php endif; ?>
+		<?php foreach ( (array) ( $report['releases'] ?? array() ) as $release ) : $id = absint( $release['id'] ); $review = (array) ( $release['editorial_review'] ?? array() ); $brief = (array) ( $review['brief'] ?? array() ); ?>
+		<div class="ikon-seo-card" style="margin:14px 0">
+			<div style="display:flex;justify-content:space-between;gap:16px;align-items:flex-start;flex-wrap:wrap"><div><h3 style="margin:0"><?php echo esc_html( $brief['page_title'] ?? ( 'Release #' . $id ) ); ?></h3><p><span class="ikon-seo-pill"><?php echo esc_html( ucfirst( str_replace( '_', ' ', $release['status'] ) ) ); ?></span> <small><?php echo esc_html( 'Release #' . $id . ' · ' . ucfirst( str_replace( '_', ' ', $release['publication_mode'] ) ) ); ?></small></p><p class="description"><?php echo esc_html( $release['target_url'] ?: 'Target URL will be confirmed at publication.' ); ?></p></div><div><strong><?php echo absint( $release['preflight_score'] ); ?>/100 preflight<?php if ( ! empty( $release['last_verified_at'] ) ) : ?><br><?php echo absint( $release['verification_score'] ); ?>/100 verification<?php endif; ?></strong><br><small><?php echo esc_html( absint( $release['blocker_count'] ) . ' blockers · ' . absint( $release['warning_count'] ) . ' warnings' ); ?></small></div></div>
+			<?php if ( ! empty( $release['draft_changed_after_release'] ) ) : ?><div class="notice notice-error inline"><p><?php esc_html_e( 'The draft changed after the release candidate was created. Readiness and preflight are no longer current; return it to Editorial Review.', 'ikon-seo' ); ?></p></div><?php endif; ?>
+			<?php if ( 'blocked' === $release['status'] && $release['blocked_reason'] ) : ?><div class="notice notice-warning inline"><p><?php echo esc_html( $release['blocked_reason'] ); ?></p></div><?php endif; ?>
+			<div style="display:flex;gap:8px;flex-wrap:wrap;margin:10px 0">
+			<?php if ( in_array( $release['status'], array( 'candidate','preflight_failed','preflight_passed' ), true ) ) : $this->publishing_command_form( $release, 'run_preflight', 'Run Current Preflight', true ); endif; ?>
+			<?php if ( 'preflight_passed' === $release['status'] ) : $this->publishing_command_form( $release, 'mark_ready', 'Approve Readiness', true, true ); endif; ?>
+			<?php if ( 'ready_for_manual_publish' === $release['status'] ) : ?>
+			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_publishing_action"><input type="hidden" name="command" value="record_manual_publication"><input type="hidden" name="release_id" value="<?php echo $id; ?>"><?php wp_nonce_field( 'ikon_seo_publishing_record_manual_publication_' . $id ); ?><input type="number" min="1" name="live_post_id" value="<?php echo absint( $release['publication_mode'] === 'new_page' ? $release['draft_post_id'] : $release['source_post_id'] ); ?>" placeholder="Published post ID"><input type="url" name="live_url" placeholder="Optional public URL"><button class="button button-primary"><?php esc_html_e( 'Record Manual Publication', 'ikon-seo' ); ?></button></form>
+			<?php endif; ?>
+			<?php if ( in_array( $release['status'], array( 'publication_detected','monitoring','issues_found','verified' ), true ) ) : $this->publishing_command_form( $release, 'verify_launch', 'Verify Public Launch', true ); endif; ?>
+			<?php if ( in_array( $release['status'], array( 'verified','monitoring' ), true ) && ! absint( $release['blocker_count'] ) ) : $this->publishing_command_form( $release, 'complete_monitoring', 'Complete Monitoring', false, true ); endif; ?>
+			<?php if ( 'blocked' === $release['status'] ) : $this->publishing_command_form( $release, 'unblock', 'Reopen Release', false, true ); elseif ( ! in_array( $release['status'], array( 'completed','cancelled' ), true ) ) : $this->publishing_command_form( $release, 'block', 'Block Release', false, true ); endif; ?>
+			</div>
+			<p><a class="button button-small" href="<?php echo esc_url( $release['draft_edit_url'] ); ?>"><?php esc_html_e( 'Open Controlled Draft', 'ikon-seo' ); ?></a><?php if ( $release['target_url'] && $release['published_at'] ) : ?> <a class="button button-small" target="_blank" rel="noopener" href="<?php echo esc_url( $release['target_url'] ); ?>"><?php esc_html_e( 'Open Live URL', 'ikon-seo' ); ?></a><?php endif; ?></p>
+			<details><summary><strong><?php esc_html_e( 'Preflight and post-launch checks', 'ikon-seo' ); ?></strong></summary><table class="widefat striped" style="margin-top:10px"><thead><tr><th><?php esc_html_e( 'Phase', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Check', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Result', 'ikon-seo' ); ?></th></tr></thead><tbody><?php if ( empty( $release['checks'] ) ) : ?><tr><td colspan="3"><?php esc_html_e( 'No checks have been run.', 'ikon-seo' ); ?></td></tr><?php endif; ?><?php foreach ( (array) $release['checks'] as $check ) : ?><tr><td><?php echo esc_html( ucfirst( str_replace( '_', ' ', $check['phase'] ) ) ); ?></td><td><strong><?php echo esc_html( $check['label'] ); ?></strong><br><small><?php echo esc_html( ucfirst( $check['severity'] ) . ' · Expected: ' . $check['expected'] ); ?></small></td><td><span class="ikon-seo-pill"><?php echo esc_html( ucfirst( $check['status'] ) ); ?></span><br><small><?php echo esc_html( $check['observed'] ); ?></small></td></tr><?php endforeach; ?></tbody></table></details>
+			<details><summary><strong><?php esc_html_e( 'Snapshots and event history', 'ikon-seo' ); ?></strong></summary><p><?php echo esc_html( count( (array) $release['snapshots'] ) . ' immutable release snapshots stored.' ); ?></p><ol><?php foreach ( (array) $release['events'] as $event ) : ?><li><strong><?php echo esc_html( ucfirst( str_replace( '_', ' ', $event['type'] ) ) ); ?></strong> — <?php echo esc_html( $event['notes'] ); ?> <small><?php echo esc_html( $event['created_at'] ); ?></small></li><?php endforeach; ?></ol></details>
+		</div>
+		<?php endforeach;
+	}
+
+	private function publishing_command_form( array $release, $command, $label, $primary = false, $notes = false ) {
+		$id = absint( $release['id'] );
+		?><form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_publishing_action"><input type="hidden" name="command" value="<?php echo esc_attr( $command ); ?>"><input type="hidden" name="release_id" value="<?php echo $id; ?>"><?php wp_nonce_field( 'ikon_seo_publishing_' . $command . '_' . $id ); ?><?php if ( $notes ) : ?><input type="text" name="notes" placeholder="Decision or blocking note"><?php endif; ?><button class="button <?php echo $primary ? 'button-primary' : ''; ?>"><?php echo esc_html( $label ); ?></button></form><?php
+	}
+
+	private function editorial_command_form( array $review, $command, $label, $primary = false, $notes = false ) {
+		$allowed = array(
+			'request_review' => array( 'assigned', 'writing', 'changes_requested' ),
+			'request_changes' => array( 'review_requested', 'approved' ),
+			'submit_revision' => array( 'changes_requested' ),
+			'approve_round' => array( 'review_requested' ),
+			'sign_off' => array( 'approved' ),
+			'block' => array( 'unassigned', 'assigned', 'writing', 'review_requested', 'changes_requested', 'approved' ),
+			'unblock' => array( 'blocked' ),
+		);
+		if ( empty( $allowed[ $command ] ) || ! in_array( $review['status'], $allowed[ $command ], true ) ) {
+			return;
+		}
+		$user_id = get_current_user_id();
+		$can_manage = current_user_can( 'manage_options' );
+		$writer_actions = array( 'request_review', 'submit_revision' );
+		$reviewer_actions = array( 'request_changes', 'approve_round', 'sign_off' );
+		if ( in_array( $command, $writer_actions, true ) && ! $can_manage && absint( $review['writer_id'] ) !== $user_id ) { return; }
+		if ( in_array( $command, $reviewer_actions, true ) && ! $can_manage && absint( $review['reviewer_id'] ) !== $user_id ) { return; }
+		if ( in_array( $command, array( 'block', 'unblock' ), true ) && ! $can_manage ) { return; }
+		$id = absint( $review['id'] );
+		?><form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_editorial_action"><input type="hidden" name="command" value="<?php echo esc_attr( $command ); ?>"><input type="hidden" name="review_id" value="<?php echo $id; ?>"><?php wp_nonce_field( 'ikon_seo_editorial_' . $command . '_' . $id ); ?><?php if ( $notes ) : ?><input type="text" name="notes" placeholder="Optional decision note"><?php endif; ?><button class="button <?php echo $primary ? 'button-primary' : ''; ?>"><?php echo esc_html( $label ); ?></button></form><?php
+	}
+
+	private function render_portfolio_governance() {
+		$report = $this->portfolio_governance->report( array( 'limit' => 100 ) );
+		$status = (array) ( $report['status'] ?? array() );
+		$agent  = (array) ( $status['agent'] ?? array() );
+		$active = (array) ( $report['active_policy'] ?? array() );
+		$compliance = (array) ( $report['compliance'] ?? array() );
+		$one_time_key = $this->portfolio_governance->consume_agent_key( get_current_user_id() );
+		$agency_report = Ikon_SEO_Agency::can_manage() ? $this->agency_command->summary( 100 ) : array();
+		?>
+		<div class="ikon-seo-section-header"><div><h2><?php esc_html_e( 'Agency Portfolio Synchronisation & Governance', 'ikon-seo' ); ?></h2><p class="description"><?php esc_html_e( 'Create versioned agency policies, deliver them as proposals, require local approval and monitor governance compliance across managed websites.', 'ikon-seo' ); ?></p></div><span class="ikon-seo-pill <?php echo ! empty( $status['database_ready'] ) ? 'is-connected' : 'is-failed'; ?>"><?php echo esc_html( ! empty( $status['database_ready'] ) ? 'Approval-first governance' : 'Database update required' ); ?></span></div>
+		<div class="notice notice-info inline"><p><strong><?php esc_html_e( 'Safety boundary:', 'ikon-seo' ); ?></strong> <?php esc_html_e( 'The agency can submit a policy proposal, but only an administrator on this WordPress website can activate it. Policies cannot publish, merge, redirect, delete, noindex, update public profiles or perform outreach.', 'ikon-seo' ); ?></p></div>
+		<?php if ( empty( $status['database_ready'] ) ) : ?><div class="notice notice-warning inline"><p><?php esc_html_e( 'Reactivate or update Ikon SEO to create the current Portfolio Governance tables.', 'ikon-seo' ); ?></p></div><?php return; endif; ?>
+
+		<div class="ikon-seo-card">
+			<h3><?php esc_html_e( 'Managed Website Governance Connection', 'ikon-seo' ); ?></h3>
+			<p><?php esc_html_e( 'Generate a separate proposal-only key for the agency command centre. Do not reuse the read-only snapshot key or the private workspace key.', 'ikon-seo' ); ?></p>
+			<?php if ( $one_time_key ) : ?><div class="notice notice-success inline"><p><strong><?php esc_html_e( 'Copy this key now:', 'ikon-seo' ); ?></strong></p><p><code style="word-break:break-all"><?php echo esc_html( $one_time_key ); ?></code></p><p><small><?php echo esc_html( $agent['endpoint'] ?? '' ); ?></small></p></div><?php endif; ?>
+			<p><?php echo esc_html( ! empty( $agent['configured'] ) ? sprintf( 'Configured · ending %s · created %s', $agent['last4'] ?? '', $agent['created_at'] ?? '' ) : 'No governance proposal key has been generated.' ); ?></p>
+			<div style="display:flex;gap:8px;flex-wrap:wrap">
+			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_portfolio_governance_action"><input type="hidden" name="command" value="generate_agent_key"><?php wp_nonce_field( 'ikon_seo_portfolio_governance_action' ); ?><button class="button button-primary"><?php esc_html_e( 'Generate New Proposal Key', 'ikon-seo' ); ?></button></form>
+			<?php if ( ! empty( $agent['configured'] ) ) : ?><form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_portfolio_governance_action"><input type="hidden" name="command" value="revoke_agent_key"><?php wp_nonce_field( 'ikon_seo_portfolio_governance_action' ); ?><button class="button"><?php esc_html_e( 'Revoke Proposal Key', 'ikon-seo' ); ?></button></form><?php endif; ?>
+			</div>
+		</div>
+
+		<div class="ikon-seo-card">
+			<h3><?php esc_html_e( 'Active Local Policy & Compliance', 'ikon-seo' ); ?></h3>
+			<?php if ( ! $active ) : ?><p><?php esc_html_e( 'No agency policy is active on this website.', 'ikon-seo' ); ?></p><?php else : ?>
+			<p><strong><?php echo esc_html( $active['policy_name'] ?? '' ); ?></strong> <?php echo esc_html( 'v' . absint( $active['policy_version'] ?? 0 ) ); ?> · <code><?php echo esc_html( substr( $active['policy_fingerprint'] ?? '', 0, 16 ) ); ?>…</code></p>
+			<div class="ikon-seo-metrics"><div class="ikon-seo-metric"><strong><?php echo absint( $compliance['score'] ?? 0 ); ?>%</strong><span><?php esc_html_e( 'Compliance', 'ikon-seo' ); ?></span></div><div class="ikon-seo-metric"><strong><?php echo absint( $compliance['effective_limits']['minimum_strategy_readiness'] ?? 70 ); ?></strong><span><?php esc_html_e( 'Minimum strategy score', 'ikon-seo' ); ?></span></div><div class="ikon-seo-metric"><strong><?php echo absint( $compliance['effective_limits']['max_safe_batch'] ?? 3 ); ?></strong><span><?php esc_html_e( 'Maximum safe batch', 'ikon-seo' ); ?></span></div></div>
+			<table class="widefat striped"><thead><tr><th><?php esc_html_e( 'Control', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Status', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Purpose', 'ikon-seo' ); ?></th></tr></thead><tbody><?php foreach ( (array) ( $compliance['checks'] ?? array() ) as $check ) : ?><tr><td><?php echo esc_html( $check['label'] ?? '' ); ?></td><td><strong><?php echo esc_html( strtoupper( $check['status'] ?? '' ) ); ?></strong></td><td><?php echo esc_html( $check['description'] ?? '' ); ?></td></tr><?php endforeach; ?></tbody></table>
+			<?php endif; ?>
+		</div>
+
+		<h3><?php esc_html_e( 'Local Policy Inbox', 'ikon-seo' ); ?></h3>
+		<?php if ( empty( $report['inbox'] ) ) : ?><p><?php esc_html_e( 'No governance proposals have been received.', 'ikon-seo' ); ?></p><?php endif; ?>
+		<?php foreach ( (array) ( $report['inbox'] ?? array() ) as $item ) : $rules=(array)($item['policy']['rules']??array()); ?>
+		<div class="ikon-seo-card"><h3><?php echo esc_html( $item['policy_name'] . ' v' . absint( $item['policy_version'] ) ); ?></h3><p><span class="ikon-seo-pill"><?php echo esc_html( ucfirst( str_replace( '_', ' ', $item['status'] ) ) ); ?></span> <?php echo esc_html( 'From ' . $item['source_label'] ); ?></p><p><?php echo esc_html( sprintf( 'Strategy readiness ≥ %d · safe batch ≤ %d · retention %d days', absint( $rules['minimum_strategy_readiness'] ?? 70 ), absint( $rules['max_safe_batch'] ?? 3 ), absint( $rules['data_retention_days'] ?? 365 ) ) ); ?></p><p><code><?php echo esc_html( $item['policy_fingerprint'] ); ?></code></p>
+		<?php if ( 'pending_local_approval' === $item['status'] ) : ?><div style="display:flex;gap:8px;flex-wrap:wrap"><form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_portfolio_governance_action"><input type="hidden" name="command" value="accept_proposal"><input type="hidden" name="proposal_id" value="<?php echo absint( $item['id'] ); ?>"><?php wp_nonce_field( 'ikon_seo_portfolio_governance_action' ); ?><input type="text" name="notes" placeholder="Local approval note"><button class="button button-primary"><?php esc_html_e( 'Accept Locally', 'ikon-seo' ); ?></button></form><form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_portfolio_governance_action"><input type="hidden" name="command" value="reject_proposal"><input type="hidden" name="proposal_id" value="<?php echo absint( $item['id'] ); ?>"><?php wp_nonce_field( 'ikon_seo_portfolio_governance_action' ); ?><input required type="text" name="notes" placeholder="Reason for rejection"><button class="button"><?php esc_html_e( 'Reject', 'ikon-seo' ); ?></button></form></div><?php endif; ?></div>
+		<?php endforeach; ?>
+
+		<?php if ( Ikon_SEO_Agency::can_manage() ) : ?>
+		<div class="ikon-seo-card"><h3><?php esc_html_e( 'Create Versioned Agency Policy', 'ikon-seo' ); ?></h3><form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_portfolio_governance_action"><input type="hidden" name="command" value="create_policy"><?php wp_nonce_field( 'ikon_seo_portfolio_governance_action' ); ?><table class="form-table"><tr><th><?php esc_html_e( 'Policy name', 'ikon-seo' ); ?></th><td><input required class="regular-text" name="name" placeholder="Agency Standard Policy"></td></tr><tr><th><?php esc_html_e( 'Policy key', 'ikon-seo' ); ?></th><td><input name="policy_key" placeholder="agency-standard"></td></tr><tr><th><?php esc_html_e( 'Minimum strategy readiness', 'ikon-seo' ); ?></th><td><input type="number" min="70" max="100" name="minimum_strategy_readiness" value="70"></td></tr><tr><th><?php esc_html_e( 'Maximum safe batch', 'ikon-seo' ); ?></th><td><input type="number" min="1" max="5" name="max_safe_batch" value="3"></td></tr><tr><th><?php esc_html_e( 'Retention', 'ikon-seo' ); ?></th><td><input type="number" min="90" max="1095" name="data_retention_days" value="365"> days</td></tr><tr><th><?php esc_html_e( 'Required gates', 'ikon-seo' ); ?></th><td><label><input type="checkbox" name="require_fact_review" value="1" checked> Fact review</label><br><label><input type="checkbox" name="require_brief_approval" value="1" checked> Brief approval</label><br><label><input type="checkbox" name="require_editorial_review" value="1" checked> Editorial review</label><br><label><input type="checkbox" name="require_publishing_preflight" value="1" checked> Publishing preflight</label><br><label><input type="checkbox" name="require_impact_study" value="1"> Impact study</label></td></tr><tr><th><?php esc_html_e( 'Notes', 'ikon-seo' ); ?></th><td><textarea name="notes" rows="3" class="large-text"></textarea></td></tr></table><button class="button button-primary"><?php esc_html_e( 'Create Draft Policy', 'ikon-seo' ); ?></button></form></div>
+
+		<h3><?php esc_html_e( 'Agency Policies', 'ikon-seo' ); ?></h3><table class="widefat striped"><thead><tr><th><?php esc_html_e( 'Policy', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Status', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Controls', 'ikon-seo' ); ?></th></tr></thead><tbody><?php foreach ( (array) ( $report['policies'] ?? array() ) as $policy ) : ?><tr><td><strong><?php echo esc_html( $policy['name'] ); ?></strong> <?php echo esc_html( 'v' . absint( $policy['version'] ) ); ?><br><code><?php echo esc_html( substr( $policy['fingerprint'],0,16) ); ?>…</code></td><td><?php echo esc_html( ucfirst( $policy['status'] ) ); ?></td><td><?php if ( 'draft' === $policy['status'] ) : ?><form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_portfolio_governance_action"><input type="hidden" name="command" value="approve_policy"><input type="hidden" name="policy_id" value="<?php echo absint( $policy['id'] ); ?>"><?php wp_nonce_field( 'ikon_seo_portfolio_governance_action' ); ?><input type="text" name="notes" placeholder="Approval note"><button class="button button-primary"><?php esc_html_e( 'Approve', 'ikon-seo' ); ?></button></form><?php elseif ( 'approved' === $policy['status'] ) : ?><form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_portfolio_governance_action"><input type="hidden" name="command" value="retire_policy"><input type="hidden" name="policy_id" value="<?php echo absint( $policy['id'] ); ?>"><?php wp_nonce_field( 'ikon_seo_portfolio_governance_action' ); ?><input required type="text" name="notes" placeholder="Retirement reason"><button class="button"><?php esc_html_e( 'Retire', 'ikon-seo' ); ?></button></form><?php endif; ?></td></tr><?php endforeach; ?></tbody></table>
+
+		<div class="ikon-seo-card"><h3><?php esc_html_e( 'Assign & Synchronise', 'ikon-seo' ); ?></h3><form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_portfolio_governance_action"><input type="hidden" name="command" value="save_site_key"><?php wp_nonce_field( 'ikon_seo_portfolio_governance_action' ); ?><select name="site_id" required><option value=""><?php esc_html_e( 'Select managed website', 'ikon-seo' ); ?></option><?php foreach ( (array) ( $agency_report['sites'] ?? array() ) as $site ) : ?><option value="<?php echo absint( $site['id'] ); ?>"><?php echo esc_html( $site['site_name'] . ' — ' . $site['site_url'] ); ?></option><?php endforeach; ?></select> <input required class="regular-text" name="governance_key" placeholder="ikon_governance_…"> <button class="button"><?php esc_html_e( 'Save Proposal Key', 'ikon-seo' ); ?></button></form><hr><form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_portfolio_governance_action"><input type="hidden" name="command" value="assign_policy"><?php wp_nonce_field( 'ikon_seo_portfolio_governance_action' ); ?><select name="policy_id" required><option value=""><?php esc_html_e( 'Select approved policy', 'ikon-seo' ); ?></option><?php foreach ( (array) ( $report['policies'] ?? array() ) as $policy ) : if ( 'approved' !== $policy['status'] ) continue; ?><option value="<?php echo absint( $policy['id'] ); ?>"><?php echo esc_html( $policy['name'] . ' v' . $policy['version'] ); ?></option><?php endforeach; ?></select> <select name="site_id" required><option value=""><?php esc_html_e( 'Select managed website', 'ikon-seo' ); ?></option><?php foreach ( (array) ( $agency_report['sites'] ?? array() ) as $site ) : ?><option value="<?php echo absint( $site['id'] ); ?>"><?php echo esc_html( $site['site_name'] ); ?></option><?php endforeach; ?></select> <button class="button button-primary"><?php esc_html_e( 'Assign Policy', 'ikon-seo' ); ?></button></form></div>
+
+		<h3><?php esc_html_e( 'Policy Assignments', 'ikon-seo' ); ?></h3><table class="widefat striped"><thead><tr><th><?php esc_html_e( 'Website', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Policy', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Remote status', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Action', 'ikon-seo' ); ?></th></tr></thead><tbody><?php foreach ( (array) ( $report['assignments'] ?? array() ) as $assignment ) : ?><tr><td><?php echo esc_html( $assignment['site_name'] ?: $assignment['site_url'] ); ?></td><td><?php echo esc_html( $assignment['policy_name'] . ' v' . $assignment['policy_version'] ); ?></td><td><?php echo esc_html( ucfirst( str_replace( '_',' ', $assignment['remote_status'] ?: $assignment['status'] ) ) ); ?><?php if ( $assignment['last_error'] ) : ?><br><small><?php echo esc_html( $assignment['last_error'] ); ?></small><?php endif; ?></td><td><form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_portfolio_governance_action"><input type="hidden" name="command" value="sync_assignment"><input type="hidden" name="assignment_id" value="<?php echo absint( $assignment['id'] ); ?>"><?php wp_nonce_field( 'ikon_seo_portfolio_governance_action' ); ?><button class="button"><?php esc_html_e( 'Send Proposal', 'ikon-seo' ); ?></button></form></td></tr><?php endforeach; ?></tbody></table>
+		<?php endif; ?>
+		<?php
+	}
+
+	private function render_pattern_library() {
+		$report = $this->pattern_library->report( array( 'limit' => 100 ) );
+		$status = $report['status'] ?? array();
+		?>
+		<div class="ikon-card">
+			<h2><?php esc_html_e( 'Portfolio Learning & Validated Pattern Library', 'ikon-seo' ); ?></h2>
+			<p><?php esc_html_e( 'Build context-bounded advisory patterns from human-acknowledged impact studies. A pattern is never automatically validated or applied.', 'ikon-seo' ); ?></p>
+			<div class="ikon-grid ikon-grid-4">
+				<div><strong><?php echo esc_html( absint( $status['patterns'] ?? 0 ) ); ?></strong><br><?php esc_html_e( 'Patterns', 'ikon-seo' ); ?></div>
+				<div><strong><?php echo esc_html( absint( $status['evidence'] ?? 0 ) ); ?></strong><br><?php esc_html_e( 'Evidence records', 'ikon-seo' ); ?></div>
+				<div><strong><?php echo esc_html( absint( $status['review_ready'] ?? 0 ) ); ?></strong><br><?php esc_html_e( 'Ready for review', 'ikon-seo' ); ?></div>
+				<div><strong><?php echo esc_html( absint( $status['validated'] ?? 0 ) ); ?></strong><br><?php esc_html_e( 'Human validated', 'ikon-seo' ); ?></div>
+			</div>
+			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" style="margin-top:16px"><input type="hidden" name="action" value="ikon_seo_pattern_library_action"><input type="hidden" name="command" value="refresh"><?php wp_nonce_field( 'ikon_seo_pattern_library_refresh_0' ); ?><button class="button button-primary"><?php esc_html_e( 'Refresh Pattern Candidates', 'ikon-seo' ); ?></button></form>
+		</div>
+		<div class="ikon-card">
+			<h3><?php esc_html_e( 'Import anonymised portfolio evidence', 'ikon-seo' ); ?></h3>
+			<p><?php esc_html_e( 'Paste a JSON array exported from another Ikon SEO website. URLs, business names, queries, content and contact details are rejected.', 'ikon-seo' ); ?></p>
+			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_pattern_library_action"><input type="hidden" name="command" value="import_evidence"><?php wp_nonce_field( 'ikon_seo_pattern_library_import_evidence_0' ); ?><textarea name="records_json" rows="8" class="large-text code" placeholder="[{&quot;source_site_fingerprint&quot;:&quot;...&quot;}]"></textarea><p><button class="button"><?php esc_html_e( 'Import Approved Evidence', 'ikon-seo' ); ?></button></p></form>
+		</div>
+		<?php foreach ( (array) ( $report['patterns'] ?? array() ) as $pattern ) : ?>
+		<div class="ikon-card">
+			<h3><?php echo esc_html( $pattern['title'] ?? '' ); ?></h3>
+			<p><strong><?php echo esc_html( ucwords( str_replace( '_', ' ', $pattern['status'] ?? '' ) ) ); ?></strong> · <?php echo esc_html( ucwords( str_replace( '_', ' ', $pattern['directional_signal'] ?? '' ) ) ); ?> · <?php echo esc_html( ucfirst( $pattern['confidence'] ?? 'low' ) ); ?> confidence</p>
+			<p><?php echo esc_html( sprintf( '%d studies (%d usable) across %d anonymised sites (%d usable) · %.1f%% directional consistency · median adjusted change: %s', absint( $pattern['study_count'] ?? 0 ), absint( $pattern['usable_study_count'] ?? 0 ), absint( $pattern['site_count'] ?? 0 ), absint( $pattern['usable_site_count'] ?? 0 ), (float) ( $pattern['consistency_percent'] ?? 0 ), null === ( $pattern['median_change_percent'] ?? null ) ? 'n/a' : number_format_i18n( (float) $pattern['median_change_percent'], 1 ) . '%' ) ); ?></p>
+			<p><code><?php echo esc_html( implode( ' / ', array( $pattern['website_mode'] ?? '', $pattern['industry'] ?? '', $pattern['market'] ?? '', $pattern['language'] ?? '', $pattern['page_type'] ?? '', $pattern['change_family'] ?? '', $pattern['primary_metric'] ?? '' ) ) ); ?></code></p>
+			<?php if ( ! empty( $pattern['limitations'] ) ) : ?><ul><?php foreach ( $pattern['limitations'] as $limitation ) : ?><li><?php echo esc_html( $limitation ); ?></li><?php endforeach; ?></ul><?php endif; ?>
+			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><input type="hidden" name="action" value="ikon_seo_pattern_library_action"><input type="hidden" name="pattern_id" value="<?php echo absint( $pattern['id'] ); ?>"><?php wp_nonce_field( 'ikon_seo_pattern_library_decision_' . absint( $pattern['id'] ) ); ?><select name="command"><option value="validate">Validate</option><option value="limit">Limited use</option><option value="reject">Reject</option><option value="retire">Retire</option><option value="restore">Restore candidate</option></select><input type="text" name="notes" placeholder="Human review note"><button class="button"><?php esc_html_e( 'Record Decision', 'ikon-seo' ); ?></button></form>
+		</div>
+		<?php endforeach; ?>
+		<div class="ikon-card"><h3><?php esc_html_e( 'Shareable anonymised evidence bundle', 'ikon-seo' ); ?></h3><textarea readonly rows="12" class="large-text code"><?php echo esc_textarea( wp_json_encode( $report['shareable_evidence'] ?? array(), JSON_PRETTY_PRINT ) ); ?></textarea></div>
+		<?php
+	}
+
+	private function render_agency_service_levels() {
+		$report = $this->agency_service_levels->report( array( 'limit' => 100 ) );
+		$status = (array) ( $report['status'] ?? array() );
+		$metrics = (array) ( $report['metrics'] ?? array() );
+		$agency = Ikon_SEO_Agency::can_manage() ? $this->agency_command->summary( 100 ) : array( 'sites' => array() );
+		$users = get_users( array( 'fields' => array( 'ID', 'display_name' ), 'number' => 100 ) );
+		?>
+		<div class="ikon-seo-section-header"><div><h2><?php esc_html_e( 'Agency Service Levels, Capacity & Client Reporting', 'ikon-seo' ); ?></h2><p class="description"><?php esc_html_e( 'Define versioned service plans, allocate bounded monthly capacity, track delivery and prepare evidence-based client reports with separate human approval.', 'ikon-seo' ); ?></p></div><span class="ikon-seo-pill <?php echo ! empty( $status['database_ready'] ) ? 'is-connected' : 'is-failed'; ?>"><?php echo esc_html( ! empty( $status['database_ready'] ) ? 'Manual client delivery only' : 'Database update required' ); ?></span></div>
+		<div class="notice notice-info inline"><p><strong><?php esc_html_e( 'Safety boundary:', 'ikon-seo' ); ?></strong> <?php esc_html_e( 'Ikon SEO can prepare and approve a report record, but it cannot email a client, publish content, promise rankings, or change a managed website.', 'ikon-seo' ); ?></p></div>
+		<?php if ( empty( $status['database_ready'] ) ) : ?><div class="notice notice-warning inline"><p><?php esc_html_e( 'Reactivate or update Ikon SEO to create the v1.15.0 service-level tables.', 'ikon-seo' ); ?></p></div><?php return; endif; ?>
+
+		<div class="ikon-seo-metrics">
+			<div class="ikon-seo-metric"><strong><?php echo absint( $metrics['active_assignments'] ?? 0 ); ?></strong><span><?php esc_html_e( 'Active clients', 'ikon-seo' ); ?></span></div>
+			<div class="ikon-seo-metric"><strong><?php echo absint( $metrics['open_items'] ?? 0 ); ?></strong><span><?php esc_html_e( 'Open work items', 'ikon-seo' ); ?></span></div>
+			<div class="ikon-seo-metric"><strong><?php echo absint( $metrics['overdue_items'] ?? 0 ); ?></strong><span><?php esc_html_e( 'Overdue items', 'ikon-seo' ); ?></span></div>
+			<div class="ikon-seo-metric"><strong><?php echo absint( $metrics['review_ready_reports'] ?? 0 ); ?></strong><span><?php esc_html_e( 'Reports to approve', 'ikon-seo' ); ?></span></div>
+		</div>
+
+		<?php if ( Ikon_SEO_Agency::can_manage() ) : ?>
+		<div class="ikon-seo-grid">
+		<div class="ikon-seo-card"><h3><?php esc_html_e( 'Create Service Plan', 'ikon-seo' ); ?></h3><form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_agency_service_levels_action"><input type="hidden" name="command" value="create_plan"><?php wp_nonce_field( 'ikon_seo_agency_service_levels_action' ); ?><table class="form-table"><tr><th><?php esc_html_e( 'Name', 'ikon-seo' ); ?></th><td><input required class="regular-text" name="name" placeholder="Managed SEO Growth"></td></tr><tr><th><?php esc_html_e( 'Monthly capacity', 'ikon-seo' ); ?></th><td><input type="number" min="1" max="1000" name="monthly_capacity_units" value="20"> units</td></tr><tr><th><?php esc_html_e( 'Concurrent work', 'ikon-seo' ); ?></th><td><input type="number" min="1" max="100" name="max_concurrent_items" value="5"></td></tr><tr><th><?php esc_html_e( 'Response target', 'ikon-seo' ); ?></th><td><input type="number" min="1" max="720" name="response_target_hours" value="48"> hours</td></tr><tr><th><?php esc_html_e( 'Report cadence', 'ikon-seo' ); ?></th><td><select name="report_cadence"><option>monthly</option><option>fortnightly</option><option>quarterly</option></select></td></tr><tr><th><?php esc_html_e( 'Included deliverables', 'ikon-seo' ); ?></th><td><textarea name="included_deliverables" rows="4" class="large-text" placeholder="Technical review&#10;Content planning&#10;Monthly report"></textarea></td></tr><tr><th><?php esc_html_e( 'Excluded services', 'ikon-seo' ); ?></th><td><textarea name="excluded_services" rows="3" class="large-text" placeholder="Paid advertising&#10;Guaranteed rankings"></textarea></td></tr></table><button class="button button-primary"><?php esc_html_e( 'Create Draft Plan', 'ikon-seo' ); ?></button></form></div>
+
+		<div class="ikon-seo-card"><h3><?php esc_html_e( 'Set Team Capacity', 'ikon-seo' ); ?></h3><form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_agency_service_levels_action"><input type="hidden" name="command" value="set_capacity"><?php wp_nonce_field( 'ikon_seo_agency_service_levels_action' ); ?><p><select name="user_id" required><option value=""><?php esc_html_e( 'Select team member', 'ikon-seo' ); ?></option><?php foreach ( $users as $user ) : ?><option value="<?php echo absint( $user->ID ); ?>"><?php echo esc_html( $user->display_name ); ?></option><?php endforeach; ?></select></p><p><input type="date" name="period_start" value="<?php echo esc_attr( gmdate( 'Y-m-01' ) ); ?>"> to <input type="date" name="period_end" value="<?php echo esc_attr( gmdate( 'Y-m-t' ) ); ?>"></p><p><input type="number" min="1" max="2000" name="capacity_units" value="80"> <?php esc_html_e( 'capacity units', 'ikon-seo' ); ?></p><p><textarea name="notes" class="large-text" rows="3" placeholder="Working days, leave or constraints"></textarea></p><button class="button"><?php esc_html_e( 'Save Capacity', 'ikon-seo' ); ?></button></form></div>
+		</div>
+		<?php endif; ?>
+
+		<h3><?php esc_html_e( 'Service Plans', 'ikon-seo' ); ?></h3><table class="widefat striped"><thead><tr><th><?php esc_html_e( 'Plan', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Limits', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Status', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Controls', 'ikon-seo' ); ?></th></tr></thead><tbody><?php foreach ( (array) ( $report['plans'] ?? array() ) as $plan ) : $rules=(array)($plan['plan']??array()); ?><tr><td><strong><?php echo esc_html( $plan['name'] ); ?></strong> <?php echo esc_html( 'v' . absint( $plan['version'] ) ); ?><br><code><?php echo esc_html( substr( $plan['fingerprint'], 0, 14 ) ); ?>…</code></td><td><?php echo esc_html( absint( $rules['monthly_capacity_units'] ?? 0 ) . ' units · ' . absint( $rules['max_concurrent_items'] ?? 0 ) . ' concurrent · ' . absint( $rules['response_target_hours'] ?? 0 ) . 'h response' ); ?></td><td><?php echo esc_html( ucfirst( $plan['status'] ) ); ?></td><td><?php if ( 'draft' === $plan['status'] ) : ?><form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_agency_service_levels_action"><input type="hidden" name="command" value="approve_plan"><input type="hidden" name="plan_id" value="<?php echo absint( $plan['id'] ); ?>"><?php wp_nonce_field( 'ikon_seo_agency_service_levels_action' ); ?><input required name="notes" placeholder="Approval note"><button class="button button-primary"><?php esc_html_e( 'Approve', 'ikon-seo' ); ?></button></form><?php elseif ( 'approved' === $plan['status'] ) : ?><form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_agency_service_levels_action"><input type="hidden" name="command" value="retire_plan"><input type="hidden" name="plan_id" value="<?php echo absint( $plan['id'] ); ?>"><?php wp_nonce_field( 'ikon_seo_agency_service_levels_action' ); ?><input required name="notes" placeholder="Retirement reason"><button class="button"><?php esc_html_e( 'Retire', 'ikon-seo' ); ?></button></form><?php endif; ?></td></tr><?php endforeach; ?></tbody></table>
+
+		<?php if ( Ikon_SEO_Agency::can_manage() ) : ?><div class="ikon-seo-card"><h3><?php esc_html_e( 'Assign Approved Plan', 'ikon-seo' ); ?></h3><form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_agency_service_levels_action"><input type="hidden" name="command" value="assign_plan"><?php wp_nonce_field( 'ikon_seo_agency_service_levels_action' ); ?><select name="plan_id" required><option value=""><?php esc_html_e( 'Select approved plan', 'ikon-seo' ); ?></option><?php foreach ( (array) ( $report['plans'] ?? array() ) as $plan ) : if ( 'approved' !== $plan['status'] ) continue; ?><option value="<?php echo absint( $plan['id'] ); ?>"><?php echo esc_html( $plan['name'] . ' v' . $plan['version'] ); ?></option><?php endforeach; ?></select> <select name="site_id" required><option value=""><?php esc_html_e( 'Select managed website', 'ikon-seo' ); ?></option><?php foreach ( (array) ( $agency['sites'] ?? array() ) as $site ) : ?><option value="<?php echo absint( $site['id'] ); ?>"><?php echo esc_html( $site['site_name'] ); ?></option><?php endforeach; ?></select> <input type="date" name="start_date" value="<?php echo esc_attr( gmdate( 'Y-m-d' ) ); ?>"> <label><input type="checkbox" name="client_reporting_enabled" value="1" checked> <?php esc_html_e( 'Enable client reports', 'ikon-seo' ); ?></label> <button class="button button-primary"><?php esc_html_e( 'Assign Plan', 'ikon-seo' ); ?></button></form></div><?php endif; ?>
+
+		<h3><?php esc_html_e( 'Client Assignments & Work', 'ikon-seo' ); ?></h3>
+		<?php foreach ( (array) ( $report['assignments'] ?? array() ) as $assignment ) : ?>
+		<div class="ikon-seo-card"><h3><?php echo esc_html( $assignment['site_name'] . ' — ' . ( $assignment['plan']['name'] ?? '' ) ); ?></h3><p><?php echo esc_html( ucfirst( $assignment['status'] ) . ' · ' . absint( $assignment['capacity_units'] ) . ' monthly units · plan v' . absint( $assignment['plan']['version'] ?? 0 ) ); ?></p>
+		<?php if ( 'active' === $assignment['status'] ) : ?><div class="ikon-seo-grid"><form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_agency_service_levels_action"><input type="hidden" name="command" value="create_work_item"><input type="hidden" name="assignment_id" value="<?php echo absint( $assignment['id'] ); ?>"><?php wp_nonce_field( 'ikon_seo_agency_service_levels_action' ); ?><h4><?php esc_html_e( 'Add Work Item', 'ikon-seo' ); ?></h4><p><input required class="regular-text" name="title" placeholder="Prepare service-page brief"></p><p><select name="owner_id"><option value="0"><?php esc_html_e( 'Unassigned', 'ikon-seo' ); ?></option><?php foreach ( $users as $user ) : ?><option value="<?php echo absint( $user->ID ); ?>"><?php echo esc_html( $user->display_name ); ?></option><?php endforeach; ?></select> <input type="number" min="1" max="1000" name="units" value="2"> units</p><p><input type="datetime-local" name="due_at"></p><button class="button"><?php esc_html_e( 'Create Work Item', 'ikon-seo' ); ?></button></form>
+		<?php if ( ! empty( $assignment['client_reporting_enabled'] ) ) : ?><form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_agency_service_levels_action"><input type="hidden" name="command" value="generate_report"><input type="hidden" name="assignment_id" value="<?php echo absint( $assignment['id'] ); ?>"><?php wp_nonce_field( 'ikon_seo_agency_service_levels_action' ); ?><h4><?php esc_html_e( 'Generate Client Report', 'ikon-seo' ); ?></h4><p><input type="date" name="period_start" value="<?php echo esc_attr( gmdate( 'Y-m-01' ) ); ?>"> to <input type="date" name="period_end" value="<?php echo esc_attr( gmdate( 'Y-m-t' ) ); ?>"></p><p><textarea name="client_summary" rows="3" class="large-text" placeholder="Evidence-based executive summary"></textarea></p><p><textarea name="next_actions" rows="3" class="large-text" placeholder="Next approved actions, one per line"></textarea></p><button class="button button-primary"><?php esc_html_e( 'Generate Review-Ready Report', 'ikon-seo' ); ?></button></form><?php endif; ?></div><?php endif; ?>
+		</div><?php endforeach; ?>
+
+		<h3><?php esc_html_e( 'Team Capacity', 'ikon-seo' ); ?></h3><table class="widefat striped"><thead><tr><th><?php esc_html_e( 'Team member', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Period', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Capacity', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Allocated', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Utilisation', 'ikon-seo' ); ?></th></tr></thead><tbody><?php foreach ( (array) ( $report['capacity'] ?? array() ) as $row ) : ?><tr><td><?php echo esc_html( $row['display_name'] ); ?></td><td><?php echo esc_html( $row['period_start'] . ' — ' . $row['period_end'] ); ?></td><td><?php echo absint( $row['capacity_units'] ); ?></td><td><?php echo absint( $row['allocated_units'] ); ?></td><td><?php echo esc_html( $row['utilisation_percent'] . '%' ); ?></td></tr><?php endforeach; ?></tbody></table>
+
+		<h3><?php esc_html_e( 'Work Queue', 'ikon-seo' ); ?></h3><table class="widefat striped"><thead><tr><th><?php esc_html_e( 'Website / item', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Units', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Due', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Status', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Update', 'ikon-seo' ); ?></th></tr></thead><tbody><?php foreach ( (array) ( $report['work_items'] ?? array() ) as $item ) : ?><tr><td><strong><?php echo esc_html( $item['title'] ); ?></strong><br><small><?php echo esc_html( $item['site_name'] ); ?></small></td><td><?php echo absint( $item['units'] ); ?></td><td><?php echo esc_html( $item['due_at'] ?: '—' ); ?></td><td><?php echo esc_html( ucfirst( str_replace( '_',' ', $item['status'] ) ) ); ?></td><td><?php if ( ! in_array( $item['status'], array( 'completed','cancelled' ), true ) ) : ?><form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_agency_service_levels_action"><input type="hidden" name="command" value="update_work_item"><input type="hidden" name="work_item_id" value="<?php echo absint( $item['id'] ); ?>"><?php wp_nonce_field( 'ikon_seo_agency_service_levels_action' ); ?><select name="status"><option value="in_progress">In progress</option><option value="awaiting_client">Awaiting client</option><option value="awaiting_approval">Awaiting approval</option><option value="completed">Completed</option><option value="cancelled">Cancelled</option></select><button class="button"><?php esc_html_e( 'Update', 'ikon-seo' ); ?></button></form><?php endif; ?></td></tr><?php endforeach; ?></tbody></table>
+
+		<h3><?php esc_html_e( 'Client Reports', 'ikon-seo' ); ?></h3><table class="widefat striped"><thead><tr><th><?php esc_html_e( 'Website / period', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Status', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Evidence', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Controls', 'ikon-seo' ); ?></th></tr></thead><tbody><?php foreach ( (array) ( $report['reports'] ?? array() ) as $client_report ) : ?><tr><td><strong><?php echo esc_html( $client_report['site_name'] ); ?></strong><br><?php echo esc_html( $client_report['period_start'] . ' — ' . $client_report['period_end'] ); ?></td><td><?php echo esc_html( ucfirst( str_replace( '_',' ', $client_report['status'] ) ) ); ?></td><td><code><?php echo esc_html( substr( $client_report['evidence_fingerprint'], 0, 14 ) ); ?>…</code></td><td><a class="button" href="<?php echo esc_url( wp_nonce_url( admin_url( 'admin-post.php?action=ikon_seo_download_client_service_report&report_id=' . absint( $client_report['id'] ) ), 'ikon_seo_download_client_service_report_' . absint( $client_report['id'] ) ) ); ?>"><?php esc_html_e( 'Preview HTML', 'ikon-seo' ); ?></a><?php if ( 'review_ready' === $client_report['status'] ) : ?><form style="display:inline" method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_agency_service_levels_action"><input type="hidden" name="command" value="approve_report"><input type="hidden" name="report_id" value="<?php echo absint( $client_report['id'] ); ?>"><?php wp_nonce_field( 'ikon_seo_agency_service_levels_action' ); ?><input required name="notes" placeholder="Approval note"><button class="button button-primary"><?php esc_html_e( 'Approve', 'ikon-seo' ); ?></button></form><?php elseif ( 'approved' === $client_report['status'] ) : ?><form style="display:inline" method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_agency_service_levels_action"><input type="hidden" name="command" value="mark_report_delivered"><input type="hidden" name="report_id" value="<?php echo absint( $client_report['id'] ); ?>"><?php wp_nonce_field( 'ikon_seo_agency_service_levels_action' ); ?><select name="method"><option value="manual_email">Manual email</option><option value="manual_portal">Manual portal</option><option value="manual_meeting">Client meeting</option><option value="manual_download">Manual download</option></select><input name="notes" placeholder="Delivery note"><button class="button"><?php esc_html_e( 'Mark Manually Delivered', 'ikon-seo' ); ?></button></form><?php endif; ?></td></tr><?php endforeach; ?></tbody></table>
+		<?php
+	}
+
+	private function render_search_impact() {
+		$report = $this->search_impact->report( array( 'limit' => 100 ), false );
+		$status = (array) ( $report['status'] ?? array() );
+		$summary = (array) ( $report['summary'] ?? array() );
+		?>
+		<div class="ikon-seo-section-header"><div><h2><?php esc_html_e( 'Search Impact & Outcome Attribution', 'ikon-seo' ); ?></h2><p class="description"><?php esc_html_e( 'Compare pre-launch and post-launch first-party evidence, account for comparison pages and confounders, and record a cautious human outcome decision.', 'ikon-seo' ); ?></p></div><span class="ikon-seo-pill <?php echo ! empty( $status['database_ready'] ) ? 'is-connected' : 'is-failed'; ?>"><?php echo esc_html( ! empty( $status['database_ready'] ) ? 'Association, not causation' : 'Database update required' ); ?></span></div>
+		<div class="notice notice-info inline"><p><strong><?php esc_html_e( 'Interpretation boundary:', 'ikon-seo' ); ?></strong> <?php esc_html_e( 'Measured movement after a release is an association. Ikon SEO does not claim that the release caused the result and never reverses or expands a page automatically.', 'ikon-seo' ); ?></p></div>
+		<?php if ( empty( $status['database_ready'] ) ) : ?><div class="notice notice-warning inline"><p><?php esc_html_e( 'Reactivate or update Ikon SEO to create the v1.12.0 Search Impact tables.', 'ikon-seo' ); ?></p></div><?php return; endif; ?>
+		<div class="ikon-seo-metrics">
+			<div class="ikon-seo-metric"><strong><?php echo absint( $summary['active'] ?? 0 ); ?></strong><span><?php esc_html_e( 'Active studies', 'ikon-seo' ); ?></span></div>
+			<div class="ikon-seo-metric"><strong><?php echo absint( $summary['ready_for_assessment'] ?? 0 ); ?></strong><span><?php esc_html_e( 'Ready to assess', 'ikon-seo' ); ?></span></div>
+			<div class="ikon-seo-metric"><strong><?php echo absint( $summary['positive_signal'] ?? 0 ); ?></strong><span><?php esc_html_e( 'Positive signals', 'ikon-seo' ); ?></span></div>
+			<div class="ikon-seo-metric"><strong><?php echo absint( $summary['negative_signal'] ?? 0 ); ?></strong><span><?php esc_html_e( 'Negative signals', 'ikon-seo' ); ?></span></div>
+			<div class="ikon-seo-metric"><strong><?php echo absint( $summary['inconclusive'] ?? 0 ); ?></strong><span><?php esc_html_e( 'Inconclusive', 'ikon-seo' ); ?></span></div>
+		</div>
+
+		<h3><?php esc_html_e( 'Published Releases Ready for Measurement', 'ikon-seo' ); ?></h3>
+		<table class="widefat striped"><thead><tr><th><?php esc_html_e( 'Release', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Measurement plan', 'ikon-seo' ); ?></th></tr></thead><tbody>
+		<?php if ( empty( $report['eligible_releases'] ) ) : ?><tr><td colspan="2"><?php esc_html_e( 'No newly published release is waiting for an impact study.', 'ikon-seo' ); ?></td></tr><?php endif; ?>
+		<?php foreach ( (array) ( $report['eligible_releases'] ?? array() ) as $release ) : $release_id = absint( $release['id'] ); ?>
+		<tr><td><strong><?php echo esc_html( get_the_title( absint( $release['live_post_id'] ?? 0 ) ) ?: ( 'Release #' . $release_id ) ); ?></strong><br><small><?php echo esc_html( $release['target_url'] ?? '' ); ?></small><br><small><?php echo esc_html( 'Published: ' . ( $release['published_at'] ?? '' ) ); ?></small></td><td>
+		<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_search_impact_action"><input type="hidden" name="command" value="create_study"><input type="hidden" name="release_id" value="<?php echo $release_id; ?>"><?php wp_nonce_field( 'ikon_seo_search_impact_create_study_' . $release_id ); ?>
+		<label><?php esc_html_e( 'Primary metric', 'ikon-seo' ); ?> <select name="primary_metric"><option value="clicks">Clicks</option><option value="impressions">Impressions</option><option value="position">Average position</option><option value="sessions">Sessions</option><option value="key_events">Key events</option><option value="qualified_leads">Qualified leads</option><option value="customers">Customers</option><option value="revenue">Revenue</option></select></label>
+		<label><?php esc_html_e( 'Comparison URL', 'ikon-seo' ); ?> <input type="url" name="comparison_url" placeholder="Optional same-site page"></label>
+		<label><?php esc_html_e( 'Evaluate after', 'ikon-seo' ); ?> <select name="evaluation_days"><option value="28">28 days</option><option value="56">56 days</option><option value="90">90 days</option></select></label>
+		<button class="button button-primary"><?php esc_html_e( 'Create Impact Study', 'ikon-seo' ); ?></button></form>
+		</td></tr><?php endforeach; ?></tbody></table>
+
+		<h3><?php esc_html_e( 'Impact Studies', 'ikon-seo' ); ?></h3>
+		<?php if ( empty( $report['studies'] ) ) : ?><p><?php esc_html_e( 'No impact studies have been created.', 'ikon-seo' ); ?></p><?php endif; ?>
+		<?php foreach ( (array) ( $report['studies'] ?? array() ) as $study ) : $id = absint( $study['id'] ); $baseline = (array) ( $study['baseline'] ?? array() ); $latest = (array) ( $study['latest'] ?? array() ); $metric = sanitize_key( $study['primary_metric'] ); ?>
+		<div class="ikon-seo-card" style="margin:14px 0">
+			<div style="display:flex;justify-content:space-between;gap:16px;align-items:flex-start;flex-wrap:wrap"><div><h3 style="margin:0"><?php echo esc_html( $study['title'] ?: ( 'Impact Study #' . $id ) ); ?></h3><p><span class="ikon-seo-pill"><?php echo esc_html( ucfirst( str_replace( '_', ' ', $study['status'] ) ) ); ?></span> <span class="ikon-seo-pill"><?php echo esc_html( ucfirst( str_replace( '_', ' ', $study['outcome'] ) ) ); ?></span></p><p class="description"><?php echo esc_html( $study['target_url'] ); ?></p></div><div><strong><?php echo esc_html( ucfirst( str_replace( '_', ' ', $metric ) ) ); ?></strong><br><small><?php echo esc_html( ucfirst( $study['confidence'] ) . ' confidence' ); ?></small><?php if ( null !== $study['adjusted_change_percent'] ) : ?><br><strong><?php echo esc_html( number_format_i18n( (float) $study['adjusted_change_percent'], 1 ) . '% adjusted' ); ?></strong><?php endif; ?></div></div>
+			<?php if ( 'blocked' === $study['status'] ) : ?><div class="notice notice-warning inline"><p><?php echo esc_html( $study['blocked_reason'] ); ?></p></div><?php endif; ?>
+			<?php if ( $baseline ) : ?><p><?php echo esc_html( sprintf( 'Baseline: %s %s · %d/100 evidence quality.', number_format_i18n( (float) ( $baseline['metrics'][ $metric ] ?? 0 ), 2 ), str_replace( '_', ' ', $metric ), absint( $baseline['quality_score'] ?? 0 ) ) ); ?><?php if ( $latest && 'post_launch' === ( $latest['checkpoint_type'] ?? '' ) ) : ?> <?php echo esc_html( sprintf( 'Latest: %s at day %d · %d/100 quality.', number_format_i18n( (float) ( $latest['metrics'][ $metric ] ?? 0 ), 2 ), absint( $latest['checkpoint_days'] ), absint( $latest['quality_score'] ?? 0 ) ) ); ?><?php endif; ?></p><?php endif; ?>
+			<div style="display:flex;gap:8px;flex-wrap:wrap;margin:10px 0">
+			<?php if ( 'baseline_pending' === $study['status'] ) : $this->search_impact_command_form( $study, 'capture_baseline', 'Capture Baseline', true ); endif; ?>
+			<?php if ( in_array( $study['status'], array( 'monitoring','ready_for_assessment','assessed','acknowledged' ), true ) ) : foreach ( array( 7,28,56,90 ) as $day ) : $exists = false; foreach ( (array) $study['measurements'] as $measurement ) { if ( 'post_launch' === ( $measurement['checkpoint_type'] ?? '' ) && $day === absint( $measurement['checkpoint_days'] ?? 0 ) ) { $exists = true; break; } } if ( ! $exists ) : ?>
+			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_search_impact_action"><input type="hidden" name="command" value="capture_checkpoint"><input type="hidden" name="study_id" value="<?php echo $id; ?>"><input type="hidden" name="checkpoint_days" value="<?php echo $day; ?>"><?php wp_nonce_field( 'ikon_seo_search_impact_capture_checkpoint_' . $id ); ?><button class="button"><?php echo esc_html( 'Capture Day ' . $day ); ?></button></form>
+			<?php endif; endforeach; endif; ?>
+			<?php if ( 'ready_for_assessment' === $study['status'] ) : $this->search_impact_command_form( $study, 'assess', 'Assess Outcome', true, true ); endif; ?>
+			<?php if ( 'blocked' === $study['status'] ) : $this->search_impact_command_form( $study, 'unblock', 'Unblock', false, true ); elseif ( ! in_array( $study['status'], array( 'archived' ), true ) ) : $this->search_impact_command_form( $study, 'block', 'Block Study', false, true ); endif; ?>
+			</div>
+			<?php if ( 'assessed' === $study['status'] ) : ?><form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><input type="hidden" name="action" value="ikon_seo_search_impact_action"><input type="hidden" name="command" value="acknowledge"><input type="hidden" name="study_id" value="<?php echo $id; ?>"><?php wp_nonce_field( 'ikon_seo_search_impact_acknowledge_' . $id ); ?><select name="decision"><option value="retain">Retain</option><option value="expand_carefully">Expand carefully</option><option value="continue_monitoring">Continue monitoring</option><option value="investigate">Investigate</option><option value="consider_revision">Consider controlled revision</option><option value="no_action">No action</option></select><input type="text" name="notes" placeholder="Decision note"><button class="button button-primary"><?php esc_html_e( 'Record Human Decision', 'ikon-seo' ); ?></button></form><?php endif; ?>
+			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:10px"><input type="hidden" name="action" value="ikon_seo_search_impact_action"><input type="hidden" name="command" value="add_confounder"><input type="hidden" name="study_id" value="<?php echo $id; ?>"><?php wp_nonce_field( 'ikon_seo_search_impact_add_confounder_' . $id ); ?><select name="confounder_type"><option value="seasonality">Seasonality</option><option value="algorithm_update">Algorithm update</option><option value="sitewide_change">Sitewide change</option><option value="tracking_change">Tracking change</option><option value="campaign">Paid or other campaign</option><option value="pricing">Pricing change</option><option value="availability">Availability change</option><option value="competitor_change">Competitor change</option><option value="other">Other</option></select><input type="text" required name="notes" placeholder="Describe a possible confounder"><button class="button"><?php esc_html_e( 'Record Confounder', 'ikon-seo' ); ?></button></form>
+			<details><summary><strong><?php esc_html_e( 'Evidence, limitations and event history', 'ikon-seo' ); ?></strong></summary><?php if ( ! empty( $study['assessment']['language'] ) ) : ?><p><strong><?php echo esc_html( $study['assessment']['language'] ); ?></strong></p><?php endif; ?><ul><?php foreach ( (array) ( $latest['limitations'] ?? $baseline['limitations'] ?? array() ) as $limitation ) : ?><li><?php echo esc_html( $limitation ); ?></li><?php endforeach; ?></ul><ol><?php foreach ( array_slice( (array) $study['events'], 0, 20 ) as $event ) : ?><li><strong><?php echo esc_html( ucfirst( str_replace( '_', ' ', $event['type'] ) ) ); ?></strong> — <?php echo esc_html( $event['notes'] ); ?> <small><?php echo esc_html( $event['created_at'] ); ?></small></li><?php endforeach; ?></ol></details>
+		</div>
+		<?php endforeach; ?>
+		<?php
+	}
+
+	private function search_impact_command_form( array $study, $command, $label, $primary = false, $notes = false ) {
+		$id = absint( $study['id'] );
+		?><form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_search_impact_action"><input type="hidden" name="command" value="<?php echo esc_attr( $command ); ?>"><input type="hidden" name="study_id" value="<?php echo $id; ?>"><?php wp_nonce_field( 'ikon_seo_search_impact_' . $command . '_' . $id ); ?><?php if ( $notes ) : ?><input type="text" name="notes" placeholder="Optional note"><?php endif; ?><button class="button <?php echo $primary ? 'button-primary' : ''; ?>"><?php echo esc_html( $label ); ?></button></form><?php
+	}
+
 	private function render_content_intelligence() {
 		$status = $this->competitor_content->status();
 		$report = $this->competitor_content->report( 100, false );
@@ -2884,6 +3907,50 @@ class Ikon_SEO_Admin {
 		echo '</tbody></table>';
 	}
 
+
+	private function render_platform_health() {
+		$report = $this->platform_hardening->report();
+		$readiness = (array) ( $report['readiness'] ?? array() );
+		$integrity = (array) ( $report['integrity'] ?? array() );
+		$compat = (array) ( $report['compatibility'] ?? array() );
+		$security = (array) ( $report['security'] ?? array() );
+		$archives = (array) ( $report['recovery_archives'] ?? array() );
+		$upgrades = (array) ( $report['upgrade_journal'] ?? array() );
+		?>
+		<section class="ikon-seo-card">
+			<h2><?php esc_html_e( 'Platform Hardening & Release Management', 'ikon-seo' ); ?></h2>
+			<p><?php esc_html_e( 'Verify the packaged release, review server compatibility and security, create credential-free recovery archives, and inspect the database upgrade journal before production deployment.', 'ikon-seo' ); ?></p>
+			<div class="ikon-seo-stat-grid">
+				<div><strong><?php echo esc_html( ucfirst( $readiness['status'] ?? 'not run' ) ); ?></strong><span><?php esc_html_e( 'Release readiness', 'ikon-seo' ); ?></span></div>
+				<div><strong><?php echo esc_html( ucfirst( $integrity['overall_status'] ?? 'not run' ) ); ?></strong><span><?php esc_html_e( 'Package integrity', 'ikon-seo' ); ?></span></div>
+				<div><strong><?php echo absint( $compat['counts']['critical'] ?? 0 ); ?></strong><span><?php esc_html_e( 'Compatibility blocks', 'ikon-seo' ); ?></span></div>
+				<div><strong><?php echo absint( $security['counts']['warning'] ?? 0 ) + absint( $security['counts']['critical'] ?? 0 ); ?></strong><span><?php esc_html_e( 'Security reviews', 'ikon-seo' ); ?></span></div>
+			</div>
+			<?php foreach ( (array) ( $readiness['blocks'] ?? array() ) as $block ) : ?><div class="notice notice-error inline"><p><?php echo esc_html( $block ); ?></p></div><?php endforeach; ?>
+			<?php foreach ( (array) ( $readiness['warnings'] ?? array() ) as $warning ) : ?><div class="notice notice-warning inline"><p><?php echo esc_html( $warning ); ?></p></div><?php endforeach; ?>
+		</section>
+		<div class="ikon-seo-two-columns">
+		<section class="ikon-seo-card"><h3><?php esc_html_e( 'Release and diagnostics actions', 'ikon-seo' ); ?></h3>
+			<?php foreach ( array( 'run_checks' => 'Run full hardening checks', 'verify_release' => 'Verify signed release manifest', 'repair_scheduler' => 'Repair expected scheduled events', 'cleanup' => 'Apply retention cleanup' ) as $command => $label ) : ?>
+			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" style="margin-bottom:10px"><input type="hidden" name="action" value="ikon_seo_platform_hardening_action"><input type="hidden" name="command" value="<?php echo esc_attr( $command ); ?>"><?php wp_nonce_field( 'ikon_seo_platform_hardening_action' ); ?><button class="button <?php echo 'run_checks' === $command ? 'button-primary' : ''; ?>"><?php echo esc_html( $label ); ?></button></form>
+			<?php endforeach; ?>
+		</section>
+		<section class="ikon-seo-card"><h3><?php esc_html_e( 'Recovery and support archives', 'ikon-seo' ); ?></h3>
+			<?php foreach ( array( 'configuration' => 'Create configuration recovery point', 'support' => 'Create sanitized support bundle' ) as $type => $label ) : ?>
+			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" style="margin-bottom:12px"><input type="hidden" name="action" value="ikon_seo_platform_hardening_action"><input type="hidden" name="command" value="create_archive"><input type="hidden" name="archive_type" value="<?php echo esc_attr( $type ); ?>"><?php wp_nonce_field( 'ikon_seo_platform_hardening_action' ); ?><input class="regular-text" name="label" placeholder="Optional archive label"> <button class="button"><?php echo esc_html( $label ); ?></button></form>
+			<?php endforeach; ?>
+			<p class="description"><?php esc_html_e( 'Archives exclude connection keys, OAuth secrets, API keys, passwords, personal data and WordPress page content.', 'ikon-seo' ); ?></p>
+		</section></div>
+		<section class="ikon-seo-card"><h3><?php esc_html_e( 'Compatibility and security matrix', 'ikon-seo' ); ?></h3><table class="widefat striped"><thead><tr><th><?php esc_html_e( 'Check', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'State', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Evidence', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Recommendation', 'ikon-seo' ); ?></th></tr></thead><tbody>
+		<?php foreach ( array_merge( (array) ( $compat['items'] ?? array() ), (array) ( $security['items'] ?? array() ) ) as $item ) : ?><tr><td><?php echo esc_html( $item['label'] ?? '' ); ?></td><td><?php echo esc_html( strtoupper( $item['state'] ?? 'info' ) ); ?></td><td><?php echo esc_html( $item['detail'] ?? '' ); ?></td><td><?php echo esc_html( $item['recommendation'] ?? '' ); ?></td></tr><?php endforeach; ?>
+		</tbody></table></section>
+		<section class="ikon-seo-card"><h3><?php esc_html_e( 'Recovery archives', 'ikon-seo' ); ?></h3><table class="widefat striped"><thead><tr><th>ID</th><th><?php esc_html_e( 'Type and label', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Version', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Payload hash', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Created', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Restore', 'ikon-seo' ); ?></th></tr></thead><tbody>
+		<?php if ( $archives ) : foreach ( $archives as $archive ) : ?><tr><td><?php echo absint( $archive['id'] ); ?></td><td><?php echo esc_html( ucfirst( $archive['archive_type'] ) . ' · ' . $archive['label'] ); ?></td><td><?php echo esc_html( $archive['plugin_version'] . ' / DB ' . $archive['db_version'] ); ?></td><td><code><?php echo esc_html( substr( $archive['payload_hash'], 0, 16 ) ); ?>…</code></td><td><?php echo esc_html( $archive['created_at'] ); ?></td><td><?php if ( 'configuration' === $archive['archive_type'] ) : ?><form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" onsubmit="return confirm('Restore the credential-free plugin configuration from this exact archive?');"><input type="hidden" name="action" value="ikon_seo_platform_hardening_action"><input type="hidden" name="command" value="restore_archive"><input type="hidden" name="archive_id" value="<?php echo absint( $archive['id'] ); ?>"><input type="hidden" name="expected_hash" value="<?php echo esc_attr( $archive['payload_hash'] ); ?>"><?php wp_nonce_field( 'ikon_seo_platform_hardening_action' ); ?><button class="button"><?php esc_html_e( 'Restore configuration', 'ikon-seo' ); ?></button></form><?php else : ?>—<?php endif; ?></td></tr><?php endforeach; else : ?><tr><td colspan="6"><?php esc_html_e( 'No recovery archive has been created.', 'ikon-seo' ); ?></td></tr><?php endif; ?>
+		</tbody></table></section>
+		<section class="ikon-seo-card"><h3><?php esc_html_e( 'Upgrade journal', 'ikon-seo' ); ?></h3><table class="widefat striped"><thead><tr><th><?php esc_html_e( 'Status', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Plugin', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Database', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Recorded', 'ikon-seo' ); ?></th></tr></thead><tbody><?php if ( $upgrades ) : foreach ( $upgrades as $upgrade ) : ?><tr><td><?php echo esc_html( ucfirst( $upgrade['status'] ?? '' ) ); ?></td><td><?php echo esc_html( ( $upgrade['from_plugin_version'] ?: 'new' ) . ' → ' . $upgrade['to_plugin_version'] ); ?></td><td><?php echo esc_html( ( $upgrade['from_db_version'] ?: 'new' ) . ' → ' . $upgrade['to_db_version'] ); ?></td><td><?php echo esc_html( $upgrade['created_at'] ); ?></td></tr><?php endforeach; else : ?><tr><td colspan="4"><?php esc_html_e( 'No upgrade record is available yet.', 'ikon-seo' ); ?></td></tr><?php endif; ?></tbody></table></section>
+		<?php
+	}
+
 	private function render_indexation() {
 		$status = $this->indexation->status();
 		$report = $this->indexation->report( 100 );
@@ -2943,6 +4010,66 @@ class Ikon_SEO_Admin {
 		<?php if ( empty( $health['checks'] ) ) : ?><tr><td colspan="4"><?php esc_html_e( 'Production health has not been run yet.', 'ikon-seo' ); ?></td></tr><?php endif; ?>
 		<?php foreach ( (array) ( $health['checks'] ?? array() ) as $check ) : ?><tr><td><strong><?php echo esc_html( $check['label'] ); ?></strong></td><td><?php echo esc_html( ucfirst( $check['state'] ) ); ?></td><td><?php echo esc_html( $check['detail'] ); ?></td><td><?php echo esc_html( $check['recommendation'] ); ?></td></tr><?php endforeach; ?>
 		</tbody></table>
+		<?php
+	}
+
+
+	private function render_deployment_control() {
+		$report = $this->deployment_control->report();
+		$license = (array) ( $report['active_entitlement'] ?? array() );
+		$releases = (array) ( $report['releases'] ?? array() );
+		$plans = (array) ( $report['deployments'] ?? array() );
+		$environment = sanitize_key( $report['environment'] ?? 'production' );
+		?>
+		<section class="ikon-seo-card">
+			<h2><?php esc_html_e( 'Deployment Control, Licensing & Managed Updates', 'ikon-seo' ); ?></h2>
+			<p><?php esc_html_e( 'Register signed release metadata, require an active entitlement and recovery point, obtain separate approval, then record and verify a WordPress update performed manually by an administrator.', 'ikon-seo' ); ?></p>
+			<div class="ikon-seo-stat-grid">
+				<div><strong><?php echo esc_html( ucfirst( $environment ) ); ?></strong><span><?php esc_html_e( 'Environment', 'ikon-seo' ); ?></span></div>
+				<div><strong><?php echo esc_html( $license ? ucfirst( $license['status'] ) : 'Missing' ); ?></strong><span><?php esc_html_e( 'Entitlement', 'ikon-seo' ); ?></span></div>
+				<div><strong><?php echo count( $releases ); ?></strong><span><?php esc_html_e( 'Registered releases', 'ikon-seo' ); ?></span></div>
+				<div><strong><?php echo count( $plans ); ?></strong><span><?php esc_html_e( 'Deployment records', 'ikon-seo' ); ?></span></div>
+			</div>
+			<div class="notice notice-info inline"><p><?php esc_html_e( 'Ikon SEO does not download or install plugin code. WordPress updates and any rollback remain manual administrator actions.', 'ikon-seo' ); ?></p></div>
+		</section>
+		<div class="ikon-seo-two-columns">
+		<section class="ikon-seo-card"><h3><?php esc_html_e( 'Entitlement', 'ikon-seo' ); ?></h3>
+		<?php if ( 'production' !== $environment ) : ?>
+		<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_deployment_control_action"><input type="hidden" name="command" value="create_evaluation"><?php wp_nonce_field( 'ikon_seo_deployment_control_action' ); ?><p><label><?php esc_html_e( 'Evaluation organisation', 'ikon-seo' ); ?><br><input class="regular-text" name="organisation" value="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>"></label></p><p><label><?php esc_html_e( 'Days', 'ikon-seo' ); ?><br><input type="number" min="1" max="30" name="days" value="14"></label></p><button class="button"><?php esc_html_e( 'Create staging evaluation', 'ikon-seo' ); ?></button></form>
+		<?php else : ?><p class="description"><?php esc_html_e( 'Production requires a signed entitlement envelope issued for this website fingerprint.', 'ikon-seo' ); ?></p><?php endif; ?>
+		<?php if ( $license ) : ?><hr><p><strong><?php echo esc_html( $license['organisation'] ); ?></strong><br><?php echo esc_html( ucfirst( $license['edition'] ) . ' · ' . ucfirst( $license['status'] ) ); ?><br><small><?php echo esc_html( $license['expires_at'] ?: 'No expiry recorded' ); ?></small></p><?php endif; ?>
+		</section>
+		<section class="ikon-seo-card"><h3><?php esc_html_e( 'Release catalogue', 'ikon-seo' ); ?></h3>
+		<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_deployment_control_action"><input type="hidden" name="command" value="register_installed_release"><?php wp_nonce_field( 'ikon_seo_deployment_control_action' ); ?><button class="button button-primary"><?php esc_html_e( 'Register installed signed release', 'ikon-seo' ); ?></button></form>
+		<?php if ( $releases ) : ?><ul><?php foreach ( array_slice( $releases, 0, 10 ) as $release ) : ?><li><strong>v<?php echo esc_html( $release['version'] ); ?></strong> · <?php echo esc_html( ucfirst( $release['channel'] ) ); ?> · <?php echo esc_html( ucfirst( $release['signature_state'] ) ); ?></li><?php endforeach; ?></ul><?php else : ?><p class="description"><?php esc_html_e( 'No release metadata has been registered.', 'ikon-seo' ); ?></p><?php endif; ?>
+		</section></div>
+		<section class="ikon-seo-card"><h3><?php esc_html_e( 'Prepare deployment', 'ikon-seo' ); ?></h3>
+		<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_deployment_control_action"><input type="hidden" name="command" value="create_plan"><?php wp_nonce_field( 'ikon_seo_deployment_control_action' ); ?><p><label><?php esc_html_e( 'Registered release', 'ikon-seo' ); ?><br><select name="release_id" required><option value=""><?php esc_html_e( 'Select release', 'ikon-seo' ); ?></option><?php foreach ( $releases as $release ) : ?><option value="<?php echo absint( $release['id'] ); ?>">v<?php echo esc_html( $release['version'] . ' · ' . $release['channel'] ); ?></option><?php endforeach; ?></select></label></p><p><textarea class="large-text" name="notes" rows="2" placeholder="Deployment notes"></textarea></p><button class="button"><?php esc_html_e( 'Run preflight and prepare', 'ikon-seo' ); ?></button></form>
+		</section>
+		<section class="ikon-seo-card"><h3><?php esc_html_e( 'Deployment history', 'ikon-seo' ); ?></h3><table class="widefat striped"><thead><tr><th>ID</th><th><?php esc_html_e( 'Versions', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Status', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Fingerprint', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Action', 'ikon-seo' ); ?></th></tr></thead><tbody>
+		<?php if ( ! $plans ) : ?><tr><td colspan="5"><?php esc_html_e( 'No deployment plan has been prepared.', 'ikon-seo' ); ?></td></tr><?php endif; ?>
+		<?php foreach ( $plans as $plan ) : ?><tr><td><?php echo absint( $plan['id'] ); ?></td><td><?php echo esc_html( $plan['from_version'] . ' → ' . $plan['target_version'] ); ?></td><td><?php echo esc_html( ucwords( str_replace( '_', ' ', $plan['status'] ) ) ); ?></td><td><code><?php echo esc_html( substr( $plan['preflight_fingerprint'], 0, 16 ) ); ?>…</code></td><td>
+		<?php if ( 'prepared' === $plan['status'] ) : ?><form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_deployment_control_action"><input type="hidden" name="command" value="approve_plan"><input type="hidden" name="plan_id" value="<?php echo absint( $plan['id'] ); ?>"><input type="hidden" name="expected_fingerprint" value="<?php echo esc_attr( $plan['preflight_fingerprint'] ); ?>"><?php wp_nonce_field( 'ikon_seo_deployment_control_action' ); ?><input name="notes" placeholder="Approval notes"> <button class="button"><?php esc_html_e( 'Approve manual update', 'ikon-seo' ); ?></button></form><?php elseif ( 'approved_manual_install' === $plan['status'] ) : ?><form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_deployment_control_action"><input type="hidden" name="command" value="record_manual_deployment"><input type="hidden" name="plan_id" value="<?php echo absint( $plan['id'] ); ?>"><?php wp_nonce_field( 'ikon_seo_deployment_control_action' ); ?><input name="notes" placeholder="Manual installation record"> <button class="button"><?php esc_html_e( 'Record manual update', 'ikon-seo' ); ?></button></form><?php elseif ( in_array( $plan['status'], array( 'deployed_pending_verification','verification_failed' ), true ) ) : ?><form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_deployment_control_action"><input type="hidden" name="command" value="verify_deployment"><input type="hidden" name="plan_id" value="<?php echo absint( $plan['id'] ); ?>"><?php wp_nonce_field( 'ikon_seo_deployment_control_action' ); ?><button class="button"><?php esc_html_e( 'Verify deployment', 'ikon-seo' ); ?></button></form><?php elseif ( 'verified' === $plan['status'] ) : ?><form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_deployment_control_action"><input type="hidden" name="command" value="close_plan"><input type="hidden" name="plan_id" value="<?php echo absint( $plan['id'] ); ?>"><?php wp_nonce_field( 'ikon_seo_deployment_control_action' ); ?><input name="notes" required placeholder="Closure notes"> <button class="button"><?php esc_html_e( 'Close record', 'ikon-seo' ); ?></button></form><?php else : ?>—<?php endif; ?>
+		</td></tr><?php endforeach; ?></tbody></table></section>
+		<?php
+	}
+
+
+	private function render_production_certification() {
+		$report = $this->production_certification->report( array( 'limit' => 50 ) );
+		$contracts = (array) ( $report['contracts'] ?? array() );
+		$certifications = (array) ( $report['certifications'] ?? array() );
+		$rollouts = (array) ( $report['rollouts'] ?? array() );
+		?>
+		<div class="ikon-seo-grid">
+			<div class="ikon-seo-card"><h2><?php esc_html_e( 'Production Agency Platform', 'ikon-seo' ); ?></h2><p><?php esc_html_e( 'Certify a specific signed release, database version and operating contract before a controlled manual rollout. This screen records evidence and approvals only.', 'ikon-seo' ); ?></p><p><strong><?php esc_html_e( 'Installed release:', 'ikon-seo' ); ?></strong> <?php echo esc_html( IKON_SEO_VERSION ); ?> · <strong><?php esc_html_e( 'Database:', 'ikon-seo' ); ?></strong> <?php echo esc_html( Ikon_SEO_Plugin::DB_VERSION ); ?></p><p><code>manual_distribution_only = true</code><br><code>automatic_installation = false</code><br><code>automatic_rollback = false</code><br><code>remote_publishing = false</code></p></div>
+			<div class="ikon-seo-card"><h3><?php esc_html_e( 'Create support contract', 'ikon-seo' ); ?></h3><form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_production_certification_action"><input type="hidden" name="command" value="create_contract"><?php wp_nonce_field( 'ikon_seo_production_certification_action' ); ?><p><input class="regular-text" name="label" value="Ikon SEO Production Support Contract" required></p><p><label><?php esc_html_e( 'Support window (days)', 'ikon-seo' ); ?> <input type="number" min="90" max="1095" name="support_window_days" value="365"></label></p><p><label><?php esc_html_e( 'Recovery drill window (days)', 'ikon-seo' ); ?> <input type="number" min="7" max="365" name="recovery_drill_days" value="90"></label></p><p><textarea class="large-text" name="notes" rows="3" placeholder="Supported hosting, plugin and operational assumptions"></textarea></p><button class="button button-primary"><?php esc_html_e( 'Create draft contract', 'ikon-seo' ); ?></button></form></div>
+		</div>
+		<h2><?php esc_html_e( 'Support contracts', 'ikon-seo' ); ?></h2><table class="widefat striped"><thead><tr><th>ID</th><th><?php esc_html_e( 'Contract', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Version', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Status', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Action', 'ikon-seo' ); ?></th></tr></thead><tbody><?php if ( ! $contracts ) : ?><tr><td colspan="5"><?php esc_html_e( 'No production support contract exists yet.', 'ikon-seo' ); ?></td></tr><?php endif; ?><?php foreach ( $contracts as $contract ) : ?><tr><td><?php echo absint( $contract['id'] ); ?></td><td><strong><?php echo esc_html( $contract['contract']['label'] ?? $contract['contract_key'] ); ?></strong><br><code><?php echo esc_html( substr( $contract['fingerprint'], 0, 16 ) ); ?>…</code></td><td><?php echo esc_html( $contract['version'] ); ?></td><td><?php echo esc_html( ucfirst( $contract['status'] ) ); ?></td><td><?php if ( 'draft' === $contract['status'] ) : ?><form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_production_certification_action"><input type="hidden" name="command" value="approve_contract"><input type="hidden" name="contract_id" value="<?php echo absint( $contract['id'] ); ?>"><?php wp_nonce_field( 'ikon_seo_production_certification_action' ); ?><button class="button"><?php esc_html_e( 'Approve with different admin', 'ikon-seo' ); ?></button></form><?php elseif ( 'approved' === $contract['status'] ) : ?><form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_production_certification_action"><input type="hidden" name="command" value="create_certification"><input type="hidden" name="contract_id" value="<?php echo absint( $contract['id'] ); ?>"><?php wp_nonce_field( 'ikon_seo_production_certification_action' ); ?><select name="environment"><option value="production">Production</option><option value="staging">Staging</option><option value="development">Development</option><option value="local">Local</option></select> <button class="button"><?php esc_html_e( 'Start certification', 'ikon-seo' ); ?></button></form><?php endif; ?></td></tr><?php endforeach; ?></tbody></table>
+		<h2><?php esc_html_e( 'Certification runs', 'ikon-seo' ); ?></h2><table class="widefat striped"><thead><tr><th>ID</th><th><?php esc_html_e( 'Release', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Environment', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Status', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Score', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Review', 'ikon-seo' ); ?></th></tr></thead><tbody><?php if ( ! $certifications ) : ?><tr><td colspan="6"><?php esc_html_e( 'No certification run exists yet.', 'ikon-seo' ); ?></td></tr><?php endif; ?><?php foreach ( $certifications as $cert ) : ?><tr><td><?php echo absint( $cert['id'] ); ?></td><td><?php echo esc_html( $cert['release_version'] . ' / DB ' . $cert['database_version'] ); ?></td><td><?php echo esc_html( ucfirst( $cert['environment'] ) ); ?></td><td><?php echo esc_html( ucfirst( str_replace( '_', ' ', $cert['status'] ) ) ); ?></td><td><?php echo absint( $cert['score'] ); ?>/100</td><td><form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_production_certification_action"><input type="hidden" name="certification_id" value="<?php echo absint( $cert['id'] ); ?>"><?php wp_nonce_field( 'ikon_seo_production_certification_action' ); ?><select name="command"><option value="refresh_certification">Refresh evidence gate</option><?php if ( 'review_ready' === $cert['status'] ) : ?><option value="approve_certification">Approve exact evidence</option><?php endif; ?></select><input type="hidden" name="evidence_fingerprint" value="<?php echo esc_attr( $cert['evidence_fingerprint'] ); ?>"> <button class="button"><?php esc_html_e( 'Apply', 'ikon-seo' ); ?></button></form><details><summary><?php esc_html_e( 'Record a check', 'ikon-seo' ); ?></summary><form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_production_certification_action"><input type="hidden" name="command" value="record_check"><input type="hidden" name="certification_id" value="<?php echo absint( $cert['id'] ); ?>"><?php wp_nonce_field( 'ikon_seo_production_certification_action' ); ?><p><select name="check_key"><?php foreach ( $this->production_certification->allowed_checks() as $key => $definition ) : ?><option value="<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $definition['label'] . ( $definition['critical'] ? ' — critical' : '' ) ); ?></option><?php endforeach; ?></select></p><p><select name="check_status"><option value="passed">Passed</option><option value="failed">Failed</option><option value="pending">Pending</option><option value="waived">Waived (non-critical only)</option></select></p><p><textarea class="large-text" name="evidence" rows="3" placeholder="Test run, compatibility result, restore drill or audit evidence"></textarea></p><p><textarea class="large-text" name="notes" rows="2" placeholder="Reviewer notes"></textarea></p><button class="button"><?php esc_html_e( 'Record check', 'ikon-seo' ); ?></button></form></details></td></tr><?php endforeach; ?></tbody></table>
+		<h2><?php esc_html_e( 'Controlled rollout waves', 'ikon-seo' ); ?></h2><p><?php esc_html_e( 'Rollout waves record manual deployments to managed-site IDs. They never install the plugin remotely.', 'ikon-seo' ); ?></p>
+		<div class="ikon-seo-card"><h3><?php esc_html_e( 'Create rollout wave', 'ikon-seo' ); ?></h3><form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_production_certification_action"><input type="hidden" name="command" value="create_rollout"><?php wp_nonce_field( 'ikon_seo_production_certification_action' ); ?><p><select name="certification_id" required><option value=""><?php esc_html_e( 'Select approved certification', 'ikon-seo' ); ?></option><?php foreach ( $certifications as $cert ) : if ( 'approved' !== $cert['status'] ) { continue; } ?><option value="<?php echo absint( $cert['id'] ); ?>"><?php echo esc_html( '#' . absint( $cert['id'] ) . ' — ' . $cert['release_version'] . ' — ' . ucfirst( $cert['environment'] ) ); ?></option><?php endforeach; ?></select></p><p><input class="regular-text" name="label" placeholder="Pilot rollout" required></p><p><input class="large-text" name="site_ids" placeholder="Managed-site IDs, comma separated: 1,2,3" required></p><p><select name="channel"><option value="stable">Stable</option><option value="candidate">Candidate</option><option value="internal">Internal</option></select></p><button class="button"><?php esc_html_e( 'Create controlled wave', 'ikon-seo' ); ?></button></form></div>
+		<table class="widefat striped"><thead><tr><th>ID</th><th><?php esc_html_e( 'Label', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Sites', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Status', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Manual result', 'ikon-seo' ); ?></th></tr></thead><tbody><?php if ( ! $rollouts ) : ?><tr><td colspan="5"><?php esc_html_e( 'No rollout wave exists yet.', 'ikon-seo' ); ?></td></tr><?php endif; ?><?php foreach ( $rollouts as $wave ) : ?><tr><td><?php echo absint( $wave['id'] ); ?></td><td><?php echo esc_html( $wave['label'] ); ?></td><td><?php echo count( (array) ( $wave['site_ids'] ?? array() ) ); ?></td><td><?php echo esc_html( ucfirst( str_replace( '_', ' ', $wave['status'] ) ) ); ?></td><td><?php if ( 'draft' === $wave['status'] ) : ?><form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_production_certification_action"><input type="hidden" name="command" value="approve_rollout"><input type="hidden" name="rollout_id" value="<?php echo absint( $wave['id'] ); ?>"><?php wp_nonce_field( 'ikon_seo_production_certification_action' ); ?><button class="button"><?php esc_html_e( 'Approve with different admin', 'ikon-seo' ); ?></button></form><?php elseif ( in_array( $wave['status'], array( 'approved','in_progress','paused' ), true ) ) : ?><form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_production_certification_action"><input type="hidden" name="command" value="record_rollout_result"><input type="hidden" name="rollout_id" value="<?php echo absint( $wave['id'] ); ?>"><?php wp_nonce_field( 'ikon_seo_production_certification_action' ); ?><select name="site_id"><?php foreach ( (array) ( $wave['site_ids'] ?? array() ) as $site_id ) : ?><option value="<?php echo absint( $site_id ); ?>"><?php echo esc_html( 'Site ' . absint( $site_id ) ); ?></option><?php endforeach; ?></select><select name="rollout_status"><option value="successful">Successful</option><option value="failed">Failed</option><option value="deferred">Deferred</option><option value="pending">Pending</option></select><input name="notes" placeholder="Manual deployment evidence"> <button class="button"><?php esc_html_e( 'Record', 'ikon-seo' ); ?></button></form><?php elseif ( 'review_ready' === $wave['status'] ) : ?><form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_production_certification_action"><input type="hidden" name="command" value="close_rollout"><input type="hidden" name="rollout_id" value="<?php echo absint( $wave['id'] ); ?>"><?php wp_nonce_field( 'ikon_seo_production_certification_action' ); ?><button class="button"><?php esc_html_e( 'Close wave', 'ikon-seo' ); ?></button></form><?php endif; ?></td></tr><?php endforeach; ?></tbody></table>
 		<?php
 	}
 
@@ -3543,6 +4670,523 @@ class Ikon_SEO_Admin {
 		exit;
 	}
 
+	public function run_auto_discovery() {
+		$this->guard_agency( 'ikon_seo_run_auto_discovery' );
+		$max_pages = absint( $_POST['max_pages'] ?? 100 );
+		$result = $this->auto_discovery->run( true, $max_pages, 'admin' );
+		if ( is_wp_error( $result ) ) {
+			$this->redirect_error( 'auto-discovery', $result->get_error_message() );
+		}
+		wp_safe_redirect( admin_url( 'admin.php?page=ikon-seo&tab=auto-discovery&auto-discovery-run=1' ) );
+		exit;
+	}
+
+	public function apply_auto_discovery() {
+		$this->guard_agency( 'ikon_seo_apply_auto_discovery' );
+		$fields = is_array( $_POST['fields'] ?? null )
+			? array_map( 'sanitize_text_field', wp_unslash( $_POST['fields'] ) )
+			: array();
+		$result = $this->auto_discovery->apply(
+			$fields,
+			! empty( $_POST['overwrite'] ),
+			! empty( $_POST['create_workflow'] ),
+			! empty( $_POST['run_safe_task'] ),
+			get_current_user_id()
+		);
+		if ( is_wp_error( $result ) ) {
+			$this->redirect_error( 'auto-discovery', $result->get_error_message() );
+		}
+		$this->diagnostics->clear_cache();
+		wp_safe_redirect( admin_url( 'admin.php?page=ikon-seo&tab=auto-discovery&auto-discovery-applied=1' ) );
+		exit;
+	}
+
+	public function save_auto_discovery_settings() {
+		$this->guard_agency( 'ikon_seo_save_auto_discovery_settings' );
+		$this->auto_discovery->save_settings(
+			array(
+				'enabled'           => ! empty( $_POST['enabled'] ),
+				'max_pages'         => absint( $_POST['max_pages'] ?? 100 ),
+				'include_connected' => ! empty( $_POST['include_connected'] ),
+			)
+		);
+		wp_safe_redirect( admin_url( 'admin.php?page=ikon-seo&tab=auto-discovery&auto-discovery-settings=1' ) );
+		exit;
+	}
+
+
+
+
+	public function accept_high_confidence_facts() {
+		$this->guard_agency( 'ikon_seo_accept_high_confidence_facts' );
+		$result = $this->discovery_review->accept_high_confidence(
+			get_current_user_id(),
+			sanitize_text_field( wp_unslash( $_POST['generated_at'] ?? '' ) )
+		);
+		if ( is_wp_error( $result ) ) {
+			$this->redirect_error( 'discovery-review', $result->get_error_message() );
+		}
+		wp_safe_redirect( admin_url( 'admin.php?page=ikon-seo&tab=discovery-review&discovery-review-updated=1' ) );
+		exit;
+	}
+
+	public function update_discovery_fact() {
+		$this->guard_agency( 'ikon_seo_update_discovery_fact' );
+		$result = $this->discovery_review->update_fact(
+			sanitize_text_field( wp_unslash( $_POST['fact_id'] ?? '' ) ),
+			sanitize_key( wp_unslash( $_POST['status'] ?? '' ) ),
+			wp_unslash( $_POST['value'] ?? '' ),
+			get_current_user_id(),
+			sanitize_text_field( wp_unslash( $_POST['generated_at'] ?? '' ) )
+		);
+		if ( is_wp_error( $result ) ) {
+			$this->redirect_error( 'discovery-review', $result->get_error_message() );
+		}
+		wp_safe_redirect( admin_url( 'admin.php?page=ikon-seo&tab=discovery-review&discovery-review-updated=1' ) );
+		exit;
+	}
+
+	public function resolve_discovery_conflict() {
+		$this->guard_agency( 'ikon_seo_resolve_discovery_conflict' );
+		$result = $this->discovery_review->resolve_conflict(
+			sanitize_text_field( wp_unslash( $_POST['conflict_id'] ?? '' ) ),
+			sanitize_text_field( wp_unslash( $_POST['selected_value'] ?? '' ) ),
+			sanitize_text_field( wp_unslash( $_POST['custom_value'] ?? '' ) ),
+			get_current_user_id(),
+			sanitize_text_field( wp_unslash( $_POST['generated_at'] ?? '' ) )
+		);
+		if ( is_wp_error( $result ) ) {
+			$this->redirect_error( 'discovery-review', $result->get_error_message() );
+		}
+		wp_safe_redirect( admin_url( 'admin.php?page=ikon-seo&tab=discovery-review&discovery-review-updated=1' ) );
+		exit;
+	}
+
+	public function apply_confirmed_discovery_facts() {
+		$this->guard_agency( 'ikon_seo_apply_confirmed_discovery_facts' );
+		$result = $this->discovery_review->apply_confirmed( get_current_user_id() );
+		if ( is_wp_error( $result ) ) {
+			$this->redirect_error( 'discovery-review', $result->get_error_message() );
+		}
+		wp_safe_redirect( admin_url( 'admin.php?page=ikon-seo&tab=discovery-review&discovery-review-applied=1' ) );
+		exit;
+	}
+
+	public function run_guided_launch() {
+		$this->guard_agency( 'ikon_seo_run_guided_launch' );
+		$result = $this->guided_launch->activate(
+			array(
+				'create_workflow' => ! empty( $_POST['create_workflow'] ),
+				'run_safe_tasks'  => ! empty( $_POST['run_safe_tasks'] ),
+				'task_batch'      => absint( $_POST['task_batch'] ?? 3 ),
+				'build_plan'      => ! empty( $_POST['build_plan'] ),
+			),
+			get_current_user_id()
+		);
+		if ( is_wp_error( $result ) ) {
+			$this->redirect_error( 'guided-launch', $result->get_error_message() );
+		}
+		$this->diagnostics->clear_cache();
+		wp_safe_redirect( admin_url( 'admin.php?page=ikon-seo&tab=guided-launch&guided-launch-updated=1' ) );
+		exit;
+	}
+
+	public function acknowledge_discovery_conflicts() {
+		$this->guard_agency( 'ikon_seo_acknowledge_discovery_conflicts' );
+		$this->guided_launch->acknowledge_conflicts( ! empty( $_POST['acknowledged'] ), get_current_user_id() );
+		wp_safe_redirect( admin_url( 'admin.php?page=ikon-seo&tab=guided-launch&guided-launch-updated=1' ) );
+		exit;
+	}
+
+
+	public function rebuild_opportunity_engine() {
+		$this->require_workflow_manager( 'rebuild the Opportunity Engine' );
+		check_admin_referer( 'ikon_seo_rebuild_opportunity_engine' );
+		$result = $this->opportunity_engine->rebuild( absint( $_POST['limit'] ?? 300 ), get_current_user_id(), 'admin' );
+		if ( is_wp_error( $result ) ) {
+			$this->redirect_error( 'opportunity-engine', $result->get_error_message() );
+		}
+		wp_safe_redirect( admin_url( 'admin.php?page=ikon-seo&tab=opportunity-engine&opportunity-engine-rebuilt=1' ) );
+		exit;
+	}
+
+	public function import_opportunity_evidence() {
+		$this->require_workflow_manager( 'import keyword evidence' );
+		check_admin_referer( 'ikon_seo_import_opportunity_evidence' );
+		$file = $_FILES['evidence_csv'] ?? array();
+		if ( empty( $file['tmp_name'] ) || ! empty( $file['error'] ) || (int) ( $file['size'] ?? 0 ) > 2 * MB_IN_BYTES ) {
+			$this->redirect_error( 'opportunity-engine', __( 'Upload a readable CSV file no larger than 2 MB.', 'ikon-seo' ) );
+		}
+		$name = sanitize_file_name( $file['name'] ?? '' );
+		if ( 'csv' !== strtolower( pathinfo( $name, PATHINFO_EXTENSION ) ) ) {
+			$this->redirect_error( 'opportunity-engine', __( 'Only CSV evidence files are accepted.', 'ikon-seo' ) );
+		}
+		$result = $this->opportunity_engine->import_csv( $file['tmp_name'], sanitize_key( $_POST['source'] ?? 'manual' ), get_current_user_id() );
+		if ( is_wp_error( $result ) ) {
+			$this->redirect_error( 'opportunity-engine', $result->get_error_message() );
+		}
+		wp_safe_redirect( admin_url( 'admin.php?page=ikon-seo&tab=opportunity-engine&opportunity-evidence-imported=1' ) );
+		exit;
+	}
+
+	public function update_opportunity_status() {
+		$this->require_workflow_manager( 'review an Opportunity Engine item' );
+		$id = absint( $_POST['opportunity_id'] ?? 0 );
+		check_admin_referer( 'ikon_seo_update_opportunity_status_' . $id );
+		$result = $this->opportunity_engine->update_status( $id, sanitize_key( $_POST['status'] ?? '' ), sanitize_textarea_field( wp_unslash( $_POST['notes'] ?? '' ) ), get_current_user_id() );
+		if ( is_wp_error( $result ) ) {
+			$this->redirect_error( 'opportunity-engine', $result->get_error_message() );
+		}
+		wp_safe_redirect( admin_url( 'admin.php?page=ikon-seo&tab=opportunity-engine&opportunity-updated=1' ) );
+		exit;
+	}
+
+	public function save_opportunity_engine_settings() {
+		$this->require_workflow_manager( 'change Opportunity Engine settings' );
+		check_admin_referer( 'ikon_seo_save_opportunity_engine_settings' );
+		$settings = Ikon_SEO_Plugin::settings();
+		$settings['opportunity_engine_enabled'] = ! empty( $_POST['enabled'] ) ? 1 : 0;
+		$settings['opportunity_engine_max_items'] = max( 25, min( 1000, absint( $_POST['max_items'] ?? 300 ) ) );
+		$settings['opportunity_engine_stale_days'] = max( 7, min( 365, absint( $_POST['stale_days'] ?? 60 ) ) );
+		update_option( Ikon_SEO_Plugin::OPTION_KEY, $settings, false );
+		wp_safe_redirect( admin_url( 'admin.php?page=ikon-seo&tab=opportunity-engine&updated=1' ) );
+		exit;
+	}
+
+
+	public function create_content_brief() {
+		$this->require_workflow_manager( 'create a controlled content brief' );
+		$id = absint( $_POST['opportunity_id'] ?? 0 );
+		check_admin_referer( 'ikon_seo_create_content_brief_' . $id );
+		$result = $this->content_workbench->create_brief( $id, get_current_user_id() );
+		$this->content_workbench_redirect( $result );
+	}
+
+	public function approve_content_brief() {
+		$this->require_workflow_manager( 'approve a controlled content brief' );
+		$id = absint( $_POST['brief_id'] ?? 0 );
+		check_admin_referer( 'ikon_seo_approve_content_brief_' . $id );
+		$result = $this->content_workbench->approve_brief( $id, sanitize_text_field( wp_unslash( $_POST['evidence_hash'] ?? '' ) ), get_current_user_id() );
+		$this->content_workbench_redirect( $result );
+	}
+
+	public function reject_content_brief() {
+		$this->require_workflow_manager( 'reject a controlled content brief' );
+		$id = absint( $_POST['brief_id'] ?? 0 );
+		check_admin_referer( 'ikon_seo_reject_content_brief_' . $id );
+		$result = $this->content_workbench->reject_brief( $id, sanitize_textarea_field( wp_unslash( $_POST['notes'] ?? '' ) ), get_current_user_id() );
+		$this->content_workbench_redirect( $result );
+	}
+
+	public function create_content_scaffold() {
+		$this->require_workflow_manager( 'create an unpublished content scaffold' );
+		$id = absint( $_POST['brief_id'] ?? 0 );
+		check_admin_referer( 'ikon_seo_create_content_scaffold_' . $id );
+		$result = $this->content_workbench->create_scaffold( $id, sanitize_text_field( wp_unslash( $_POST['evidence_hash'] ?? '' ) ), get_current_user_id() );
+		$this->content_workbench_redirect( $result );
+	}
+
+	public function evaluate_content_draft() {
+		$this->require_workflow_manager( 'evaluate a controlled content draft' );
+		$id = absint( $_POST['brief_id'] ?? 0 );
+		check_admin_referer( 'ikon_seo_evaluate_content_draft_' . $id );
+		$result = $this->content_workbench->evaluate_draft( $id, get_current_user_id() );
+		$this->content_workbench_redirect( $result );
+	}
+
+	public function mark_content_ready() {
+		$this->require_workflow_manager( 'mark a controlled draft ready for review' );
+		$id = absint( $_POST['brief_id'] ?? 0 );
+		check_admin_referer( 'ikon_seo_mark_content_ready_' . $id );
+		$result = $this->content_workbench->mark_ready( $id, get_current_user_id() );
+		$this->content_workbench_redirect( $result );
+	}
+
+
+	public function editorial_action() {
+		if ( ! current_user_can( 'edit_posts' ) ) {
+			wp_die( esc_html__( 'You are not allowed to participate in editorial reviews.', 'ikon-seo' ) );
+		}
+		$command = sanitize_key( wp_unslash( $_POST['command'] ?? '' ) );
+		$review_id = absint( $_POST['review_id'] ?? 0 );
+		$brief_id = absint( $_POST['brief_id'] ?? 0 );
+		$nonce_id = 'start_review' === $command ? $brief_id : $review_id;
+		if ( in_array( $command, array( 'start_review', 'assign', 'block', 'unblock' ), true ) && ! current_user_can( 'manage_options' ) ) {
+			wp_die( esc_html__( 'Only an administrator can perform this editorial action.', 'ikon-seo' ) );
+		}
+		check_admin_referer( 'ikon_seo_editorial_' . $command . '_' . $nonce_id );
+		$assignment = array(
+			'writer_id' => absint( $_POST['writer_id'] ?? 0 ),
+			'reviewer_id' => absint( $_POST['reviewer_id'] ?? 0 ),
+			'due_at' => sanitize_text_field( wp_unslash( $_POST['due_at'] ?? '' ) ),
+			'review_due_at' => sanitize_text_field( wp_unslash( $_POST['review_due_at'] ?? '' ) ),
+		);
+		$notes = sanitize_textarea_field( wp_unslash( $_POST['notes'] ?? '' ) );
+		switch ( $command ) {
+			case 'start_review': $result = $this->editorial_review->start_review( $brief_id, $assignment, get_current_user_id() ); break;
+			case 'assign': $result = $this->editorial_review->assign( $review_id, $assignment, get_current_user_id() ); break;
+			case 'request_review': $result = $this->editorial_review->request_review( $review_id, $notes, get_current_user_id() ); break;
+			case 'add_comment': $result = $this->editorial_review->add_comment( $review_id, array( 'type' => sanitize_key( wp_unslash( $_POST['comment_type'] ?? 'general' ) ), 'anchor_text' => sanitize_text_field( wp_unslash( $_POST['anchor_text'] ?? '' ) ), 'text' => sanitize_textarea_field( wp_unslash( $_POST['comment_text'] ?? '' ) ) ), get_current_user_id() ); break;
+			case 'resolve_comment': $result = $this->editorial_review->resolve_comment( absint( $_POST['comment_id'] ?? 0 ), sanitize_key( wp_unslash( $_POST['resolution'] ?? 'resolved' ) ), $notes, get_current_user_id() ); break;
+			case 'update_check': $result = $this->editorial_review->update_check( absint( $_POST['check_id'] ?? 0 ), sanitize_key( wp_unslash( $_POST['check_status'] ?? 'pending' ) ), $notes, get_current_user_id() ); break;
+			case 'request_changes': $result = $this->editorial_review->request_changes( $review_id, $notes, get_current_user_id() ); break;
+			case 'submit_revision': $result = $this->editorial_review->submit_revision( $review_id, $notes, get_current_user_id() ); break;
+			case 'approve_round': $result = $this->editorial_review->approve_round( $review_id, $notes, get_current_user_id() ); break;
+			case 'sign_off': $result = $this->editorial_review->sign_off( $review_id, $notes, get_current_user_id() ); break;
+			case 'block': $result = $this->editorial_review->block( $review_id, $notes, get_current_user_id() ); break;
+			case 'unblock': $result = $this->editorial_review->unblock( $review_id, $notes, get_current_user_id() ); break;
+			default: $result = new WP_Error( 'ikon_seo_editorial_command', __( 'Unknown editorial action.', 'ikon-seo' ) );
+		}
+		if ( is_wp_error( $result ) ) {
+			$this->redirect_error( 'editorial-review', $result->get_error_message() );
+		}
+		$redirect_url = current_user_can( 'manage_options' ) ? admin_url( 'admin.php?page=ikon-seo&tab=editorial-review&editorial-review-updated=1' ) : admin_url( 'edit.php?page=ikon-seo-editorial&editorial-review-updated=1' );
+		wp_safe_redirect( $redirect_url );
+		exit;
+	}
+
+
+	public function publishing_action() {
+		$this->require_workflow_manager( 'manage controlled publishing readiness' );
+		$command = sanitize_key( wp_unslash( $_POST['command'] ?? '' ) );
+		$release_id = absint( $_POST['release_id'] ?? 0 );
+		$review_id = absint( $_POST['review_id'] ?? 0 );
+		$nonce_id = 'create_release' === $command ? $review_id : $release_id;
+		check_admin_referer( 'ikon_seo_publishing_' . $command . '_' . $nonce_id );
+		$notes = sanitize_textarea_field( wp_unslash( $_POST['notes'] ?? '' ) );
+		switch ( $command ) {
+			case 'create_release':
+				$result = $this->publishing_readiness->create_release( $review_id, array( 'slug' => sanitize_title( wp_unslash( $_POST['slug'] ?? '' ) ), 'target_url' => esc_url_raw( wp_unslash( $_POST['target_url'] ?? '' ) ) ), get_current_user_id() );
+				break;
+			case 'run_preflight':
+				$result = $this->publishing_readiness->run_preflight( $release_id, get_current_user_id() );
+				break;
+			case 'mark_ready':
+				$result = $this->publishing_readiness->mark_ready( $release_id, $notes, get_current_user_id() );
+				break;
+			case 'record_manual_publication':
+				$result = $this->publishing_readiness->record_manual_publication( $release_id, absint( $_POST['live_post_id'] ?? 0 ), esc_url_raw( wp_unslash( $_POST['live_url'] ?? '' ) ), get_current_user_id() );
+				break;
+			case 'verify_launch':
+				$result = $this->publishing_readiness->verify_launch( $release_id, get_current_user_id(), true );
+				break;
+			case 'complete_monitoring':
+				$result = $this->publishing_readiness->complete_monitoring( $release_id, $notes, get_current_user_id() );
+				break;
+			case 'block':
+				$result = $this->publishing_readiness->block( $release_id, $notes, get_current_user_id() );
+				break;
+			case 'unblock':
+				$result = $this->publishing_readiness->unblock( $release_id, $notes, get_current_user_id() );
+				break;
+			default:
+				$result = new WP_Error( 'ikon_seo_publishing_command', __( 'Unknown publishing readiness action.', 'ikon-seo' ) );
+		}
+		if ( is_wp_error( $result ) ) {
+			$this->redirect_error( 'publishing-readiness', $result->get_error_message() );
+		}
+		wp_safe_redirect( admin_url( 'admin.php?page=ikon-seo&tab=publishing-readiness&publishing-readiness-updated=1' ) );
+		exit;
+	}
+
+
+	public function agency_service_levels_action() {
+		if ( ! current_user_can( 'manage_options' ) || ! Ikon_SEO_Agency::can_manage() ) {
+			wp_die( esc_html__( 'Agency access is required to manage service levels and client reports.', 'ikon-seo' ) );
+		}
+		check_admin_referer( 'ikon_seo_agency_service_levels_action' );
+		$command = sanitize_key( wp_unslash( $_POST['command'] ?? 'read' ) );
+		$payload = array(
+			'command' => $command,
+			'plan_id' => absint( $_POST['plan_id'] ?? 0 ),
+			'site_id' => absint( $_POST['site_id'] ?? 0 ),
+			'assignment_id' => absint( $_POST['assignment_id'] ?? 0 ),
+			'work_item_id' => absint( $_POST['work_item_id'] ?? 0 ),
+			'report_id' => absint( $_POST['report_id'] ?? 0 ),
+			'status' => sanitize_key( wp_unslash( $_POST['status'] ?? '' ) ),
+			'method' => sanitize_key( wp_unslash( $_POST['method'] ?? '' ) ),
+			'notes' => sanitize_textarea_field( wp_unslash( $_POST['notes'] ?? '' ) ),
+		);
+		if ( 'create_plan' === $command ) {
+			$payload['plan'] = array(
+				'name' => sanitize_text_field( wp_unslash( $_POST['name'] ?? '' ) ),
+				'plan_key' => sanitize_key( wp_unslash( $_POST['plan_key'] ?? '' ) ),
+				'currency' => sanitize_text_field( wp_unslash( $_POST['currency'] ?? 'USD' ) ),
+				'monthly_fee' => (float) ( $_POST['monthly_fee'] ?? 0 ),
+				'monthly_capacity_units' => absint( $_POST['monthly_capacity_units'] ?? 20 ),
+				'max_concurrent_items' => absint( $_POST['max_concurrent_items'] ?? 5 ),
+				'response_target_hours' => absint( $_POST['response_target_hours'] ?? 48 ),
+				'report_cadence' => sanitize_key( wp_unslash( $_POST['report_cadence'] ?? 'monthly' ) ),
+				'review_cadence' => sanitize_key( wp_unslash( $_POST['review_cadence'] ?? 'monthly' ) ),
+				'included_deliverables' => sanitize_textarea_field( wp_unslash( $_POST['included_deliverables'] ?? '' ) ),
+				'excluded_services' => sanitize_textarea_field( wp_unslash( $_POST['excluded_services'] ?? '' ) ),
+				'report_evidence' => sanitize_textarea_field( wp_unslash( $_POST['report_evidence'] ?? '' ) ),
+				'notes' => sanitize_textarea_field( wp_unslash( $_POST['notes'] ?? '' ) ),
+			);
+		} elseif ( 'assign_plan' === $command ) {
+			$payload['assignment'] = array(
+				'start_date' => sanitize_text_field( wp_unslash( $_POST['start_date'] ?? '' ) ),
+				'renewal_date' => sanitize_text_field( wp_unslash( $_POST['renewal_date'] ?? '' ) ),
+				'capacity_override_units' => absint( $_POST['capacity_override_units'] ?? 0 ),
+				'client_reporting_enabled' => ! empty( $_POST['client_reporting_enabled'] ),
+				'notes' => sanitize_textarea_field( wp_unslash( $_POST['notes'] ?? '' ) ),
+			);
+		} elseif ( 'set_capacity' === $command ) {
+			$payload['capacity'] = array(
+				'user_id' => absint( $_POST['user_id'] ?? 0 ),
+				'period_start' => sanitize_text_field( wp_unslash( $_POST['period_start'] ?? '' ) ),
+				'period_end' => sanitize_text_field( wp_unslash( $_POST['period_end'] ?? '' ) ),
+				'capacity_units' => absint( $_POST['capacity_units'] ?? 0 ),
+				'notes' => sanitize_textarea_field( wp_unslash( $_POST['notes'] ?? '' ) ),
+			);
+		} elseif ( 'create_work_item' === $command || 'update_work_item' === $command ) {
+			$payload['work_item'] = array(
+				'assignment_id' => absint( $_POST['assignment_id'] ?? 0 ),
+				'title' => sanitize_text_field( wp_unslash( $_POST['title'] ?? '' ) ),
+				'description' => sanitize_textarea_field( wp_unslash( $_POST['description'] ?? '' ) ),
+				'owner_id' => absint( $_POST['owner_id'] ?? 0 ),
+				'category' => sanitize_key( wp_unslash( $_POST['category'] ?? 'seo_operations' ) ),
+				'priority' => sanitize_key( wp_unslash( $_POST['priority'] ?? 'normal' ) ),
+				'units' => absint( $_POST['units'] ?? 1 ),
+				'due_at' => sanitize_text_field( wp_unslash( $_POST['due_at'] ?? '' ) ),
+				'status' => sanitize_key( wp_unslash( $_POST['status'] ?? 'planned' ) ),
+			);
+		} elseif ( 'generate_report' === $command ) {
+			$payload['report'] = array(
+				'period_start' => sanitize_text_field( wp_unslash( $_POST['period_start'] ?? '' ) ),
+				'period_end' => sanitize_text_field( wp_unslash( $_POST['period_end'] ?? '' ) ),
+				'client_summary' => sanitize_textarea_field( wp_unslash( $_POST['client_summary'] ?? '' ) ),
+				'next_actions' => sanitize_textarea_field( wp_unslash( $_POST['next_actions'] ?? '' ) ),
+			);
+		}
+		$result = $this->agency_service_levels->sync( $payload, get_current_user_id() );
+		if ( is_wp_error( $result ) ) {
+			$this->redirect_error( 'agency-service-levels', $result->get_error_message() );
+		}
+		wp_safe_redirect( admin_url( 'admin.php?page=ikon-seo&tab=agency-service-levels&agency-service-levels-updated=1' ) );
+		exit;
+	}
+
+	public function download_client_service_report() {
+		if ( ! current_user_can( 'manage_options' ) || ! Ikon_SEO_Agency::can_manage() ) {
+			wp_die( esc_html__( 'Agency access is required to preview client reports.', 'ikon-seo' ) );
+		}
+		$report_id = absint( $_GET['report_id'] ?? 0 );
+		check_admin_referer( 'ikon_seo_download_client_service_report_' . $report_id );
+		$html = $this->agency_service_levels->render_report_html( $report_id );
+		if ( is_wp_error( $html ) ) {
+			wp_die( esc_html( $html->get_error_message() ) );
+		}
+		nocache_headers();
+		header( 'Content-Type: text/html; charset=' . get_option( 'blog_charset' ) );
+		header( 'Content-Disposition: inline; filename="ikon-seo-client-report-' . $report_id . '.html"' );
+		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Full escaped standalone report document.
+		exit;
+	}
+
+	public function portfolio_governance_action() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( esc_html__( 'You do not have permission to manage portfolio governance.', 'ikon-seo' ) );
+		}
+		check_admin_referer( 'ikon_seo_portfolio_governance_action' );
+		$command = sanitize_key( wp_unslash( $_POST['command'] ?? 'read' ) );
+		$central_commands = array( 'create_policy','approve_policy','retire_policy','save_site_key','assign_policy','sync_assignment' );
+		if ( in_array( $command, $central_commands, true ) && ! Ikon_SEO_Agency::can_manage() ) {
+			wp_die( esc_html__( 'Agency access is required for central governance actions.', 'ikon-seo' ) );
+		}
+		if ( 'generate_agent_key' === $command ) {
+			$result = $this->portfolio_governance->generate_agent_key( get_current_user_id() );
+		} elseif ( 'revoke_agent_key' === $command ) {
+			$result = $this->portfolio_governance->revoke_agent_key( get_current_user_id() );
+		} else {
+			$payload = array(
+				'command' => $command,
+				'policy_id' => absint( $_POST['policy_id'] ?? 0 ),
+				'site_id' => absint( $_POST['site_id'] ?? 0 ),
+				'assignment_id' => absint( $_POST['assignment_id'] ?? 0 ),
+				'proposal_id' => absint( $_POST['proposal_id'] ?? 0 ),
+				'governance_key' => sanitize_text_field( wp_unslash( $_POST['governance_key'] ?? '' ) ),
+				'notes' => sanitize_textarea_field( wp_unslash( $_POST['notes'] ?? '' ) ),
+			);
+			if ( 'create_policy' === $command ) {
+				$payload['policy'] = array(
+					'name' => sanitize_text_field( wp_unslash( $_POST['name'] ?? '' ) ),
+					'policy_key' => sanitize_key( wp_unslash( $_POST['policy_key'] ?? '' ) ),
+					'minimum_strategy_readiness' => absint( $_POST['minimum_strategy_readiness'] ?? 70 ),
+					'max_safe_batch' => absint( $_POST['max_safe_batch'] ?? 3 ),
+					'data_retention_days' => absint( $_POST['data_retention_days'] ?? 365 ),
+					'require_fact_review' => ! empty( $_POST['require_fact_review'] ),
+					'require_guided_launch' => true,
+					'require_brief_approval' => ! empty( $_POST['require_brief_approval'] ),
+					'require_editorial_review' => ! empty( $_POST['require_editorial_review'] ),
+					'require_publishing_preflight' => ! empty( $_POST['require_publishing_preflight'] ),
+					'require_impact_study' => ! empty( $_POST['require_impact_study'] ),
+					'notes' => sanitize_textarea_field( wp_unslash( $_POST['notes'] ?? '' ) ),
+				);
+			}
+			$result = $this->portfolio_governance->sync( $payload, get_current_user_id() );
+		}
+		if ( is_wp_error( $result ) ) {
+			$this->redirect_error( 'agency-governance', $result->get_error_message() );
+		}
+		wp_safe_redirect( admin_url( 'admin.php?page=ikon-seo&tab=agency-governance&portfolio-governance-updated=1' ) );
+		exit;
+	}
+
+	public function pattern_library_action() {
+		if ( ! current_user_can( 'manage_options' ) ) { wp_die( esc_html__( 'You are not allowed to manage the Pattern Library.', 'ikon-seo' ) ); }
+		$command = sanitize_key( wp_unslash( $_POST['command'] ?? 'read' ) );
+		$pattern_id = absint( $_POST['pattern_id'] ?? 0 );
+		$nonce_action = in_array( $command, array( 'validate','limit','reject','retire','restore' ), true ) ? 'ikon_seo_pattern_library_decision_' . $pattern_id : 'ikon_seo_pattern_library_' . $command . '_0';
+		check_admin_referer( $nonce_action );
+		$payload = array( 'command' => $command, 'pattern_id' => $pattern_id, 'notes' => sanitize_textarea_field( wp_unslash( $_POST['notes'] ?? '' ) ) );
+		if ( 'import_evidence' === $command ) {
+			$decoded = json_decode( wp_unslash( $_POST['records_json'] ?? '[]' ), true );
+			if ( ! is_array( $decoded ) ) { $this->redirect_error( 'pattern-library', __( 'The imported evidence must be a valid JSON array.', 'ikon-seo' ) ); }
+			$payload['records'] = $decoded;
+		}
+		$result = $this->pattern_library->sync( $payload, get_current_user_id() );
+		if ( is_wp_error( $result ) ) { $this->redirect_error( 'pattern-library', $result->get_error_message() ); }
+		wp_safe_redirect( admin_url( 'admin.php?page=ikon-seo&tab=pattern-library&pattern-library-updated=1' ) );
+		exit;
+	}
+
+	public function search_impact_action() {
+		$this->require_workflow_manager( 'manage search impact measurement' );
+		$command = sanitize_key( wp_unslash( $_POST['command'] ?? '' ) );
+		$study_id = absint( $_POST['study_id'] ?? 0 );
+		$release_id = absint( $_POST['release_id'] ?? 0 );
+		$nonce_id = 'create_study' === $command ? $release_id : $study_id;
+		check_admin_referer( 'ikon_seo_search_impact_' . $command . '_' . $nonce_id );
+		$notes = sanitize_textarea_field( wp_unslash( $_POST['notes'] ?? '' ) );
+		switch ( $command ) {
+			case 'create_study':
+				$result = $this->search_impact->create_study( $release_id, array( 'primary_metric' => sanitize_key( wp_unslash( $_POST['primary_metric'] ?? 'clicks' ) ), 'comparison_url' => esc_url_raw( wp_unslash( $_POST['comparison_url'] ?? '' ) ), 'evaluation_days' => absint( $_POST['evaluation_days'] ?? 28 ) ), get_current_user_id() );
+				break;
+			case 'capture_baseline': $result = $this->search_impact->capture_baseline( $study_id, get_current_user_id(), true ); break;
+			case 'capture_checkpoint': $result = $this->search_impact->capture_checkpoint( $study_id, absint( $_POST['checkpoint_days'] ?? 0 ), get_current_user_id(), true ); break;
+			case 'add_confounder': $result = $this->search_impact->add_confounder( $study_id, array( 'type' => sanitize_key( wp_unslash( $_POST['confounder_type'] ?? 'other' ) ), 'notes' => $notes, 'occurred_at' => current_time( 'mysql', true ) ), get_current_user_id() ); break;
+			case 'assess': $result = $this->search_impact->assess( $study_id, $notes, get_current_user_id() ); break;
+			case 'acknowledge': $result = $this->search_impact->acknowledge( $study_id, sanitize_key( wp_unslash( $_POST['decision'] ?? '' ) ), $notes, get_current_user_id() ); break;
+			case 'block': $result = $this->search_impact->block( $study_id, $notes, get_current_user_id() ); break;
+			case 'unblock': $result = $this->search_impact->unblock( $study_id, $notes, get_current_user_id() ); break;
+			default: $result = new WP_Error( 'ikon_seo_search_impact_command', __( 'Unknown Search Impact action.', 'ikon-seo' ) );
+		}
+		if ( is_wp_error( $result ) ) {
+			$this->redirect_error( 'search-impact', $result->get_error_message() );
+		}
+		wp_safe_redirect( admin_url( 'admin.php?page=ikon-seo&tab=search-impact&search-impact-updated=1' ) );
+		exit;
+	}
+
+	private function content_workbench_redirect( $result ) {
+		if ( is_wp_error( $result ) ) {
+			$this->redirect_error( 'content-workbench', $result->get_error_message() );
+		}
+		wp_safe_redirect( admin_url( 'admin.php?page=ikon-seo&tab=content-workbench&content-workbench-updated=1' ) );
+		exit;
+	}
+
 	public function save_strategy() {
 		$this->guard_agency( 'ikon_seo_save_strategy' );
 		$result = $this->strategy->save( $_POST, get_current_user_id(), 'admin' );
@@ -3570,6 +5214,7 @@ class Ikon_SEO_Admin {
 		$new_fingerprint             = $this->profile->fingerprint( $clean );
 		if ( ! hash_equals( $old_fingerprint, $new_fingerprint ) ) {
 				$clean['token_hash']     = '';
+				$clean['connection_owner_user_id'] = 0;
 				$clean['token_hint']     = '';
 				$clean['connection_verified_at'] = '';
 				$clean['connection_last_seen_at'] = '';
@@ -4591,6 +6236,44 @@ class Ikon_SEO_Admin {
 		exit;
 	}
 
+
+	public function refresh_executive_command() {
+		$this->guard_agency( 'ikon_seo_refresh_executive_command' );
+		$result = $this->executive_command->refresh( 200, get_current_user_id(), ! empty( $_POST['refresh_remote'] ) );
+		if ( is_wp_error( $result ) ) { $this->redirect_error( 'agency-command-centre', $result->get_error_message() ); }
+		wp_safe_redirect( admin_url( 'admin.php?page=ikon-seo&tab=agency-command-centre&agency-command-updated=1' ) );
+		exit;
+	}
+
+	public function update_executive_risk() {
+		$risk_id = absint( $_POST['risk_id'] ?? 0 );
+		$this->guard_agency( 'ikon_seo_update_executive_risk_' . $risk_id );
+		$command = sanitize_key( $_POST['risk_command'] ?? 'assign_risk' );
+		$payload = array(
+			'command' => $command,
+			'risk_id' => $risk_id,
+			'owner_id' => absint( $_POST['owner_id'] ?? 0 ),
+			'due_at' => sanitize_text_field( wp_unslash( $_POST['due_at'] ?? '' ) ),
+			'notes' => sanitize_textarea_field( wp_unslash( $_POST['notes'] ?? '' ) ),
+		);
+		$result = $this->executive_command->sync( $payload, get_current_user_id() );
+		if ( is_wp_error( $result ) ) { $this->redirect_error( 'agency-command-centre', $result->get_error_message() ); }
+		wp_safe_redirect( admin_url( 'admin.php?page=ikon-seo&tab=agency-command-centre&agency-command-updated=1' ) );
+		exit;
+	}
+
+	public function update_executive_notification() {
+		$notification_id = absint( $_POST['notification_id'] ?? 0 );
+		$this->guard_agency( 'ikon_seo_update_executive_notification_' . $notification_id );
+		$result = $this->executive_command->sync(
+			array( 'command' => sanitize_key( $_POST['notification_command'] ?? 'acknowledge_notification' ), 'notification_id' => $notification_id ),
+			get_current_user_id()
+		);
+		if ( is_wp_error( $result ) ) { $this->redirect_error( 'agency-command-centre', $result->get_error_message() ); }
+		wp_safe_redirect( admin_url( 'admin.php?page=ikon-seo&tab=agency-command-centre&agency-command-updated=1' ) );
+		exit;
+	}
+
 	public function export_agency_report() {
 		$site_id = absint( $_POST['site_id'] ?? 0 );
 		$this->guard_agency( 'ikon_seo_export_agency_report_' . $site_id );
@@ -4651,20 +6334,46 @@ class Ikon_SEO_Admin {
 		}
 		$settings = Ikon_SEO_Plugin::settings();
 		$report   = $this->agency_command->summary( 200 );
+		$executive_filters = array(
+			'limit'         => 200,
+			'site_id'       => absint( $_GET['command_site_id'] ?? 0 ),
+			'severity'      => sanitize_key( $_GET['command_severity'] ?? '' ),
+			'approval_type' => sanitize_key( $_GET['command_approval_type'] ?? '' ),
+			'owner_id'      => absint( $_GET['command_owner_id'] ?? 0 ),
+			'search'        => sanitize_text_field( wp_unslash( $_GET['command_search'] ?? '' ) ),
+		);
+		$executive = $this->executive_command->report( $executive_filters );
 		$agent    = $this->agency_command->agent_status();
 		$one_time_key = $this->agency_command->consume_agent_key( get_current_user_id() );
 		$sites    = (array) ( $report['sites'] ?? array() );
 		$metrics  = (array) ( $report['metrics'] ?? array() );
+		$executive_metrics = (array) ( $executive['metrics'] ?? array() );
 		?>
 		<div class="ikon-seo-section-header">
 			<div>
 				<h2><?php esc_html_e( 'Agency Command Centre', 'ikon-seo' ); ?></h2>
-				<p class="description"><?php esc_html_e( 'Monitor multiple Ikon SEO websites from one agency-controlled dashboard using read-only snapshots, cross-site alerts, approval queues, budgets and privacy-preserving portfolio checks.', 'ikon-seo' ); ?></p>
+				<p class="description"><?php esc_html_e( 'Consolidate website health, approvals, operational risks, service levels, capacity forecasts and executive portfolio analytics from one read-only agency dashboard.', 'ikon-seo' ); ?></p>
 			</div>
 			<span class="ikon-seo-pill <?php echo ! empty( $settings['agency_command_enabled'] ) ? 'is-connected' : 'is-failed'; ?>"><?php echo esc_html( ! empty( $settings['agency_command_enabled'] ) ? 'Portfolio monitoring enabled' : 'Portfolio monitoring paused' ); ?></span>
 		</div>
 
 		<div class="notice notice-info inline"><p><strong><?php esc_html_e( 'Safety boundary:', 'ikon-seo' ); ?></strong> <?php esc_html_e( 'The command centre reads bounded snapshots only. Publishing, redirects, live-page changes, public-profile edits and external outreach remain on the individual website and require human approval.', 'ikon-seo' ); ?></p></div>
+
+		<form class="ikon-seo-card" method="get" action="<?php echo esc_url( admin_url( 'admin.php' ) ); ?>">
+			<input type="hidden" name="page" value="ikon-seo">
+			<input type="hidden" name="tab" value="agency-command-centre">
+			<h3><?php esc_html_e( 'Portfolio filters', 'ikon-seo' ); ?></h3>
+			<p class="description"><?php esc_html_e( 'Search across connected websites, approval records, risks and internal notifications.', 'ikon-seo' ); ?></p>
+			<div class="ikon-seo-inline-form">
+				<label><?php esc_html_e( 'Website', 'ikon-seo' ); ?> <select name="command_site_id"><option value="0"><?php esc_html_e( 'All websites', 'ikon-seo' ); ?></option><?php foreach ( (array) ( $report['sites'] ?? array() ) as $filter_site ) : ?><option value="<?php echo absint( $filter_site['id'] ); ?>" <?php selected( $executive_filters['site_id'], absint( $filter_site['id'] ) ); ?>><?php echo esc_html( trim( ( $filter_site['client_name'] ?? '' ) . ' — ' . ( $filter_site['site_name'] ?? '' ), ' —' ) ); ?></option><?php endforeach; ?></select></label>
+				<label><?php esc_html_e( 'Severity', 'ikon-seo' ); ?> <select name="command_severity"><option value=""><?php esc_html_e( 'All severities', 'ikon-seo' ); ?></option><?php foreach ( array( 'critical','high','medium','low' ) as $severity ) : ?><option value="<?php echo esc_attr( $severity ); ?>" <?php selected( $executive_filters['severity'], $severity ); ?>><?php echo esc_html( ucfirst( $severity ) ); ?></option><?php endforeach; ?></select></label>
+				<label><?php esc_html_e( 'Approval type', 'ikon-seo' ); ?> <select name="command_approval_type"><option value=""><?php esc_html_e( 'All decisions', 'ikon-seo' ); ?></option><?php foreach ( array( 'fact_review','content_brief','editorial_review','publishing_readiness','manual_publication','search_impact','pattern_validation','governance_policy','client_report' ) as $approval_type ) : ?><option value="<?php echo esc_attr( $approval_type ); ?>" <?php selected( $executive_filters['approval_type'], $approval_type ); ?>><?php echo esc_html( ucwords( str_replace( '_', ' ', $approval_type ) ) ); ?></option><?php endforeach; ?></select></label>
+				<label><?php esc_html_e( 'Owner ID', 'ikon-seo' ); ?> <input type="number" min="0" name="command_owner_id" value="<?php echo esc_attr( $executive_filters['owner_id'] ); ?>" size="6"></label>
+				<label><?php esc_html_e( 'Search', 'ikon-seo' ); ?> <input type="search" name="command_search" value="<?php echo esc_attr( $executive_filters['search'] ); ?>" placeholder="<?php esc_attr_e( 'Client, site, risk or decision', 'ikon-seo' ); ?>"></label>
+				<button class="button button-primary"><?php esc_html_e( 'Apply filters', 'ikon-seo' ); ?></button>
+				<a class="button" href="<?php echo esc_url( admin_url( 'admin.php?page=ikon-seo&tab=agency-command-centre' ) ); ?>"><?php esc_html_e( 'Clear', 'ikon-seo' ); ?></a>
+			</div>
+		</form>
 
 		<?php if ( empty( $report['ready'] ) ) : ?>
 			<div class="notice notice-warning inline"><p><?php esc_html_e( 'The Agency Command Centre database is not ready. Deactivate and reactivate Ikon SEO once to run the database upgrade.', 'ikon-seo' ); ?></p></div>
@@ -4680,6 +6389,50 @@ class Ikon_SEO_Admin {
 			<div class="ikon-seo-metric"><strong><?php echo esc_html( number_format_i18n( absint( $metrics['duplication_risk'] ?? 0 ) ) ); ?></strong><span><?php esc_html_e( 'Overlap reviews', 'ikon-seo' ); ?></span></div>
 			<div class="ikon-seo-metric"><strong><?php echo esc_html( number_format_i18n( absint( $metrics['stale'] ?? 0 ) ) ); ?></strong><span><?php esc_html_e( 'Stale snapshots', 'ikon-seo' ); ?></span></div>
 		</div>
+
+
+		<section class="ikon-seo-card">
+			<div class="ikon-seo-section-header"><div><h3><?php esc_html_e( 'Executive portfolio overview', 'ikon-seo' ); ?></h3><p class="description"><?php esc_html_e( 'Health scores expose their components and represent operational readiness, not rankings or revenue forecasts.', 'ikon-seo' ); ?></p></div><form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_refresh_executive_command"><?php wp_nonce_field( 'ikon_seo_refresh_executive_command' ); ?><label><input type="checkbox" name="refresh_remote" value="1"> <?php esc_html_e( 'Refresh remote snapshots first', 'ikon-seo' ); ?></label> <button class="button button-primary"><?php esc_html_e( 'Refresh command centre', 'ikon-seo' ); ?></button></form></div>
+			<div class="ikon-seo-metrics">
+				<div class="ikon-seo-metric"><strong><?php echo esc_html( number_format_i18n( absint( $executive_metrics['websites'] ?? 0 ) ) ); ?></strong><span><?php esc_html_e( 'Websites', 'ikon-seo' ); ?></span></div>
+				<div class="ikon-seo-metric"><strong><?php echo esc_html( number_format_i18n( (float) ( $executive_metrics['portfolio_health_average'] ?? 0 ), 1 ) ); ?></strong><span><?php esc_html_e( 'Average health', 'ikon-seo' ); ?></span></div>
+				<div class="ikon-seo-metric"><strong><?php echo esc_html( number_format_i18n( absint( $executive_metrics['websites_requiring_attention'] ?? 0 ) ) ); ?></strong><span><?php esc_html_e( 'Require attention', 'ikon-seo' ); ?></span></div>
+				<div class="ikon-seo-metric"><strong><?php echo esc_html( number_format_i18n( absint( $executive_metrics['pending_approvals'] ?? 0 ) ) ); ?></strong><span><?php esc_html_e( 'Pending approvals', 'ikon-seo' ); ?></span></div>
+				<div class="ikon-seo-metric"><strong><?php echo esc_html( number_format_i18n( absint( $executive_metrics['open_risks'] ?? 0 ) ) ); ?></strong><span><?php esc_html_e( 'Open risks', 'ikon-seo' ); ?></span></div>
+				<div class="ikon-seo-metric"><strong><?php echo esc_html( number_format_i18n( absint( $executive_metrics['critical_risks'] ?? 0 ) ) ); ?></strong><span><?php esc_html_e( 'Critical risks', 'ikon-seo' ); ?></span></div>
+				<div class="ikon-seo-metric"><strong><?php echo esc_html( number_format_i18n( (float) ( $executive_metrics['capacity_utilisation_percent'] ?? 0 ), 1 ) ); ?>%</strong><span><?php esc_html_e( 'Capacity used', 'ikon-seo' ); ?></span></div>
+				<div class="ikon-seo-metric"><strong><?php echo esc_html( number_format_i18n( absint( $executive_metrics['reports_awaiting_approval'] ?? 0 ) ) ); ?></strong><span><?php esc_html_e( 'Reports to approve', 'ikon-seo' ); ?></span></div>
+			</div>
+		</section>
+
+		<?php $portfolio_analytics = (array) ( $executive['portfolio_analytics'] ?? array() ); ?>
+		<h2><?php esc_html_e( 'Executive portfolio analytics', 'ikon-seo' ); ?></h2>
+		<p class="description"><?php esc_html_e( 'Aggregated operational counts remain segmented by workflow stage. They describe recorded activity and do not claim rankings, traffic, leads or revenue.', 'ikon-seo' ); ?></p>
+		<table class="widefat striped"><thead><tr><th><?php esc_html_e( 'Area', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Recorded status totals', 'ikon-seo' ); ?></th></tr></thead><tbody>
+		<?php foreach ( array( 'health_levels' => 'Portfolio health', 'opportunities' => 'Opportunities', 'content' => 'Content production', 'editorial' => 'Editorial review', 'publishing' => 'Publishing readiness', 'search_impact' => 'Search Impact', 'client_reporting' => 'Client reporting' ) as $analytics_key => $analytics_label ) : ?>
+			<tr><td><strong><?php echo esc_html( $analytics_label ); ?></strong></td><td><?php $status_totals = (array) ( $portfolio_analytics[ $analytics_key ] ?? array() ); if ( empty( $status_totals ) ) { esc_html_e( 'No recorded data', 'ikon-seo' ); } else { $pieces = array(); foreach ( $status_totals as $status_name => $status_count ) { $pieces[] = ucwords( str_replace( '_', ' ', $status_name ) ) . ': ' . absint( $status_count ); } echo esc_html( implode( ' · ', $pieces ) ); } ?></td></tr>
+		<?php endforeach; ?>
+		</tbody></table>
+
+		<h2><?php esc_html_e( 'Portfolio health scorecards', 'ikon-seo' ); ?></h2>
+		<table class="widefat striped"><thead><tr><th><?php esc_html_e( 'Website', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Health', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Workflow', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Service level', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Next action', 'ikon-seo' ); ?></th></tr></thead><tbody>
+		<?php if ( empty( $executive['sites'] ) ) : ?><tr><td colspan="5"><?php esc_html_e( 'Connect and refresh managed websites to build portfolio scorecards.', 'ikon-seo' ); ?></td></tr><?php endif; ?>
+		<?php foreach ( (array) ( $executive['sites'] ?? array() ) as $site ) : ?><tr><td><strong><?php echo esc_html( $site['client_name'] . ' — ' . $site['site_name'] ); ?></strong><br><small><?php echo esc_html( $site['last_snapshot_at'] ); ?></small></td><td><strong><?php echo esc_html( absint( $site['health']['score'] ) ); ?>/100</strong> · <?php echo esc_html( ucfirst( $site['health']['level'] ) ); ?><br><small><?php foreach ( (array) $site['health']['components'] as $label => $score ) { echo esc_html( ucwords( str_replace( '_', ' ', $label ) ) . ': ' . $score . ' ' ); } ?></small></td><td><?php echo esc_html( absint( $site['approval_count'] ) ); ?> approvals<br><?php echo esc_html( absint( $site['risk_count'] ) ); ?> risks</td><td><?php echo esc_html( $site['service']['plan_name'] ?? 'No active plan' ); ?><br><small><?php echo esc_html( (float) ( $site['service']['capacity_percent'] ?? 0 ) ); ?>% capacity · <?php echo esc_html( absint( $site['service']['overdue_items'] ?? 0 ) ); ?> overdue</small></td><td><?php echo esc_html( $site['next_action'] ); ?></td></tr><?php endforeach; ?>
+		</tbody></table>
+
+		<h2><?php esc_html_e( 'Unified approval inbox', 'ikon-seo' ); ?></h2>
+		<table class="widefat striped"><thead><tr><th><?php esc_html_e( 'Website', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Decision', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Priority', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Due', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Review', 'ikon-seo' ); ?></th></tr></thead><tbody><?php if ( empty( $executive['approvals'] ) ) : ?><tr><td colspan="5"><?php esc_html_e( 'No controlled decisions are currently waiting.', 'ikon-seo' ); ?></td></tr><?php endif; ?><?php foreach ( array_slice( (array) ( $executive['approvals'] ?? array() ), 0, 100 ) as $item ) : ?><tr><td><?php echo esc_html( trim( $item['client_name'] . ' — ' . $item['site_name'], ' —' ) ); ?></td><td><strong><?php echo esc_html( $item['title'] ); ?></strong><br><small><?php echo esc_html( ucwords( str_replace( '_', ' ', $item['type'] ) ) ); ?> · <?php echo esc_html( ucwords( str_replace( '_', ' ', $item['status'] ) ) ); ?></small></td><td><?php echo esc_html( absint( $item['priority'] ) ); ?></td><td><?php echo esc_html( $item['due_at'] ?: '—' ); ?></td><td><?php if ( $item['review_url'] ) : ?><a class="button" href="<?php echo esc_url( $item['review_url'] ); ?>" target="_blank" rel="noopener"><?php esc_html_e( 'Open review', 'ikon-seo' ); ?></a><?php else : ?>—<?php endif; ?></td></tr><?php endforeach; ?></tbody></table>
+
+		<h2><?php esc_html_e( 'Portfolio risk register', 'ikon-seo' ); ?></h2>
+		<table class="widefat striped"><thead><tr><th><?php esc_html_e( 'Severity', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Website and risk', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Owner / due', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Recommended action', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Decision', 'ikon-seo' ); ?></th></tr></thead><tbody><?php if ( empty( $executive['risks'] ) ) : ?><tr><td colspan="5"><?php esc_html_e( 'No active executive risks are stored.', 'ikon-seo' ); ?></td></tr><?php endif; ?><?php foreach ( array_slice( (array) ( $executive['risks'] ?? array() ), 0, 150 ) as $risk ) : ?><tr><td><span class="ikon-seo-pill <?php echo in_array( $risk['severity'], array( 'critical','high' ), true ) ? 'is-failed' : 'is-connected'; ?>"><?php echo esc_html( ucfirst( $risk['severity'] ) ); ?></span></td><td><strong><?php echo esc_html( $risk['site_name'] ?: 'Portfolio-wide' ); ?> — <?php echo esc_html( $risk['title'] ); ?></strong><br><?php echo esc_html( $risk['evidence']['summary'] ?? '' ); ?></td><td><?php echo esc_html( $risk['owner_id'] ? 'User #' . absint( $risk['owner_id'] ) : 'Unassigned' ); ?><br><small><?php echo esc_html( $risk['due_at'] ?: 'No due date' ); ?></small></td><td><?php echo esc_html( $risk['recommended_action'] ); ?></td><td><form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_update_executive_risk"><input type="hidden" name="risk_id" value="<?php echo absint( $risk['id'] ); ?>"><?php wp_nonce_field( 'ikon_seo_update_executive_risk_' . absint( $risk['id'] ) ); ?><p><select name="risk_command"><option value="assign_risk">Assign/update</option><option value="resolve_risk">Resolve</option></select></p><p><input type="number" min="0" name="owner_id" value="<?php echo absint( $risk['owner_id'] ); ?>" placeholder="User ID"> <input type="datetime-local" name="due_at"></p><p><textarea name="notes" rows="2" placeholder="Required resolution note"></textarea></p><button class="button"><?php esc_html_e( 'Save', 'ikon-seo' ); ?></button></form></td></tr><?php endforeach; ?></tbody></table>
+
+		<h2><?php esc_html_e( 'Internal notifications', 'ikon-seo' ); ?></h2>
+		<table class="widefat striped"><thead><tr><th><?php esc_html_e( 'Status', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Notification', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Updated', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Action', 'ikon-seo' ); ?></th></tr></thead><tbody><?php if ( empty( $executive['notifications'] ) ) : ?><tr><td colspan="4"><?php esc_html_e( 'No active internal notifications.', 'ikon-seo' ); ?></td></tr><?php endif; ?><?php foreach ( array_slice( (array) ( $executive['notifications'] ?? array() ), 0, 100 ) as $notice ) : ?><tr><td><?php echo esc_html( ucfirst( $notice['status'] ) ); ?></td><td><strong><?php echo esc_html( $notice['title'] ); ?></strong><br><?php echo esc_html( $notice['summary'] ); ?></td><td><?php echo esc_html( $notice['updated_at'] ); ?></td><td><form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"><input type="hidden" name="action" value="ikon_seo_update_executive_notification"><input type="hidden" name="notification_id" value="<?php echo absint( $notice['id'] ); ?>"><?php wp_nonce_field( 'ikon_seo_update_executive_notification_' . absint( $notice['id'] ) ); ?><select name="notification_command"><option value="acknowledge_notification">Acknowledge</option><option value="dismiss_notification">Dismiss</option></select> <button class="button"><?php esc_html_e( 'Save', 'ikon-seo' ); ?></button></form></td></tr><?php endforeach; ?></tbody></table>
+
+		<h2><?php esc_html_e( 'Capacity forecast', 'ikon-seo' ); ?></h2>
+		<?php $forecast = (array) ( $executive['capacity_forecast'] ?? array() ); ?>
+		<p><?php echo esc_html( sprintf( '%s committed of %s units (%s%%). %s overdue items and %s unassigned items.', absint( $forecast['committed_units'] ?? 0 ), absint( $forecast['total_capacity_units'] ?? 0 ), (float) ( $forecast['utilisation_percent'] ?? 0 ), absint( $forecast['overdue_items'] ?? 0 ), absint( $forecast['unassigned_items'] ?? 0 ) ) ); ?></p>
+		<table class="widefat striped"><thead><tr><th><?php esc_html_e( 'Team member', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Capacity', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Committed', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Remaining', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Utilisation', 'ikon-seo' ); ?></th></tr></thead><tbody><?php if ( empty( $forecast['people'] ) ) : ?><tr><td colspan="5"><?php esc_html_e( 'No team capacity periods are configured.', 'ikon-seo' ); ?></td></tr><?php endif; ?><?php foreach ( (array) ( $forecast['people'] ?? array() ) as $person ) : ?><tr><td><?php echo esc_html( $person['display_name'] ); ?></td><td><?php echo esc_html( absint( $person['capacity_units'] ) ); ?></td><td><?php echo esc_html( absint( $person['committed_units'] ) ); ?></td><td><?php echo esc_html( absint( $person['remaining_units'] ) ); ?></td><td><?php echo esc_html( (float) $person['utilisation_percent'] ); ?>%</td></tr><?php endforeach; ?></tbody></table>
 
 		<?php if ( $one_time_key ) : ?>
 			<div class="notice notice-warning inline">
@@ -5871,12 +7624,178 @@ class Ikon_SEO_Admin {
 		wp_safe_redirect( admin_url( 'admin.php?page=ikon-seo&tab=indexation&indexation-updated=1' ) ); exit;
 	}
 
+
+	public function platform_hardening_action() {
+		$this->require_workflow_manager( 'manage platform hardening and recovery records' );
+		check_admin_referer( 'ikon_seo_platform_hardening_action' );
+		$payload = array(
+			'command' => sanitize_key( $_POST['command'] ?? 'read' ),
+			'archive_type' => sanitize_key( $_POST['archive_type'] ?? 'configuration' ),
+			'label' => sanitize_text_field( wp_unslash( $_POST['label'] ?? '' ) ),
+			'archive_id' => absint( $_POST['archive_id'] ?? 0 ),
+			'expected_hash' => sanitize_text_field( wp_unslash( $_POST['expected_hash'] ?? '' ) ),
+		);
+		$result = $this->platform_hardening->sync( $payload, get_current_user_id() );
+		if ( is_wp_error( $result ) ) { $this->redirect_error( 'platform-health', $result->get_error_message() ); }
+		wp_safe_redirect( admin_url( 'admin.php?page=ikon-seo&tab=platform-health&platform-health-updated=1' ) ); exit;
+	}
+
+
+	public function deployment_control_action() {
+		$this->require_workflow_manager( 'manage deployment and entitlement records' );
+		check_admin_referer( 'ikon_seo_deployment_control_action' );
+		$command = sanitize_key( wp_unslash( $_POST['command'] ?? 'read' ) );
+		$payload = array(
+			'command' => $command,
+			'entitlement_id' => absint( $_POST['entitlement_id'] ?? 0 ),
+			'release_id' => absint( $_POST['release_id'] ?? 0 ),
+			'plan_id' => absint( $_POST['plan_id'] ?? 0 ),
+			'expected_fingerprint' => sanitize_text_field( wp_unslash( $_POST['expected_fingerprint'] ?? '' ) ),
+			'notes' => sanitize_textarea_field( wp_unslash( $_POST['notes'] ?? '' ) ),
+		);
+		if ( 'create_evaluation' === $command ) {
+			$payload['evaluation'] = array( 'organisation' => sanitize_text_field( wp_unslash( $_POST['organisation'] ?? '' ) ), 'days' => absint( $_POST['days'] ?? 14 ), 'environment' => Ikon_SEO_Plugin::settings()['deployment_environment'] ?? '' );
+		} elseif ( 'create_plan' === $command ) {
+			$payload['plan'] = array( 'environment' => Ikon_SEO_Plugin::settings()['deployment_environment'] ?? '', 'notes' => $payload['notes'] );
+		}
+		$result = $this->deployment_control->sync( $payload, get_current_user_id() );
+		if ( is_wp_error( $result ) ) { $this->redirect_error( 'deployment-control', $result->get_error_message() ); }
+		wp_safe_redirect( admin_url( 'admin.php?page=ikon-seo&tab=deployment-control&deployment-control-updated=1' ) ); exit;
+	}
+
 	public function run_production_health() {
 		$this->require_workflow_manager( 'run production health checks' );
 		check_admin_referer( 'ikon_seo_run_production_health' );
 		$result = $this->production_health->run( get_current_user_id(), 'admin' );
 		if ( is_wp_error( $result ) ) { $this->redirect_error( 'indexation', $result->get_error_message() ); }
 		wp_safe_redirect( admin_url( 'admin.php?page=ikon-seo&tab=indexation&indexation-updated=1' ) ); exit;
+	}
+
+
+	public function production_certification_action() {
+		$this->require_workflow_manager( 'manage production certification and controlled rollout records' );
+		check_admin_referer( 'ikon_seo_production_certification_action' );
+		$command = sanitize_key( wp_unslash( $_POST['command'] ?? 'read' ) );
+		$payload = array(
+			'command' => $command,
+			'contract_id' => absint( $_POST['contract_id'] ?? 0 ),
+			'certification_id' => absint( $_POST['certification_id'] ?? 0 ),
+			'rollout_id' => absint( $_POST['rollout_id'] ?? 0 ),
+			'evidence_fingerprint' => sanitize_text_field( wp_unslash( $_POST['evidence_fingerprint'] ?? '' ) ),
+		);
+		if ( 'create_contract' === $command ) {
+			$payload['contract'] = array( 'label'=>sanitize_text_field(wp_unslash($_POST['label']??'')), 'support_window_days'=>absint($_POST['support_window_days']??365), 'recovery_drill_days'=>absint($_POST['recovery_drill_days']??90), 'notes'=>sanitize_textarea_field(wp_unslash($_POST['notes']??'')) );
+		} elseif ( 'create_certification' === $command ) {
+			$payload['certification'] = array( 'environment'=>sanitize_key(wp_unslash($_POST['environment']??'production')) );
+		} elseif ( 'record_check' === $command ) {
+			$payload['check_key'] = sanitize_key( wp_unslash( $_POST['check_key'] ?? '' ) );
+			$payload['check'] = array( 'status'=>sanitize_key(wp_unslash($_POST['check_status']??'pending')), 'evidence'=>sanitize_textarea_field(wp_unslash($_POST['evidence']??'')), 'notes'=>sanitize_textarea_field(wp_unslash($_POST['notes']??'')) );
+		} elseif ( 'create_rollout' === $command ) {
+			$site_ids = preg_split( '/[\s,]+/', sanitize_text_field( wp_unslash( $_POST['site_ids'] ?? '' ) ) );
+			$payload['rollout'] = array( 'label'=>sanitize_text_field(wp_unslash($_POST['label']??'')), 'site_ids'=>array_values(array_filter(array_map('absint',(array)$site_ids))), 'channel'=>sanitize_key(wp_unslash($_POST['channel']??'stable')) );
+		} elseif ( 'record_rollout_result' === $command ) {
+			$payload['site_id'] = absint( $_POST['site_id'] ?? 0 );
+			$payload['status'] = sanitize_key( wp_unslash( $_POST['rollout_status'] ?? 'pending' ) );
+			$payload['notes'] = sanitize_textarea_field( wp_unslash( $_POST['notes'] ?? '' ) );
+		}
+		$result = $this->production_certification->sync( $payload, get_current_user_id() );
+		if ( is_wp_error( $result ) ) { $this->redirect_error( 'production-certification', $result->get_error_message() ); }
+		wp_safe_redirect( admin_url( 'admin.php?page=ikon-seo&tab=production-certification&production-certification-updated=1' ) ); exit;
+	}
+
+
+	private function render_staging_validation() {
+		$report      = $this->staging_validation->report( array( 'limit' => 15, 'include_checks' => true ) );
+		$runs        = (array) ( $report['runs'] ?? array() );
+		$environment = sanitize_key( $report['environment'] ?? 'production' );
+		$can_run     = in_array( $environment, array( 'local', 'development', 'staging' ), true );
+		$pack_run    = absint( $_GET['pack_run'] ?? 0 );
+		$pack        = $pack_run ? $this->staging_validation->evidence_pack( $pack_run ) : null;
+		?>
+		<section class="ikon-seo-card">
+			<h2><?php esc_html_e( 'Staging Validation & Evidence Runner', 'ikon-seo' ); ?></h2>
+			<p><?php esc_html_e( 'Run non-destructive environment checks on the actual WordPress staging website. Evidence is locked to an exact fingerprint and requires approval by a different administrator before it can be used in Production Certification.', 'ikon-seo' ); ?></p>
+			<p><strong><?php esc_html_e( 'Detected environment:', 'ikon-seo' ); ?></strong> <?php echo esc_html( ucfirst( $environment ) ); ?></p>
+			<p class="description"><?php esc_html_e( 'The runner may create temporary Ikon SEO database records, cache values and files. It removes its self-test artefacts and cannot publish, install plugins or change public content.', 'ikon-seo' ); ?></p>
+			<?php if ( ! $can_run ) : ?>
+				<div class="notice notice-warning inline"><p><?php esc_html_e( 'Automated staging validation is disabled on production environments. Clone the website to staging and set WP_ENVIRONMENT_TYPE to staging before running these checks.', 'ikon-seo' ); ?></p></div>
+			<?php else : ?>
+				<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
+					<input type="hidden" name="action" value="ikon_seo_staging_validation_action">
+					<input type="hidden" name="command" value="start_run">
+					<input type="hidden" name="environment" value="<?php echo esc_attr( $environment ); ?>">
+					<?php wp_nonce_field( 'ikon_seo_staging_validation_action' ); ?>
+					<button class="button button-primary"><?php esc_html_e( 'Start full staging validation', 'ikon-seo' ); ?></button>
+				</form>
+			<?php endif; ?>
+		</section>
+
+		<?php if ( is_wp_error( $pack ) ) : ?>
+			<div class="notice notice-error inline"><p><?php echo esc_html( $pack->get_error_message() ); ?></p></div>
+		<?php elseif ( is_array( $pack ) ) : ?>
+			<section class="ikon-seo-card">
+				<h3><?php esc_html_e( 'Approved certification evidence pack', 'ikon-seo' ); ?></h3>
+				<p><?php esc_html_e( 'Copy this privacy-minimised JSON into your controlled certification record. The pack does not approve Production Certification automatically.', 'ikon-seo' ); ?></p>
+				<textarea class="large-text code" rows="20" readonly><?php echo esc_textarea( wp_json_encode( $pack, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES ) ); ?></textarea>
+			</section>
+		<?php endif; ?>
+
+		<h2><?php esc_html_e( 'Validation runs', 'ikon-seo' ); ?></h2>
+		<table class="widefat striped">
+			<thead><tr><th>ID</th><th><?php esc_html_e( 'Environment', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Status', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Score', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Evidence', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Action', 'ikon-seo' ); ?></th></tr></thead>
+			<tbody>
+			<?php if ( ! $runs ) : ?><tr><td colspan="6"><?php esc_html_e( 'No staging validation run exists yet.', 'ikon-seo' ); ?></td></tr><?php endif; ?>
+			<?php foreach ( $runs as $run ) : ?>
+				<tr>
+					<td><?php echo absint( $run['id'] ); ?></td>
+					<td><?php echo esc_html( ucfirst( $run['environment'] ) ); ?><br><small><?php echo esc_html( 'WP ' . $run['wordpress_version'] . ' · PHP ' . $run['php_version'] ); ?></small></td>
+					<td><strong><?php echo esc_html( ucfirst( str_replace( '_', ' ', $run['status'] ) ) ); ?></strong><br><small><?php echo esc_html( count( (array) $run['blocks'] ) . ' blocks · ' . count( (array) $run['warnings'] ) . ' warnings' ); ?></small></td>
+					<td><?php echo absint( $run['score'] ); ?>/100</td>
+					<td><code><?php echo esc_html( substr( (string) $run['evidence_fingerprint'], 0, 16 ) ); ?>…</code><br><small><?php echo esc_html( $run['updated_at'] ); ?></small></td>
+					<td>
+						<?php if ( 'approved' !== $run['status'] ) : ?>
+							<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" style="display:inline-block;margin-right:6px;">
+								<input type="hidden" name="action" value="ikon_seo_staging_validation_action"><input type="hidden" name="command" value="run_checks"><input type="hidden" name="run_id" value="<?php echo absint( $run['id'] ); ?>"><?php wp_nonce_field( 'ikon_seo_staging_validation_action' ); ?><button class="button"><?php esc_html_e( 'Rerun checks', 'ikon-seo' ); ?></button>
+							</form>
+						<?php endif; ?>
+						<?php if ( 'review_ready' === $run['status'] ) : ?>
+							<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" style="display:inline-block;">
+								<input type="hidden" name="action" value="ikon_seo_staging_validation_action"><input type="hidden" name="command" value="approve_run"><input type="hidden" name="run_id" value="<?php echo absint( $run['id'] ); ?>"><input type="hidden" name="evidence_fingerprint" value="<?php echo esc_attr( $run['evidence_fingerprint'] ); ?>"><?php wp_nonce_field( 'ikon_seo_staging_validation_action' ); ?><button class="button button-primary"><?php esc_html_e( 'Approve with different admin', 'ikon-seo' ); ?></button>
+							</form>
+						<?php elseif ( 'approved' === $run['status'] ) : ?>
+							<a class="button" href="<?php echo esc_url( admin_url( 'admin.php?page=ikon-seo&tab=staging-validation&pack_run=' . absint( $run['id'] ) ) ); ?>"><?php esc_html_e( 'View evidence pack', 'ikon-seo' ); ?></a>
+						<?php endif; ?>
+					</td>
+				</tr>
+				<tr><td colspan="6">
+					<details><summary><?php echo esc_html( sprintf( __( 'Review %d checks', 'ikon-seo' ), count( (array) $run['checks'] ) ) ); ?></summary>
+						<table class="widefat striped" style="margin-top:8px;"><thead><tr><th><?php esc_html_e( 'Check', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Critical', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Status', 'ikon-seo' ); ?></th><th><?php esc_html_e( 'Evidence summary', 'ikon-seo' ); ?></th></tr></thead><tbody>
+						<?php foreach ( (array) $run['checks'] as $check ) : ?><tr><td><?php echo esc_html( $check['label'] ); ?><br><code><?php echo esc_html( $check['check_key'] ); ?></code></td><td><?php echo ! empty( $check['critical'] ) ? esc_html__( 'Yes', 'ikon-seo' ) : esc_html__( 'Advisory', 'ikon-seo' ); ?></td><td><?php echo esc_html( ucfirst( $check['status'] ) ); ?></td><td><?php echo esc_html( $check['message'] ); ?><br><small><code><?php echo esc_html( substr( $check['evidence_hash'], 0, 16 ) ); ?>…</code></small></td></tr><?php endforeach; ?>
+						</tbody></table>
+					</details>
+				</td></tr>
+			<?php endforeach; ?>
+			</tbody>
+		</table>
+		<?php
+	}
+
+
+	public function staging_validation_action() {
+		$this->require_workflow_manager( 'run and approve staging validation evidence' );
+		check_admin_referer( 'ikon_seo_staging_validation_action' );
+		$command = sanitize_key( wp_unslash( $_POST['command'] ?? 'read' ) );
+		$payload = array(
+			'command'              => $command,
+			'run_id'               => absint( $_POST['run_id'] ?? 0 ),
+			'evidence_fingerprint' => sanitize_text_field( wp_unslash( $_POST['evidence_fingerprint'] ?? '' ) ),
+		);
+		if ( 'start_run' === $command ) {
+			$payload['run'] = array( 'environment' => sanitize_key( wp_unslash( $_POST['environment'] ?? 'staging' ) ) );
+		}
+		$result = $this->staging_validation->sync( $payload, get_current_user_id() );
+		if ( is_wp_error( $result ) ) { $this->redirect_error( 'staging-validation', $result->get_error_message() ); }
+		wp_safe_redirect( admin_url( 'admin.php?page=ikon-seo&tab=staging-validation&staging-validation-updated=1' ) ); exit;
 	}
 
 	private function render_closed_loop() {
@@ -5995,6 +7914,17 @@ class Ikon_SEO_Admin {
 		$result = $this->closed_loop->restore_checkpoint( $id, get_current_user_id() );
 		if ( is_wp_error( $result ) ) { $this->redirect_error( 'closed-loop', $result->get_error_message() ); }
 		wp_safe_redirect( admin_url( 'admin.php?page=ikon-seo&tab=closed-loop&closed-loop-updated=1' ) ); exit;
+	}
+
+
+	private function redirect_error( $tab, $message ) {
+		if ( 'editorial-review' === $tab && ! current_user_can( 'manage_options' ) ) {
+			$url = admin_url( 'edit.php?page=ikon-seo-editorial' );
+		} else {
+			$url = admin_url( 'admin.php?page=ikon-seo&tab=' . sanitize_key( $tab ) );
+		}
+		wp_safe_redirect( add_query_arg( 'ikon-error', sanitize_text_field( $message ), $url ) );
+		exit;
 	}
 
 	private function require_workflow_manager( $action ) {

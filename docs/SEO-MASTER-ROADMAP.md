@@ -299,3 +299,100 @@ The Agency Command Centre was delivered in v0.18.0. Visibility and Brand Intelli
 - Large portfolio performance profiling
 - Security and permission review
 - Stable GitHub release after successful live validation
+
+## Guided Launch & Strategy Activation (1.7.0)
+
+- Six-stage first-install handoff from discovery to Operating Plan
+- Strategy-readiness and conflict-review gates
+- Mode-specific workflow creation without duplicates
+- One-to-five-task bounded read-only activation batches
+- Initial Operating Plan generation from current evidence
+- Next-five-actions guidance and Project History continuity
+- No publishing, redirects, indexation, Business Profile or outreach automation
+
+
+## Workspace Integration & Fact-Level Approval (1.7.1)
+
+- Durable decision state for every detected discovery fact
+- Corrected, rejected, conflicting and outdated evidence handling
+- Rescan comparison without silently replacing confirmed values
+- Source-labelled review sections for identity, website model, services, locations, audience, conversions, claims and governance
+- Secure workspace endpoints for fact review and Guided Launch
+- Optimistic locking, idempotency, connection scopes, rate limiting and action history
+- Guided Launch blocking gates for unresolved business evidence
+- No public-page, redirect, indexation, Business Profile, review-response, outreach or backlink automation
+
+## Evidence Intelligence & Opportunity Engine (1.8.0)
+
+- Consolidated Search Console, Analytics, imported Semrush/Ahrefs and approved competitor evidence
+- Keyword and page opportunity scoring based on current first-party evidence
+- Search intent, content-gap and local-coverage models
+- Authority and differentiation requirements for each recommended opportunity
+- Operating Plan integration with confidence and evidence freshness
+- Human approval before any content brief, draft or live-site change
+
+## Content Planning & Controlled Draft Generation (1.9.0)
+
+- Convert only Planned opportunities into versioned, evidence-locked briefs
+- Require current-evidence approval before separate unpublished draft creation
+- Create new-page scaffolds or separate revision drafts for existing pages
+- Carry target query, intent, audience, proof, source, differentiation, claim and conversion requirements
+- Block stale briefs before drafting, quality evaluation or ready-for-review status
+- Require Publisher Intelligence quality gates and human review before publication
+- Preserve all publishing, redirect, canonical, noindex and deletion approvals
+
+## Editorial Review, Collaboration & Revision Control (1.10.0)
+
+- Assign separate writers and reviewers with writing and review due dates
+- Store immutable baseline, review-request and revision-submission snapshots
+- Compare draft versions without replacing the approved brief or live page
+- Add structured comments, revision requests and decision history
+- Add source, claim and quality checklists with explicit reviewer verification
+- Report blocked, overdue, awaiting-review and signed-off work
+- Record final human sign-off while keeping publishing separately approved
+
+## Controlled Publishing Readiness & Post-Launch Verification (1.11.0)
+
+- Convert final editorial sign-off into an immutable release candidate
+- Run bounded title, slug, content, metadata, robots, canonical, linking, conversion and media preflight checks
+- Require a separate ready-for-manual-publish approval while keeping WordPress status unchanged
+- Detect or record an authorised manual WordPress publication
+- Verify the rendered URL, HTTP status, canonical, indexability, metadata, H1, structured data, measurement and conversions
+- Store launch, 24-hour, 7-day and 28-day read-only verification snapshots
+- Keep all public changes and issue remediation separately approved
+
+## Search Impact Monitoring & Outcome Attribution (1.12.0)
+
+- Capture Search Console and Analytics baselines around manually published releases
+- Compare page/query clicks, impressions, CTR, position, engagement and conversions over controlled windows
+- Separate observed correlation from causal claims
+- Attribute outcomes back to Opportunity Engine, brief, review and release evidence
+- Route underperformance and decay into the Operating Plan without automatic public changes
+
+## Portfolio Learning & Validated Pattern Library (1.13.0)
+
+- Convert acknowledged impact studies into anonymised evidence records
+- Group observations using strict website, market, language, page, change and metric context
+- Require cross-site evidence and directional consistency before human validation
+- Invalidate validated patterns when their evidence fingerprint changes
+- Keep patterns advisory and route any proposed use through the existing controlled workflow
+
+## Agency Portfolio Synchronisation & Governance (1.14.0)
+
+- Versioned agency operating policies and managed-site assignments.
+- Dedicated proposal-only site keys, separate from normal workspace credentials.
+- Remote delivery into a local WordPress administrator approval inbox.
+- Compliance reporting and policy-aware Guided Launch readiness and batch limits.
+- Locked manual-publishing, anonymised-evidence, advisory-pattern and no-external-write safeguards.
+- Bounded scheduled synchronisation with durable receipts, status and errors.
+- No remote policy activation and no live website changes.
+
+## Agency Service Levels, Capacity & Client Reporting (1.15.0)
+
+- Versioned service plans with response, delivery, reporting and capacity commitments.
+- Managed-site assignments with effective dates, owners and locally visible service expectations.
+- Monthly team-capacity records and bounded work-item allocation by role and website.
+- SLA compliance scoring for response times, overdue work, capacity pressure and reporting readiness.
+- Evidence-locked client reports generated from managed-site snapshots and recorded work.
+- Separate report preparation, approval and manual-delivery records with stale-evidence invalidation.
+- No automated email delivery, publishing, live-site modification or unsupported performance claims.

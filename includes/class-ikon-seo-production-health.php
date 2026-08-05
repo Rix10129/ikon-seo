@@ -47,6 +47,19 @@ class Ikon_SEO_Production_Health {
 		$memory = $this->memory_limit_bytes();
 		$this->add_check( $checks, 'memory_limit', $memory < 134217728 && -1 !== $memory ? 'warning' : 'pass', 'PHP memory limit', -1 === $memory ? 'Unlimited' : size_format( $memory ), 'A limit below 128 MB may be unreliable for large audits.' );
 
+		$execution_limit = (int) ini_get( 'max_execution_time' );
+		$this->add_check( $checks, 'execution_time', $execution_limit > 0 && $execution_limit < 30 ? 'warning' : 'pass', 'PHP execution limit', $execution_limit > 0 ? $execution_limit . ' seconds' : 'Unlimited', 'Allow at least 30 seconds for bounded audit and migration batches.' );
+
+		$upload = wp_upload_dir( null, false );
+		$upload_ok = empty( $upload['error'] ) && ! empty( $upload['basedir'] ) && is_dir( $upload['basedir'] ) && is_writable( $upload['basedir'] );
+		$this->add_check( $checks, 'uploads_writable', $upload_ok ? 'pass' : 'warning', 'Uploads directory', $upload_ok ? 'Writable' : sanitize_text_field( $upload['error'] ?? 'Not writable' ), 'Restore safe WordPress upload-directory permissions before importing evidence or media.' );
+
+		$settings_size = strlen( (string) maybe_serialize( get_option( Ikon_SEO_Plugin::OPTION_KEY, array() ) ) );
+		$this->add_check( $checks, 'settings_size', $settings_size > 2 * MB_IN_BYTES ? 'warning' : 'pass', 'Ikon SEO settings size', size_format( $settings_size ), 'Keep large evidence and reports in dedicated database tables rather than the settings option.' );
+
+		$overdue = $this->overdue_cron_hooks( $this->expected_cron_hooks() );
+		$this->add_check( $checks, 'cron_backlog', count( $overdue ) > 5 ? 'critical' : ( $overdue ? 'warning' : 'pass' ), 'Scheduled-task backlog', $overdue ? implode( ', ', array_slice( $overdue, 0, 10 ) ) : 'No expected Ikon SEO task is more than one hour overdue', 'Configure a real server cron and review fatal errors before processing more work.' );
+
 		$expected_tables = $this->expected_tables();
 		$missing_tables = array();
 		foreach ( $expected_tables as $table ) {
@@ -168,18 +181,100 @@ class Ikon_SEO_Production_Health {
 	private function expected_tables() {
 		global $wpdb;
 		$suffixes = array(
-			'ikon_seo_logs', 'ikon_seo_queue', 'ikon_seo_workspace_history',
-			'ikon_seo_evidence', 'ikon_seo_search_rows', 'ikon_seo_search_clusters',
-			'ikon_seo_technical_urls', 'ikon_seo_internal_links', 'ikon_seo_pagespeed',
-			'ikon_seo_recommendations', 'ikon_seo_outcome_snapshots', 'ikon_seo_outcomes',
-			'ikon_seo_recovery_checkpoints', 'ikon_seo_indexation_urls',
-			'ikon_seo_indexation_runs', 'ikon_seo_system_health_runs',
-			'ikon_seo_schema_audits', 'ikon_seo_media_assets', 'ikon_seo_governance_runs',
-			'ikon_seo_experiments', 'ikon_seo_experiment_measurements', 'ikon_seo_claims',
-			'ikon_seo_revenue_events', 'ikon_seo_international_pages',
-			'ikon_seo_server_log_events', 'ikon_seo_server_log_imports',
-			'ikon_seo_portfolio_quality_profiles', 'ikon_seo_portfolio_quality_findings',
+			'ikon_seo_agency_alerts',
+			'ikon_seo_agency_sites',
+			'ikon_seo_agency_snapshots',
+			'ikon_seo_agency_usage',
+			'ikon_seo_analytics_pages',
+			'ikon_seo_backlink_imports',
+			'ikon_seo_backlinks',
+			'ikon_seo_brand_mentions',
+			'ikon_seo_citations',
+			'ikon_seo_claims',
+			'ikon_seo_client_reports',
+			'ikon_seo_client_portal_access',
+			'ikon_seo_client_portal_snapshots',
+			'ikon_seo_client_portal_events',
+			'ikon_seo_license_entitlements',
+			'ikon_seo_release_catalog',
+			'ikon_seo_deployment_plans',
+			'ikon_seo_deployment_events',
+			'ikon_seo_command_notifications',
+			'ikon_seo_command_risks',
+			'ikon_seo_competitor_research',
+			'ikon_seo_content_briefs',
+			'ikon_seo_editorial_checks',
+			'ikon_seo_editorial_comments',
+			'ikon_seo_editorial_events',
+			'ikon_seo_editorial_reviews',
+			'ikon_seo_editorial_snapshots',
+			'ikon_seo_evidence',
+			'ikon_seo_experiment_measurements',
+			'ikon_seo_experiments',
+			'ikon_seo_gbp_drafts',
+			'ikon_seo_governance_assignments',
+			'ikon_seo_governance_events',
+			'ikon_seo_governance_inbox',
+			'ikon_seo_governance_policies',
+			'ikon_seo_governance_runs',
+			'ikon_seo_impact_events',
+			'ikon_seo_impact_measurements',
+			'ikon_seo_impact_studies',
+			'ikon_seo_indexation_runs',
+			'ikon_seo_indexation_urls',
+			'ikon_seo_international_pages',
+			'ikon_seo_keyword_evidence',
+			'ikon_seo_link_graph',
+			'ikon_seo_local_conversions',
+			'ikon_seo_local_prominence',
+			'ikon_seo_local_ranks',
+			'ikon_seo_local_review_tasks',
+			'ikon_seo_locations',
+			'ikon_seo_logs',
+			'ikon_seo_media_assets',
+			'ikon_seo_opportunities',
+			'ikon_seo_outcome_snapshots',
+			'ikon_seo_outcomes',
+			'ikon_seo_pagespeed',
+			'ikon_seo_pattern_events',
+			'ikon_seo_pattern_evidence',
+			'ikon_seo_patterns',
+			'ikon_seo_portfolio_quality_findings',
 			'ikon_seo_portfolio_quality_imports',
+			'ikon_seo_portfolio_quality_profiles',
+			'ikon_seo_portfolio_signatures',
+			'ikon_seo_publisher_hubs',
+			'ikon_seo_publisher_items',
+			'ikon_seo_publisher_keywords',
+			'ikon_seo_publishing_checks',
+			'ikon_seo_publishing_events',
+			'ikon_seo_publishing_releases',
+			'ikon_seo_publishing_snapshots',
+			'ikon_seo_queue',
+			'ikon_seo_recommendations',
+			'ikon_seo_recovery_archives',
+			'ikon_seo_recovery_checkpoints',
+			'ikon_seo_release_integrity_runs',
+			'ikon_seo_revenue_events',
+			'ikon_seo_schema_audits',
+			'ikon_seo_search_clusters',
+			'ikon_seo_search_rows',
+			'ikon_seo_server_log_events',
+			'ikon_seo_server_log_imports',
+			'ikon_seo_service_assignments',
+			'ikon_seo_service_events',
+			'ikon_seo_service_plans',
+			'ikon_seo_service_work_items',
+			'ikon_seo_system_health_runs',
+			'ikon_seo_team_capacity',
+			'ikon_seo_technical_urls',
+			'ikon_seo_upgrade_journal',
+			'ikon_seo_visibility_observations',
+			'ikon_seo_visibility_snapshots',
+			'ikon_seo_workflow_runs',
+			'ikon_seo_workflow_tasks',
+			'ikon_seo_workflows',
+			'ikon_seo_workspace_history',
 		);
 		return array_map( function( $suffix ) use ( $wpdb ) { return $wpdb->prefix . $suffix; }, $suffixes );
 	}
@@ -188,16 +283,43 @@ class Ikon_SEO_Production_Health {
 		return array(
 			'ikon_seo_daily_monitor', 'ikon_seo_evidence_crawl',
 			Ikon_SEO_Search_Intelligence::CRON_HOOK,
+			Ikon_SEO_Opportunity_Engine::CRON_HOOK,
 			Ikon_SEO_Technical_Intelligence::CRON_HOOK,
 			Ikon_SEO_Automation::RUNNER_HOOK,
+			Ikon_SEO_Automation::DAILY_HOOK,
+			Ikon_SEO_Automation::WEEKLY_HOOK,
+			Ikon_SEO_Local_Growth::CRON_HOOK,
+			Ikon_SEO_Visibility_Brand_Intelligence::CRON_HOOK,
+			Ikon_SEO_Agency_Command_Centre::CRON_HOOK,
 			Ikon_SEO_Closed_Loop::CRON_HOOK,
 			Ikon_SEO_Indexation_Intelligence::CRON_HOOK,
 			Ikon_SEO_Structured_Media_Governance::CRON_HOOK,
 			Ikon_SEO_Experiments_Claims_Revenue::CRON_HOOK,
 			Ikon_SEO_International_Server_Intelligence::CRON_HOOK,
 			Ikon_SEO_Portfolio_Quality_Guard::CRON_HOOK,
+			Ikon_SEO_Publishing_Readiness::CRON_HOOK,
+			Ikon_SEO_Search_Impact::CRON_HOOK,
+			Ikon_SEO_Pattern_Library::CRON_HOOK,
+			Ikon_SEO_Portfolio_Governance::CRON_HOOK,
+			Ikon_SEO_Agency_Service_Levels::CRON_HOOK,
+			Ikon_SEO_Executive_Command_Centre::CRON_HOOK,
+			Ikon_SEO_Platform_Hardening::CRON_HOOK,
+			Ikon_SEO_Client_Portal::CRON_HOOK,
+			Ikon_SEO_Deployment_Control::CRON_HOOK,
 			self::CRON_HOOK, self::HEARTBEAT_HOOK,
 		);
+	}
+
+	private function overdue_cron_hooks( array $hooks ) {
+		$overdue = array();
+		$now = time();
+		foreach ( $hooks as $hook ) {
+			$next = wp_next_scheduled( $hook );
+			if ( $next && $next < $now - HOUR_IN_SECONDS ) {
+				$overdue[] = $hook;
+			}
+		}
+		return $overdue;
 	}
 
 	private function loopback_check() {

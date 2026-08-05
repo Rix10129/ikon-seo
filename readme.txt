@@ -3,10 +3,10 @@ Contributors: ikondigitals
 Tags: seo, local-seo, google-business-profile, elementor, schema, workflow
 Requires at least: 6.4
 Requires PHP: 7.4
-Stable tag: 1.5.0
+Stable tag: 2.0.1
 License: GPLv2 or later
 
-Portfolio-wide quality safeguards, privacy-preserving footprint review and approval-first SEO operations.
+Production certification, support lifecycle governance, controlled distribution and approval-first agency operations.
 
 == Description ==
 
@@ -14,6 +14,68 @@ Ikon SEO provides a secure connected workflow for creating and improving WordPre
 
 Features include:
 
+* Production Agency Platform with versioned support contracts and exact release/database certification.
+* Critical production checks for package integrity, migrations, recovery drills, cron, REST security, role separation, tenant isolation, privacy and runbooks.
+* Evidence fingerprints that invalidate prior certification approval whenever underlying evidence changes.
+* Two-person support-contract, certification and rollout-wave approvals.
+* Bounded controlled rollout waves that record manual deployments but never install, activate or roll back plugin code.
+* Explicit supported-version and compatibility contract for WordPress, PHP, upgrade baselines, recovery windows and release channels.
+* Executive Agency Command Centre consolidating managed-site health, approvals, risks, service levels and portfolio analytics.
+* Transparent 100-point operational health components that explicitly do not predict rankings, traffic, leads or revenue.
+* Unified approval inbox covering fact review, briefs, editorial, publishing, impact, patterns, governance and client reports.
+* Persistent risk register with severity, evidence, owner, due date, recommended action and resolution history.
+* Capacity forecasting with team utilisation, overdue work and unassigned items without automatic reassignment.
+* Internal WordPress notifications plus a non-public, client-safe portal preview data model.
+* Agency Service Levels for versioned client plans, site assignments and bounded monthly delivery capacity.
+* Team capacity records with allocated units, remaining capacity and utilisation visibility.
+* Work-item concurrency and monthly-capacity enforcement before new agency work is accepted.
+* Evidence-based client reports generated from managed-site snapshots and recorded delivery items.
+* Separate report preparation and approval users, stale-evidence blocking and manual-delivery-only records.
+* Client-report HTML preview without automatic email, portal publishing or public website changes.
+* Agency Portfolio Governance for versioned agency policies, managed-site assignments and compliance reporting.
+* Dedicated proposal-only governance keys, separate from normal workspace credentials.
+* Remote policy delivery that always requires local WordPress administrator acceptance before activation.
+* Locked manual-publish, advisory-pattern, anonymised-evidence and no-external-live-write rules.
+* Guided Launch enforcement for policy-defined readiness thresholds and bounded safe-task batches.
+* Weekly bounded assignment synchronisation, local proposal inboxes and durable governance event records.
+* Pattern Library for anonymised, context-bounded portfolio learning.
+* Human validation requiring five usable studies across three usable anonymised websites and at least 65% directional consistency.
+* Evidence-fingerprint invalidation and revalidation when supporting evidence changes.
+* Privacy-safe import/export that rejects URLs, names, queries, content and contact information.
+* Search Impact workspace for baseline-versus-post-launch measurement.
+* Stored Search Console, Analytics and privacy-preserving lead/revenue evidence.
+* 7, 28, 56 and 90-day checkpoints with optional same-site comparison adjustment.
+* Evidence-quality scoring, manual confounders and non-causal outcome language.
+* Human assessment and acknowledgement with stale-evidence invalidation.
+* Publishing Readiness workspace for signed-off controlled drafts.
+* Immutable release candidates locked to the final editorial snapshot and draft hash.
+* Bounded preflight checks for title, slug, metadata, placeholders, canonical, robots, internal links, conversion and media.
+* Separate readiness approval that explicitly requires a manual WordPress publishing action.
+* Same-site manual-publication detection/recording without an automatic publish, private, schedule or merge command.
+* Read-only rendered-page checks for HTTP status, canonical, indexability, metadata, H1, schema, measurement and conversion elements.
+* Launch, 24-hour, 7-day and 28-day public verification snapshots.
+* Daily bounded monitoring of no more than three due releases, same-site safe HTTP verification and Project History records.
+* Secure Publishing Readiness workspace action while preserving exactly 30 focused operations.
+* Editorial Review workspace with assigned writers, reviewers and due dates.
+* Immutable review-request and revision snapshots with draft version comparison.
+* Structured inline, source, claim, structure, SEO and accessibility comments.
+* Required source, claim and quality verification checklists before approval.
+* Review rounds, changes-requested, blocked, overdue, approved and signed-off states.
+* Final human sign-off that never publishes or schedules the WordPress draft.
+* Secure Editorial Review workspace action while preserving exactly 30 focused operations.
+* Content Workbench converting only Planned opportunities into versioned, evidence-locked briefs.
+* Explicit brief approval before any separate unpublished WordPress draft is created.
+* Stale-evidence protection before approval, draft creation, quality evaluation and ready-for-review status.
+* Separate revision drafts for existing pages, with no direct live-page editing.
+* Publisher Intelligence quality gates and human review required before publication.
+* Secure Content Workbench workspace action with idempotency and draft-scoped permissions.
+* Unified Opportunity Engine combining Search Console, stored Analytics, technical, indexation, competitor, authority and imported keyword evidence.
+* Durable keyword-evidence ledger for approved Semrush, Ahrefs, licensed-provider and manual CSV exports.
+* Transparent priority scoring using estimated impact, confidence, freshness, effort and change risk.
+* Open, reviewed, planned, completed and dismissed states with notes and Project History records.
+* Weekly bounded queue rebuilds, stale-evidence controls and source-health reporting.
+* Focused Opportunity Engine workspace action while preserving exactly 30 workspace operations.
+* Standalone Search Intelligence, Analytics reporting and refresh monitoring remain available in WordPress and their direct REST routes but are omitted from the focused schema.
 * Privacy-preserving page signatures without complete article content, author names or image files.
 * Cross-site content, template, heading, topic, author, media and publishing-pattern review.
 * Thin programmatic cluster detection using configurable page-count and word thresholds.
@@ -278,6 +340,198 @@ No. It can synchronize review status and prepare workflow tasks. Any reply or pu
 No. It warns against doorway-style area pages. A local page should be considered only when there is a genuine service relationship, a distinct user need and enough real local evidence to make the page useful.
 
 == Changelog ==
+
+= 2.0.1 =
+* Added the non-destructive Staging Validation & Evidence Runner.
+* Added critical staging gates, advisory integration checks, evidence fingerprints and two-administrator approval.
+* Added privacy-minimised evidence packs for Production Certification handoff.
+* Advanced the database component to 40.0.
+
+= 2.0.0 =
+
+* Added the Production Certification dashboard and secure workspace endpoint.
+* Added versioned production support contracts with separate preparation and approval.
+* Added 15 production-readiness checks with non-waivable critical controls.
+* Added evidence-fingerprint invalidation and exact-evidence approval.
+* Added controlled rollout waves for bounded managed-site IDs and manual deployment results.
+* Added database component version 39.0 and five certification tables.
+* Added daily bounded certification monitoring.
+* Preserved manual distribution, no automatic installation, no automatic rollback and no remote publishing.
+
+= 1.19.0 =
+
+* Added Deployment Control, Licensing & Managed Updates with environment and update-channel controls.
+* Added signed RSA-SHA256 entitlement-envelope verification, persistent installation identity and revocable entitlement records.
+* Added staged release-catalogue records with exact ZIP SHA-256 requirements and production stable-channel enforcement.
+* Added two-person deployment preparation and approval, recovery-point requirements and evidence-locked readiness checks.
+* Added manual deployment recording and post-deployment Platform Health verification without automatic download, installation or rollback.
+* Added database component version 38.0, four deployment-control tables and bounded daily monitoring.
+* Preserved public-site operation after entitlement expiry and retained exactly 30 focused workspace operations.
+
+= 1.18.0 =
+
+* Added a secure read-only client portal using existing WordPress user accounts and one managed website per access grant.
+* Added pending, active, expired and revoked access states with exact SHA-256 activation fingerprints and optional expiry dates.
+* Added allowlisted client snapshots for approved reports, service scope, planned and completed work, acknowledged Search Impact evidence and client-attention items.
+* Excluded internal notes, fees, capacity, credentials, administrative URLs, draft reports and unrelated websites.
+* Added privacy-preserving access-event hashes, bounded snapshot retention and daily maintenance.
+* Added database component version 37.0, three client-portal tables and authenticated client/admin REST routes.
+* Preserved exactly 30 focused workspace operations and all no-publish, no-message and local-approval safeguards.
+
+= 1.17.0 =
+
+* Added Platform Hardening & Release Management with a dedicated WordPress administration screen and secure workspace endpoint.
+* Added detached RSA-SHA256 release-manifest verification, per-file SHA-256 checks and unexpected executable-file detection.
+* Added credential-free configuration recovery archives, sanitized support bundles, exact-hash restore confirmation and automatic pre-restore recovery points.
+* Added an immutable installation and database upgrade journal plus explicit scheduler repair.
+* Expanded production health to verify all current database tables, scheduled modules, cron backlog, uploads permissions, execution time and settings size.
+* Added database component version 36.0, three hardening tables and daily bounded checks.
+* Preserved exactly 30 focused workspace operations and all no-publish, no-automatic-rollback and no-external-diagnostics safeguards.
+
+= 1.16.0 =
+
+* Upgraded the existing Agency Command Centre with executive portfolio analytics and transparent website health components.
+* Added a unified cross-site approval inbox for newer discovery, content, editorial, publishing, impact, pattern, governance and reporting workflows.
+* Added a persistent portfolio risk register with ownership, due dates, resolution notes and evidence-driven reopening.
+* Added team-capacity forecasting, internal notifications, cross-site filters and client-safe portal-preview preparation.
+* Added database component version 35.0, two Executive Command Centre tables and bounded hourly refresh.
+* Preserved exactly 30 focused workspace operations and all no-live-change, local-approval and no-automatic-communication safeguards.
+
+= 1.15.0 =
+
+* Added versioned agency service plans with included work, exclusions, response targets, report cadence, concurrent-work limits and capacity units.
+* Added active, paused and ended managed-site service assignments.
+* Added monthly team capacity and utilisation records.
+* Added capacity-controlled service work items with guarded status transitions and due dates.
+* Added evidence-based client report generation using stored Agency Command Centre snapshots and delivery records.
+* Added stale-evidence protection before report approval.
+* Required different preparer and approver users for client reports.
+* Added manual-only delivery records and standalone HTML report previews.
+* Added the Agency Service Levels REST workspace with draft and approval scope separation while preserving exactly 30 focused operations.
+* Added daily bounded service-level monitoring without client communication or live-site changes.
+
+= 1.14.0 =
+
+* Added Agency Portfolio Synchronisation & Governance.
+* Added versioned agency policies, managed-site assignments, compliance reporting and policy sync receipts.
+* Added a dedicated proposal-only governance key and remote inbox that requires local administrator acceptance.
+* Added locked rules preserving manual publishing, advisory pattern use, anonymised portfolio evidence and disabled external live writes.
+* Added Guided Launch enforcement for minimum strategy readiness and maximum safe-task batch size.
+* Added database component version 33.0 and four Portfolio Governance tables plus managed-site governance fields.
+* Added a secure Portfolio Governance REST workspace while retaining exactly 30 focused operations.
+* Preserved all existing approval, evidence, editorial, publishing and no-live-change safeguards.
+
+= 1.13.0 =
+
+* Added Portfolio Learning & Validated Pattern Library.
+* Added anonymised evidence exchange with strict rejection of URLs, names, queries, content and contact information.
+* Added exact context signatures for website mode, industry, market, language, page type, change family and metric.
+* Added review-ready scoring with five usable medium/high-confidence studies across three usable anonymised sites and 65% consistency.
+* Added human validated, limited-use, rejected, retired and revalidation-required states.
+* Added evidence-fingerprint invalidation so changed evidence clears active approval.
+* Added database component version 32.0 and three Pattern Library tables.
+* Added a secure Pattern Library REST workspace while retaining exactly 30 focused operations.
+* Preserved all no-live-change, no-causal-claim and approval-first safeguards.
+
+= 1.12.0 =
+
+* Added Search Impact Monitoring & Outcome Attribution.
+* Added pre-launch baselines and 7, 28, 56 and 90-day post-launch checkpoints.
+* Added optional same-site comparison pages, evidence-quality scoring and manual confounders.
+* Added human-reviewed positive, negative, neutral and inconclusive signal assessments without causal claims.
+* Added stale-evidence invalidation, currency-bounded revenue attribution and a daily three-study monitoring limit.
+* Added database component version 31.0 and three Search Impact tables.
+* Added a secure Search Impact REST workspace while retaining exactly 30 focused operations.
+
+= 1.11.0 =
+
+* Added Controlled Publishing Readiness & Post-Launch Verification.
+* Added immutable release candidates linked to final Editorial Review sign-off and the current controlled-draft hash.
+* Added bounded preflight checks for unpublished state, title, slug, content completion, placeholders, SEO metadata, robots, canonical, internal links, conversion actions and featured media.
+* Added a separate ready-for-manual-publish approval with explicit metadata that automatic publishing is disabled.
+* Added detection and explicit recording of a real manual WordPress publication before public verification can begin.
+* Added bounded read-only public checks for HTTP response, indexability, canonical, rendered metadata, H1, structured data, measurement and conversion actions.
+* Added launch, 24-hour, 7-day and 28-day monitoring snapshots, issue states, comparisons and human completion gates.
+* Added daily verification batches limited to three due releases and a 1 MB public-response limit.
+* Added secure Publishing Readiness REST operations and retained exactly 30 focused workspace operations.
+* Added database component version 30.0 and four publishing governance tables.
+* Preserved manual publishing, scheduling, merging, redirect, deletion, canonical, noindex, Business Profile, review-response, outreach and backlink decisions.
+
+= 1.10.0 =
+
+* Added Editorial Review, Collaboration & Revision Control.
+* Added writer and reviewer assignments with separate-role validation and writing/review due dates.
+* Added immutable baseline, review-request and revision-submission snapshots.
+* Added review rounds and comparison summaries for title, word-count and paragraph changes.
+* Added structured comments and revision requests with anchors, assignees and resolution history.
+* Added source, claim and quality verification checklists generated from approved brief evidence.
+* Added blocked and overdue reporting plus content-calendar handoff data.
+* Added approval gates for stale evidence, unsnapshotted edits, open comments and incomplete or failed checks.
+* Added final human sign-off metadata while keeping every WordPress item unpublished.
+* Added secure Editorial Review REST operations and retained exactly 30 focused workspace operations.
+* Preserved manual publishing, redirect, deletion, canonical, noindex, Business Profile, review-response, outreach and backlink approvals.
+
+= 1.9.0 =
+
+* Added Content Planning & Controlled Draft Generation.
+* Added a Content Workbench for converting only Planned opportunities into evidence-led briefs.
+* Added versioned brief snapshots with source opportunity IDs, confidence, intent, audience, section plans, source requirements, unsupported-claim exclusions and conversion requirements.
+* Added explicit approval and evidence-hash checks before separate WordPress draft creation.
+* Added unpublished editorial scaffolds and controlled draft-payload submission with bounded payload and section limits.
+* Added stale-evidence blocking before approval, drafting, quality evaluation and ready-for-review decisions.
+* Added duplicate controlled-draft prevention and separate revision drafts for existing pages.
+* Added Publisher Intelligence quality-gate handoff and manual ready-for-review state.
+* Added secure Content Workbench REST operations while preserving the focused 30-operation workspace schema.
+* Preserved manual publishing, redirect, deletion, canonical, noindex, Business Profile, review-response, outreach and backlink approvals.
+
+= 1.8.0 =
+
+* Added the Evidence Intelligence & Opportunity Engine.
+* Added a durable keyword-evidence table for approved Semrush, Ahrefs, licensed-provider, manual and workspace imports.
+* Added unified opportunities from Search Console, Analytics, technical, indexation, competitor-content and authority evidence.
+* Added explainable priority scoring based on impact, confidence, freshness, effort and change risk.
+* Added open, reviewed, planned, completed and dismissed review states with notes and Project History records.
+* Added approval-gated Operating Plan handoff for planned opportunities with duplicate page/category protection.
+* Added bounded weekly rebuilds, configurable queue size, stale-evidence controls and source-health reporting.
+* Added secure read and draft-scoped Opportunity Engine REST operations with idempotency protection.
+* Replaced standalone Search Intelligence, Analytics reporting and monitoring in the focused schema to preserve exactly 30 workspace operations; their direct routes remain available.
+* Preserved approval requirements for content briefs, drafts, publishing, redirects, canonicals, indexation, outreach and backlink actions.
+
+= 1.7.1 =
+
+* Added a Fact Review workspace with detected, confirmed, edited, rejected, conflict, needs-confirmation and outdated states.
+* Added rescan comparison and protection against silently overwriting confirmed business information.
+* Added value-level conflict resolution for phone, email, language and currency evidence.
+* Added secure discovery-review and Guided Launch REST endpoints using existing revocable keys, scopes, payload limits and rate limits.
+* Added optimistic locking with the current discovery timestamp and idempotency protection for workspace writes.
+* Added a Guided Launch gate for uncertain, outdated and conflicting discovery evidence.
+* Added migration support for existing Auto Discovery application records.
+* Preserved approval requirements for publishing, redirects, canonicals, indexation, public profiles, reviews, outreach and backlink actions.
+
+= 1.7.0 =
+
+* Added Guided Launch & Strategy Activation after Auto Discovery.
+* Added six-stage onboarding progress for discovery, confirmation, conflict review, workflow, safe audits and Operating Plan generation.
+* Added one controlled activation action that can create the recommended workflow, run one to five read-only tasks and refresh the Operating Plan.
+* Added conflict-review acknowledgement without selecting or changing business values.
+* Added launch-state history, error visibility and the next five actions.
+* Added an Auto Discovery handoff to Guided Launch and stored the latest application result.
+* Preserved approval requirements for publishing, redirects, canonicals, indexation, Business Profile, reviews, outreach and backlink actions.
+
+= 1.6.0 =
+* Added Auto Discovery & Strategy Builder.
+* Detects website mode, offerings, conversions, language, currency, industry and contact evidence from WordPress and public same-site pages.
+* Adds confidence-scored, source-labelled suggestions with conflict detection and explicit confirmation controls.
+* Can apply selected profile and strategy values, create the recommended workflow and run one bounded read-only task.
+* Schedules a safe first local discovery after installation or upgrade.
+* Preserves approval requirements for publishing, redirects, indexation, public profiles and external actions.
+
+
+= 1.5.1 =
+* Fixed Agency Access initialization when a website has exactly one WordPress administrator.
+* Added a safe self-recovery rule for the sole administrator after upgrades.
+* Preserved database component version 25.0 and all existing plugin data.
+
 
 = 1.5.0 =
 * Added the Portfolio Quality & Footprint Guard.

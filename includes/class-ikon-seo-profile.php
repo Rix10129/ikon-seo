@@ -130,6 +130,7 @@ class Ikon_SEO_Profile {
 		$clean['profile_version']    = self::VERSION;
 		$clean['profile_home_url']   = home_url( '/' );
 		$clean['token_hash']         = '';
+		$clean['connection_owner_user_id'] = 0;
 		$clean['token_hint']         = '';
 		$clean['connection_verified_at'] = '';
 		$clean['connection_last_seen_at']= '';

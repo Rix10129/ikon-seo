@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Ikon SEO",
-    "version": "1.5.0",
+    "version": "2.0.1",
     "description": "Audits, plans, measures, creates, improves and safely approves SEO-focused WordPress pages."
   },
   "servers": [
@@ -106,44 +106,10 @@
         }
       }
     },
-    "/publisher-intelligence": {
-      "post": {
-        "operationId": "syncIkonSEOPublisherIntelligence",
-        "summary": "Read or update the keyword universe, topic hubs, editorial pipeline, contributor profiles, quality gates, lifecycle recommendations and portfolio signatures",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "Action completed"
-          },
-          "201": {
-            "description": "Resource created"
-          },
-          "400": {
-            "description": "Invalid request"
-          },
-          "403": {
-            "description": "Action or scope disabled"
-          },
-          "409": {
-            "description": "Conflict or duplicate"
-          }
-        },
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/PublisherSync"
-              }
-            }
-          }
-        }
-      }
-    },
     "/agency-command-centre": {
       "post": {
         "operationId": "syncIkonSEOAgencyCommandCentre",
-        "summary": "Read the multi-site portfolio, refresh read-only snapshots, record budgets and resolve portfolio alerts",
+        "summary": "Read executive portfolio analytics and govern internal risks",
         "parameters": [],
         "responses": {
           "200": {
@@ -171,7 +137,8 @@
               }
             }
           }
-        }
+        },
+        "description": "Consolidates read-only managed-site snapshots, approval queues, risk records, capacity forecasts and client-safe preview data. It cannot publish or change a managed website."
       }
     },
     "/pages": {
@@ -301,54 +268,6 @@
             }
           }
         }
-      }
-    },
-    "/inventory": {
-      "get": {
-        "operationId": "auditWordPressInventory",
-        "summary": "Audit pages, links, metadata, orphans and keyword overlap",
-        "responses": {
-          "200": {
-            "description": "Successful response"
-          }
-        },
-        "parameters": [
-          {
-            "name": "refresh",
-            "in": "query",
-            "schema": {
-              "type": "boolean"
-            }
-          }
-        ]
-      }
-    },
-    "/evidence": {
-      "get": {
-        "operationId": "diagnoseIkonSEORankingEvidence",
-        "summary": "Read page-level technical, Search Console and Analytics evidence with categorised findings, evidence sufficiency, business value and clear limitations",
-        "responses": {
-          "200": {
-            "description": "Successful response"
-          }
-        },
-        "parameters": [
-          {
-            "name": "post_id",
-            "in": "query",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "refresh",
-            "in": "query",
-            "schema": {
-              "type": "boolean",
-              "default": false
-            }
-          }
-        ]
       }
     },
     "/technical-intelligence": {
@@ -518,294 +437,65 @@
         }
       }
     },
-    "/reviews": {
-      "get": {
-        "operationId": "listIkonSEOReviews",
-        "summary": "List improvement drafts awaiting review",
-        "responses": {
-          "200": {
-            "description": "Successful response"
-          }
-        }
-      }
-    },
-    "/reviews/{id}/comparison": {
-      "get": {
-        "operationId": "compareIkonSEOReview",
-        "summary": "Compare an improvement draft with its live source",
-        "responses": {
-          "200": {
-            "description": "Successful response"
-          }
-        },
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ]
-      }
-    },
-    "/reviews/{id}/merge": {
+    "/staging-validation": {
       "post": {
-        "operationId": "mergeApprovedIkonSEOReview",
-        "summary": "Merge an approved draft into its original page",
-        "parameters": [
+        "operationId": "syncIkonSEOStagingValidation",
+        "summary": "Run non-destructive staging checks and approve an evidence-locked certification handoff",
+        "description": "No command publishes, installs or changes live content. Run preparation uses draft scope; approval requires approve scope and production environments are blocked.",
+        "security": [
           {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
+            "IkonSEOKey": []
           }
         ],
-        "responses": {
-          "200": {
-            "description": "Action completed"
-          },
-          "201": {
-            "description": "Resource created"
-          },
-          "400": {
-            "description": "Invalid request"
-          },
-          "403": {
-            "description": "Action or scope disabled"
-          },
-          "409": {
-            "description": "Conflict or duplicate"
-          }
-        },
-        "description": "Disabled by default. Requires the approve key scope and Remote merge setting."
-      }
-    },
-    "/search-intelligence": {
-      "get": {
-        "operationId": "readIkonSEOSearchIntelligence",
-        "summary": "Read the persistent page-query database, query clusters, cannibalisation evidence, striking-distance opportunities and content decay",
-        "responses": {
-          "200": {
-            "description": "Successful response"
-          }
-        },
         "parameters": [
           {
-            "name": "refresh",
-            "in": "query",
-            "schema": {
-              "type": "boolean",
-              "default": false
-            }
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "minimum": 10,
-              "maximum": 250,
-              "default": 100
-            }
-          }
-        ]
-      }
-    },
-    "/analytics/report": {
-      "get": {
-        "operationId": "readGoogleAnalyticsReport",
-        "summary": "Read current and previous landing-page sessions, users, engagement, views and key events",
-        "responses": {
-          "200": {
-            "description": "Successful response"
-          }
-        },
-        "parameters": [
-          {
-            "name": "days",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "minimum": 7,
-              "maximum": 90,
-              "default": 28
-            }
-          },
-          {
-            "name": "refresh",
-            "in": "query",
-            "schema": {
-              "type": "boolean",
-              "default": false
-            }
-          }
-        ]
-      }
-    },
-    "/queue": {
-      "get": {
-        "operationId": "listIkonSEOPagePlans",
-        "summary": "List CSV-imported page plans awaiting interactive generation",
-        "responses": {
-          "200": {
-            "description": "Successful response"
-          }
-        },
-        "parameters": [
-          {
-            "name": "status",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "planned",
-                "claimed",
-                "paused",
-                "completed",
-                "failed",
-                "archived"
-              ]
-            }
-          },
-          {
-            "name": "batch_id",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "maximum": 200
-            }
-          }
-        ]
-      }
-    },
-    "/queue/{id}/claim": {
-      "post": {
-        "operationId": "claimIkonSEOPagePlan",
-        "summary": "Claim one page plan for up to one hour before generating its payload",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
+            "$ref": "#/components/parameters/IdempotencyKey"
           }
         ],
-        "responses": {
-          "200": {
-            "description": "Action completed"
-          },
-          "201": {
-            "description": "Resource created"
-          },
-          "400": {
-            "description": "Invalid request"
-          },
-          "403": {
-            "description": "Action or scope disabled"
-          },
-          "409": {
-            "description": "Conflict or duplicate"
-          }
-        }
-      }
-    },
-    "/queue/{id}/complete": {
-      "post": {
-        "operationId": "completeIkonSEOPagePlan",
-        "summary": "Validate a completed page payload, create its WordPress draft and complete the page plan",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Action completed"
-          },
-          "201": {
-            "description": "Resource created"
-          },
-          "400": {
-            "description": "Invalid request"
-          },
-          "403": {
-            "description": "Action or scope disabled"
-          },
-          "409": {
-            "description": "Conflict or duplicate"
-          }
-        },
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/QueueCompletion"
+                "$ref": "#/components/schemas/StagingValidationSync"
               }
             }
           }
-        }
-      }
-    },
-    "/monitoring": {
-      "get": {
-        "operationId": "readContentRefreshMonitor",
-        "summary": "Read overdue reviews, upcoming refresh dates and meaningful Search Console declines",
+        },
         "responses": {
           "200": {
-            "description": "Successful response"
-          }
-        }
-      }
-    },
-    "/workspace-state": {
-      "post": {
-        "operationId": "syncIkonSEOProjectHistory",
-        "summary": "Read durable project history and optionally save one completed, pending or recommended project event",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "Action completed"
-          },
-          "201": {
-            "description": "Resource created"
+            "description": "Staging validation result"
           },
           "400": {
-            "description": "Invalid request"
+            "description": "Invalid or unsafe request"
+          },
+          "401": {
+            "description": "Authentication required"
           },
           "403": {
-            "description": "Action or scope disabled"
-          },
-          "409": {
-            "description": "Conflict or duplicate"
+            "description": "Scope or approval denied"
           }
-        },
+        }
+      }
+    },
+    "/portfolio-governance": {
+      "post": {
+        "operationId": "syncIkonSEOPortfolioGovernance",
+        "summary": "Synchronise approval-first agency governance policies and local decisions",
+        "description": "Policies are delivered as proposals only. A local WordPress administrator must accept a proposal before activation. No command publishes or changes public content.",
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/WorkspaceSync"
+                "$ref": "#/components/schemas/PortfolioGovernanceSync"
               }
             }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Portfolio governance result"
           }
         }
       }
@@ -844,27 +534,16 @@
         }
       }
     },
-    "/local/locations": {
-      "get": {
-        "operationId": "readIkonSEOLocations",
-        "summary": "Read profile-bound storefront, hybrid and service-area records before preparing local content",
-        "responses": {
-          "200": {
-            "description": "Successful response"
-          }
-        }
-      }
-    },
-    "/portfolio-quality-guard": {
+    "/auto-discovery": {
       "post": {
-        "operationId": "syncIkonSEOPortfolioQualityGuard",
-        "summary": "Read and manage privacy-preserving cross-site quality evidence, differentiation risks and review gates",
+        "operationId": "syncIkonSEOAutoDiscovery",
+        "summary": "Read, run and apply review-first website discovery and strategy proposals",
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/PortfolioQualitySync"
+                "$ref": "#/components/schemas/AutoDiscoverySync"
               }
             }
           }
@@ -872,6 +551,362 @@
         "responses": {
           "200": {
             "description": "Successful operation"
+          }
+        }
+      }
+    },
+    "/discovery-review": {
+      "post": {
+        "operationId": "syncIkonSEODiscoveryReview",
+        "summary": "Read and save fact-level confirmations, corrected values, rejections and conflict resolutions without changing live pages",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DiscoveryReviewSync"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/guided-launch": {
+      "post": {
+        "operationId": "syncIkonSEOGuidedLaunch",
+        "summary": "Read or activate the approval-first workflow, safe audit batch and Operating Plan after discovery review",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GuidedLaunchSync"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/opportunity-engine": {
+      "post": {
+        "operationId": "syncIkonSEOOpportunityEngine",
+        "summary": "Read, rebuild and review a unified evidence-based opportunity queue; optionally import approved Semrush, Ahrefs or licensed-provider keyword evidence",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OpportunityEngineSync"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/content-workbench": {
+      "post": {
+        "operationId": "syncIkonSEOContentWorkbench",
+        "summary": "Convert planned opportunities into evidence-locked briefs, approve or reject briefs, create separate drafts, run quality gates and mark drafts ready for human review",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Action completed"
+          },
+          "201": {
+            "description": "Resource created"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "403": {
+            "description": "Action or scope disabled"
+          },
+          "409": {
+            "description": "Conflict or duplicate"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContentWorkbenchSync"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/editorial-review": {
+      "post": {
+        "operationId": "syncIkonSEOEditorialReview",
+        "summary": "Assign controlled drafts, manage review rounds and comments, verify sources and claims, compare revisions, record final sign-off and keep publishing separate",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Action completed"
+          },
+          "201": {
+            "description": "Resource created"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "403": {
+            "description": "Action or scope disabled"
+          },
+          "409": {
+            "description": "Conflict or duplicate"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditorialReviewSync"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/publishing-readiness": {
+      "post": {
+        "operationId": "syncIkonSEOPublishingReadiness",
+        "summary": "Create immutable release candidates from signed-off drafts, run preflight checks, record readiness approval, detect manual publication and perform read-only post-launch verification",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PublishingReadinessSync"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        },
+        "x-ikon-destructive": false,
+        "x-ikon-live-change": false,
+        "description": "Creates release candidates and verification records but never publishes, schedules, merges, redirects, deletes or changes indexability. Commands mark_ready, record_manual_publication, complete_monitoring, block and unblock require the approve key scope. Preparation and read-only verification commands require draft scope."
+      }
+    },
+    "/search-impact": {
+      "post": {
+        "operationId": "syncIkonSEOSearchImpact",
+        "summary": "Create and monitor baseline-versus-post-launch impact studies using stored first-party evidence, comparison pages and human-reviewed outcome decisions",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchImpactSync"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        },
+        "x-ikon-destructive": false,
+        "x-ikon-live-change": false,
+        "description": "No command changes a public page. Assessment, acknowledgement and blocking decisions require the approve key scope; study creation, evidence capture and confounder recording require draft scope. Outcomes describe association and do not assert causation."
+      }
+    },
+    "/pattern-library": {
+      "post": {
+        "operationId": "syncIkonSEOPatternLibrary",
+        "summary": "Aggregate anonymised, acknowledged impact evidence into context-bounded pattern candidates and record human validation decisions",
+        "description": "No pattern is automatically applied. Validation, limited-use, rejection, retirement and restoration decisions require the approve scope. Refresh and anonymised evidence import require draft scope.",
+        "security": [
+          {
+            "IkonSEOKey": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PatternLibrarySync"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Pattern Library response"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Scope denied"
+          }
+        }
+      }
+    },
+    "/agency-service-levels": {
+      "post": {
+        "operationId": "syncIkonSEOAgencyServiceLevels",
+        "summary": "Manage agency service plans, capacity, work delivery and approval-gated client reports",
+        "description": "Creates operational records and client-report drafts only. Report delivery is manual and no command publishes content, sends client communication or changes a managed website.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AgencyServiceLevelsSync"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Agency service-level result"
+          }
+        }
+      }
+    },
+    "/platform-hardening": {
+      "post": {
+        "operationId": "syncIkonSEOPlatformHardening",
+        "summary": "Run release integrity and compatibility checks, create credential-free recovery archives, preview same-version restores and repair scheduled events",
+        "description": "Configuration restore, scheduler repair and cleanup require the approve key scope. No command publishes or edits WordPress content, transmits diagnostics, or performs an automatic rollback.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlatformHardeningSync"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Action completed"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "403": {
+            "description": "Action or scope disabled"
+          },
+          "409": {
+            "description": "Conflict or duplicate"
+          }
+        }
+      }
+    },
+    "/deployment-control": {
+      "post": {
+        "operationId": "syncIkonSEODeploymentControl",
+        "summary": "Read entitlement status, register signed releases, prepare approval-gated deployment plans and verify manually installed updates",
+        "description": "No command downloads, installs, activates, deactivates or rolls back plugin code. Approval, entitlement and manual-deployment decisions require the approve key scope.",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeploymentControlSync"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Action completed"
+          },
+          "201": {
+            "description": "Resource created"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "403": {
+            "description": "Action or scope disabled"
+          },
+          "409": {
+            "description": "Conflict or duplicate"
+          }
+        }
+      }
+    },
+    "/production-certification": {
+      "post": {
+        "operationId": "syncIkonSEOProductionCertification",
+        "summary": "Create support contracts, certify signed releases and govern manual rollout waves",
+        "description": "No command downloads, installs, rolls back or publishes anything. Contract, certification and rollout approvals require the approve key scope.",
+        "security": [
+          {
+            "IkonSEOKey": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductionCertificationSync"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Production certification result"
+          },
+          "400": {
+            "description": "Invalid or unsafe request"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Scope or approval denied"
           }
         }
       }
@@ -1760,8 +1795,15 @@
               "read",
               "refresh_site",
               "refresh_all",
+              "refresh_portfolio",
               "record_usage",
-              "resolve_alert"
+              "resolve_alert",
+              "assign_risk",
+              "resolve_risk",
+              "reopen_risk",
+              "acknowledge_notification",
+              "dismiss_notification",
+              "client_portal_preview"
             ],
             "default": "read"
           },
@@ -1815,6 +1857,41 @@
                 "format": "date"
               }
             }
+          },
+          "risk_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "notification_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "owner_id": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "due_at": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "string",
+            "maxLength": 5000
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "critical",
+              "high",
+              "medium",
+              "low"
+            ]
+          },
+          "approval_type": {
+            "type": "string"
+          },
+          "search": {
+            "type": "string",
+            "maxLength": 255
           }
         }
       },
@@ -3701,6 +3778,1303 @@
             "type": "integer",
             "minimum": 90,
             "maximum": 1095
+          }
+        }
+      },
+      "AutoDiscoverySync": {
+        "type": "object",
+        "properties": {
+          "command": {
+            "type": "string",
+            "enum": [
+              "read",
+              "run",
+              "apply",
+              "save_settings"
+            ],
+            "default": "read"
+          },
+          "refresh": {
+            "type": "boolean",
+            "default": true
+          },
+          "max_pages": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 300,
+            "default": 100
+          },
+          "fields": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "overwrite": {
+            "type": "boolean",
+            "default": false
+          },
+          "create_workflow": {
+            "type": "boolean",
+            "default": false
+          },
+          "run_safe_task": {
+            "type": "boolean",
+            "default": false
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "include_connected": {
+            "type": "boolean"
+          }
+        }
+      },
+      "DiscoveryReviewSync": {
+        "type": "object",
+        "properties": {
+          "command": {
+            "type": "string",
+            "enum": [
+              "read",
+              "accept_high_confidence",
+              "update_fact",
+              "resolve_conflict",
+              "apply_confirmed"
+            ],
+            "default": "read"
+          },
+          "fact_id": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "detected",
+              "confirmed",
+              "edited",
+              "rejected",
+              "needs_confirmation"
+            ]
+          },
+          "value": {},
+          "conflict_id": {
+            "type": "string"
+          },
+          "selected_value": {
+            "type": "string"
+          },
+          "custom_value": {
+            "type": "string"
+          },
+          "generated_at": {
+            "type": "string",
+            "description": "Optimistic-lock value from the current discovery report."
+          }
+        }
+      },
+      "GuidedLaunchSync": {
+        "type": "object",
+        "properties": {
+          "command": {
+            "type": "string",
+            "enum": [
+              "read",
+              "activate",
+              "acknowledge_conflicts"
+            ],
+            "default": "read"
+          },
+          "create_workflow": {
+            "type": "boolean",
+            "default": true
+          },
+          "run_safe_tasks": {
+            "type": "boolean",
+            "default": true
+          },
+          "build_plan": {
+            "type": "boolean",
+            "default": true
+          },
+          "task_batch": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5,
+            "default": 3
+          },
+          "acknowledged": {
+            "type": "boolean"
+          }
+        }
+      },
+      "OpportunityEngineSync": {
+        "type": "object",
+        "description": "Read-only analysis. This action cannot publish, redirect, delete, noindex or change canonicals.",
+        "properties": {
+          "command": {
+            "type": "string",
+            "enum": [
+              "read",
+              "rebuild",
+              "import",
+              "update_status",
+              "archive_evidence"
+            ],
+            "default": "read"
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 1000,
+            "default": 100
+          },
+          "source": {
+            "type": "string",
+            "enum": [
+              "semrush",
+              "ahrefs",
+              "licensed_provider",
+              "manual",
+              "workspace_import"
+            ]
+          },
+          "opportunity_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "evidence_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "open",
+              "reviewed",
+              "planned",
+              "completed",
+              "dismissed"
+            ]
+          },
+          "notes": {
+            "type": "string"
+          },
+          "records": {
+            "type": "array",
+            "maxItems": 5000,
+            "items": {
+              "type": "object",
+              "required": [
+                "keyword"
+              ],
+              "properties": {
+                "keyword": {
+                  "type": "string"
+                },
+                "target_url": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "competitor_domain": {
+                  "type": "string"
+                },
+                "country": {
+                  "type": "string"
+                },
+                "device": {
+                  "type": "string"
+                },
+                "intent": {
+                  "type": "string"
+                },
+                "search_volume": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "keyword_difficulty": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "position": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "previous_position": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "estimated_traffic": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "cpc": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "serp_features": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "evidence_notes": {
+                  "type": "string"
+                },
+                "observed_at": {
+                  "type": "string",
+                  "format": "date"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ContentWorkbenchSync": {
+        "type": "object",
+        "properties": {
+          "command": {
+            "type": "string",
+            "enum": [
+              "read",
+              "create_brief",
+              "approve_brief",
+              "reject_brief",
+              "create_scaffold",
+              "submit_draft",
+              "evaluate_draft",
+              "mark_ready"
+            ],
+            "default": "read"
+          },
+          "opportunity_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "brief_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "evidence_hash": {
+            "type": "string",
+            "minLength": 64,
+            "maxLength": 64,
+            "description": "Use the exact current brief evidence hash for approval and draft creation."
+          },
+          "notes": {
+            "type": "string",
+            "maxLength": 5000
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 250,
+            "default": 100
+          },
+          "page_payload": {
+            "$ref": "#/components/schemas/PagePayload"
+          }
+        }
+      },
+      "EditorialReviewSync": {
+        "type": "object",
+        "properties": {
+          "command": {
+            "type": "string",
+            "enum": [
+              "read",
+              "start_review",
+              "assign",
+              "request_review",
+              "add_comment",
+              "resolve_comment",
+              "update_check",
+              "request_changes",
+              "submit_revision",
+              "approve_round",
+              "sign_off",
+              "block",
+              "unblock",
+              "compare"
+            ],
+            "default": "read"
+          },
+          "brief_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "review_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "comment_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "check_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "from_snapshot_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "to_snapshot_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "notes": {
+            "type": "string",
+            "maxLength": 5000
+          },
+          "resolution": {
+            "type": "string",
+            "enum": [
+              "open",
+              "resolved",
+              "dismissed"
+            ]
+          },
+          "check_status": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "verified",
+              "failed",
+              "not_applicable"
+            ]
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 250,
+            "default": 100
+          },
+          "assignment": {
+            "type": "object",
+            "properties": {
+              "writer_id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "reviewer_id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "due_at": {
+                "type": "string"
+              },
+              "review_due_at": {
+                "type": "string"
+              }
+            }
+          },
+          "comment": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "inline",
+                  "source",
+                  "claim",
+                  "structure",
+                  "seo",
+                  "accessibility",
+                  "general"
+                ]
+              },
+              "anchor_text": {
+                "type": "string",
+                "maxLength": 1000
+              },
+              "section_key": {
+                "type": "string",
+                "maxLength": 100
+              },
+              "text": {
+                "type": "string",
+                "maxLength": 10000
+              },
+              "assigned_to": {
+                "type": "integer",
+                "minimum": 0
+              }
+            }
+          }
+        }
+      },
+      "PublishingReadinessSync": {
+        "type": "object",
+        "description": "Approval-gated publishing governance. No command publishes or changes a public page. Approval decisions require the approve connection-key scope.",
+        "properties": {
+          "command": {
+            "type": "string",
+            "enum": [
+              "read",
+              "create_release",
+              "run_preflight",
+              "mark_ready",
+              "record_manual_publication",
+              "verify_launch",
+              "complete_monitoring",
+              "block",
+              "unblock",
+              "compare"
+            ],
+            "default": "read"
+          },
+          "review_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "release_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "live_post_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "live_url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "from_snapshot_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "to_snapshot_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "notes": {
+            "type": "string",
+            "maxLength": 5000
+          },
+          "refresh": {
+            "type": "boolean",
+            "default": false
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 250,
+            "default": 100
+          },
+          "plan": {
+            "type": "object",
+            "properties": {
+              "slug": {
+                "type": "string",
+                "maxLength": 200
+              },
+              "target_url": {
+                "type": "string",
+                "format": "uri"
+              }
+            }
+          }
+        }
+      },
+      "SearchImpactSync": {
+        "type": "object",
+        "description": "Measures association between a manual publication and later stored evidence. It does not prove causation, invent targets or change public content. Assessment and human acknowledgement require the approve connection-key scope.",
+        "properties": {
+          "command": {
+            "type": "string",
+            "enum": [
+              "read",
+              "create_study",
+              "capture_baseline",
+              "capture_checkpoint",
+              "add_confounder",
+              "assess",
+              "acknowledge",
+              "block",
+              "unblock"
+            ],
+            "default": "read"
+          },
+          "study_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "release_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "checkpoint_days": {
+            "type": "integer",
+            "enum": [
+              7,
+              28,
+              56,
+              90
+            ]
+          },
+          "notes": {
+            "type": "string",
+            "maxLength": 5000
+          },
+          "decision": {
+            "type": "string",
+            "enum": [
+              "retain",
+              "expand_carefully",
+              "continue_monitoring",
+              "investigate",
+              "consider_revision",
+              "no_action"
+            ]
+          },
+          "refresh": {
+            "type": "boolean",
+            "default": false
+          },
+          "plan": {
+            "type": "object",
+            "properties": {
+              "primary_metric": {
+                "type": "string",
+                "enum": [
+                  "clicks",
+                  "impressions",
+                  "ctr",
+                  "position",
+                  "sessions",
+                  "active_users",
+                  "views",
+                  "key_events",
+                  "qualified_leads",
+                  "customers",
+                  "revenue"
+                ],
+                "default": "clicks"
+              },
+              "comparison_url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "baseline_days": {
+                "type": "integer",
+                "minimum": 7,
+                "maximum": 90,
+                "default": 28
+              },
+              "evaluation_days": {
+                "type": "integer",
+                "minimum": 7,
+                "maximum": 180,
+                "default": 28
+              }
+            }
+          },
+          "confounder": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "seasonality",
+                  "sitewide_change",
+                  "algorithm_update",
+                  "campaign",
+                  "tracking_change",
+                  "availability",
+                  "pricing",
+                  "competitor_change",
+                  "offline_event",
+                  "other"
+                ]
+              },
+              "notes": {
+                "type": "string",
+                "maxLength": 5000
+              },
+              "occurred_at": {
+                "type": "string"
+              },
+              "direction": {
+                "type": "string",
+                "enum": [
+                  "positive",
+                  "negative",
+                  "mixed",
+                  "unknown"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "PatternLibrarySync": {
+        "type": "object",
+        "description": "Builds context-bounded advisory patterns from anonymised acknowledged evidence. It never applies a pattern, changes public content or makes a causal or universal claim.",
+        "properties": {
+          "command": {
+            "type": "string",
+            "enum": [
+              "read",
+              "refresh",
+              "import_evidence",
+              "validate",
+              "limit",
+              "reject",
+              "retire",
+              "restore"
+            ],
+            "default": "read"
+          },
+          "pattern_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "notes": {
+            "type": "string",
+            "maxLength": 5000
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 200,
+            "default": 100
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "candidate",
+              "review_ready",
+              "validated",
+              "limited_use",
+              "revalidation_required",
+              "rejected",
+              "retired"
+            ]
+          },
+          "records": {
+            "type": "array",
+            "maxItems": 200,
+            "items": {
+              "type": "object",
+              "properties": {
+                "source_site_fingerprint": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{32,64}$"
+                },
+                "source_study_key": {
+                  "type": "string",
+                  "maxLength": 100
+                },
+                "website_mode": {
+                  "type": "string"
+                },
+                "industry": {
+                  "type": "string"
+                },
+                "market": {
+                  "type": "string"
+                },
+                "language": {
+                  "type": "string"
+                },
+                "page_type": {
+                  "type": "string"
+                },
+                "change_family": {
+                  "type": "string"
+                },
+                "primary_metric": {
+                  "type": "string"
+                },
+                "outcome": {
+                  "type": "string",
+                  "enum": [
+                    "positive_signal",
+                    "negative_signal",
+                    "neutral_signal",
+                    "inconclusive"
+                  ]
+                },
+                "confidence": {
+                  "type": "string",
+                  "enum": [
+                    "low",
+                    "medium",
+                    "high"
+                  ]
+                },
+                "adjusted_change_percent": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "human_decision": {
+                  "type": "string"
+                },
+                "assessment_hash": {
+                  "type": "string"
+                },
+                "observed_at": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PortfolioGovernanceSync": {
+        "type": "object",
+        "properties": {
+          "command": {
+            "type": "string",
+            "enum": [
+              "read",
+              "create_policy",
+              "approve_policy",
+              "retire_policy",
+              "save_site_key",
+              "assign_policy",
+              "sync_assignment",
+              "accept_proposal",
+              "reject_proposal"
+            ],
+            "default": "read"
+          },
+          "policy_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "site_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "assignment_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "proposal_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "governance_key": {
+            "type": "string",
+            "minLength": 28
+          },
+          "notes": {
+            "type": "string"
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 200,
+            "default": 100
+          },
+          "policy": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "policy_key": {
+                "type": "string"
+              },
+              "version": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "minimum_strategy_readiness": {
+                "type": "integer",
+                "minimum": 70,
+                "maximum": 100
+              },
+              "max_safe_batch": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 5
+              },
+              "require_fact_review": {
+                "type": "boolean"
+              },
+              "require_guided_launch": {
+                "type": "boolean"
+              },
+              "require_brief_approval": {
+                "type": "boolean"
+              },
+              "require_editorial_review": {
+                "type": "boolean"
+              },
+              "require_publishing_preflight": {
+                "type": "boolean"
+              },
+              "require_impact_study": {
+                "type": "boolean"
+              },
+              "data_retention_days": {
+                "type": "integer",
+                "minimum": 90,
+                "maximum": 1095
+              },
+              "allowed_evidence_sources": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "notes": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "AgencyServiceLevelsSync": {
+        "type": "object",
+        "properties": {
+          "command": {
+            "type": "string",
+            "enum": [
+              "read",
+              "create_plan",
+              "approve_plan",
+              "retire_plan",
+              "assign_plan",
+              "update_assignment",
+              "set_capacity",
+              "create_work_item",
+              "update_work_item",
+              "generate_report",
+              "approve_report",
+              "mark_report_delivered"
+            ],
+            "default": "read"
+          },
+          "plan_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "site_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "assignment_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "work_item_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "report_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "status": {
+            "type": "string"
+          },
+          "method": {
+            "type": "string",
+            "enum": [
+              "manual_email",
+              "manual_portal",
+              "manual_meeting",
+              "manual_download"
+            ]
+          },
+          "notes": {
+            "type": "string"
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 200,
+            "default": 100
+          },
+          "plan": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "plan_key": {
+                "type": "string"
+              },
+              "currency": {
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 3
+              },
+              "monthly_fee": {
+                "type": "number",
+                "minimum": 0
+              },
+              "monthly_capacity_units": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 1000
+              },
+              "max_concurrent_items": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 100
+              },
+              "response_target_hours": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 720
+              },
+              "report_cadence": {
+                "type": "string",
+                "enum": [
+                  "weekly",
+                  "fortnightly",
+                  "monthly",
+                  "quarterly"
+                ]
+              },
+              "review_cadence": {
+                "type": "string",
+                "enum": [
+                  "weekly",
+                  "fortnightly",
+                  "monthly",
+                  "quarterly"
+                ]
+              },
+              "included_deliverables": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "excluded_services": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "report_evidence": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "notes": {
+                "type": "string"
+              }
+            }
+          },
+          "assignment": {
+            "type": "object",
+            "properties": {
+              "start_date": {
+                "type": "string",
+                "format": "date"
+              },
+              "renewal_date": {
+                "type": "string",
+                "format": "date"
+              },
+              "capacity_override_units": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 1000
+              },
+              "client_reporting_enabled": {
+                "type": "boolean"
+              },
+              "notes": {
+                "type": "string"
+              }
+            }
+          },
+          "capacity": {
+            "type": "object",
+            "properties": {
+              "user_id": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "period_start": {
+                "type": "string",
+                "format": "date"
+              },
+              "period_end": {
+                "type": "string",
+                "format": "date"
+              },
+              "capacity_units": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 2000
+              },
+              "notes": {
+                "type": "string"
+              }
+            }
+          },
+          "work_item": {
+            "type": "object",
+            "properties": {
+              "assignment_id": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "owner_id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "category": {
+                "type": "string"
+              },
+              "priority": {
+                "type": "string",
+                "enum": [
+                  "low",
+                  "normal",
+                  "high",
+                  "urgent"
+                ]
+              },
+              "units": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 1000
+              },
+              "status": {
+                "type": "string"
+              },
+              "due_at": {
+                "type": "string"
+              }
+            }
+          },
+          "report": {
+            "type": "object",
+            "properties": {
+              "period_start": {
+                "type": "string",
+                "format": "date"
+              },
+              "period_end": {
+                "type": "string",
+                "format": "date"
+              },
+              "client_summary": {
+                "type": "string"
+              },
+              "next_actions": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PlatformHardeningSync": {
+        "type": "object",
+        "properties": {
+          "command": {
+            "type": "string",
+            "enum": [
+              "read",
+              "run_checks",
+              "verify_release",
+              "create_archive",
+              "preview_restore",
+              "restore_archive",
+              "repair_scheduler",
+              "cleanup"
+            ],
+            "default": "read"
+          },
+          "archive_type": {
+            "type": "string",
+            "enum": [
+              "configuration",
+              "support"
+            ],
+            "default": "configuration"
+          },
+          "label": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "archive_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "expected_hash": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        }
+      },
+      "DeploymentControlSync": {
+        "type": "object",
+        "properties": {
+          "command": {
+            "type": "string",
+            "enum": [
+              "read",
+              "create_evaluation",
+              "import_entitlement",
+              "revoke_entitlement",
+              "register_installed_release",
+              "import_release",
+              "create_plan",
+              "approve_plan",
+              "record_manual_deployment",
+              "verify_deployment",
+              "close_plan"
+            ],
+            "default": "read"
+          },
+          "entitlement_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "release_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "plan_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "expected_fingerprint": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "notes": {
+            "type": "string",
+            "maxLength": 5000
+          },
+          "evaluation": {
+            "type": "object"
+          },
+          "envelope": {
+            "type": "object"
+          },
+          "plan": {
+            "type": "object"
+          }
+        }
+      },
+      "StagingValidationSync": {
+        "type": "object",
+        "required": [
+          "command"
+        ],
+        "properties": {
+          "command": {
+            "type": "string",
+            "enum": [
+              "read",
+              "start_run",
+              "run_checks",
+              "approve_run",
+              "evidence_pack"
+            ],
+            "default": "read"
+          },
+          "run_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "evidence_fingerprint": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "check_keys": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 30
+          },
+          "run": {
+            "type": "object"
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          }
+        }
+      },
+      "ProductionCertificationSync": {
+        "type": "object",
+        "required": [
+          "command"
+        ],
+        "properties": {
+          "command": {
+            "type": "string",
+            "enum": [
+              "read",
+              "create_contract",
+              "approve_contract",
+              "create_certification",
+              "record_check",
+              "refresh_certification",
+              "approve_certification",
+              "create_rollout",
+              "approve_rollout",
+              "record_rollout_result",
+              "close_rollout"
+            ]
+          },
+          "contract_id": {
+            "type": "integer"
+          },
+          "certification_id": {
+            "type": "integer"
+          },
+          "rollout_id": {
+            "type": "integer"
+          },
+          "check_key": {
+            "type": "string"
+          },
+          "site_id": {
+            "type": "integer"
+          },
+          "status": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          },
+          "evidence_fingerprint": {
+            "type": "string"
+          },
+          "contract": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "certification": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "check": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "rollout": {
+            "type": "object",
+            "additionalProperties": true
           }
         }
       }

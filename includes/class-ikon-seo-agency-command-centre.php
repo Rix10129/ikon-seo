@@ -250,6 +250,7 @@ final class Ikon_SEO_Agency_Command_Centre {
 		$queue     = $this->queue->counts();
 		$monitor   = $this->monitor->summary();
 		$diagnostics = $this->stored_diagnostics_summary();
+		$operations = $this->extended_operations_snapshot();
 		$signatures = $this->publisher->export_signature_bundle( self::MAX_SIGNATURES );
 		$signatures = is_array( $signatures ) ? array_slice( (array) ( $signatures['items'] ?? array() ), 0, self::MAX_SIGNATURES ) : array();
 
@@ -373,6 +374,7 @@ final class Ikon_SEO_Agency_Command_Centre {
 				'blocked_pipeline'  => absint( $portfolio_quality['blocked_pipeline'] ?? 0 ),
 				'last_evaluation'   => sanitize_text_field( $portfolio_quality['last_evaluation'] ?? '' ),
 			),
+			'operations' => $operations,
 			'approvals' => array(
 				'review_drafts' => array_map(
 					function( $review ) {
@@ -415,6 +417,7 @@ final class Ikon_SEO_Agency_Command_Centre {
 			$snapshot['portfolio_signatures'] = array_slice( $snapshot['portfolio_signatures'], 0, 25 );
 			$snapshot['approvals']['review_drafts'] = array_slice( $snapshot['approvals']['review_drafts'], 0, 10 );
 			$snapshot['approvals']['workflow_tasks'] = array_slice( $snapshot['approvals']['workflow_tasks'], 0, 10 );
+			$snapshot['operations']['approval_items'] = array_slice( (array) ( $snapshot['operations']['approval_items'] ?? array() ), 0, 20 );
 			$snapshot['truncated'] = true;
 		}
 		return $snapshot;
@@ -844,6 +847,12 @@ final class Ikon_SEO_Agency_Command_Centre {
 			'report_label'     => sanitize_text_field( $row['report_label'] ),
 			'last_snapshot_at' => sanitize_text_field( $row['last_snapshot_at'] ),
 			'last_error'       => sanitize_text_field( $row['last_error'] ),
+			'governance'       => array(
+				'configured'  => ! empty( $row['encrypted_governance_key'] ),
+				'status'      => sanitize_key( $row['governance_status'] ?? 'not_configured' ),
+				'last_sync_at'=> sanitize_text_field( $row['governance_last_sync_at'] ?? '' ),
+				'last_error'  => sanitize_text_field( $row['governance_last_error'] ?? '' ),
+			),
 			'snapshot_age_hours'=> null === $age ? null : round( $age, 1 ),
 			'stale'            => $stale,
 			'attention'        => $attention,
@@ -1085,6 +1094,96 @@ final class Ikon_SEO_Agency_Command_Centre {
 		}
 	}
 
+
+	private function extended_operations_snapshot() {
+		global $wpdb;
+		$review_state = get_option( 'ikon_seo_discovery_review_v1', array() );
+		$review_state = is_array( $review_state ) ? $review_state : array();
+		$review_counts = array( 'detected' => 0, 'confirmed' => 0, 'edited' => 0, 'rejected' => 0, 'conflict' => 0, 'needs_confirmation' => 0, 'outdated' => 0 );
+		foreach ( (array) ( $review_state['facts'] ?? array() ) as $record ) {
+			$status = sanitize_key( $record['status'] ?? 'detected' );
+			$review_counts[ $status ] = ( $review_counts[ $status ] ?? 0 ) + 1;
+		}
+		$unresolved_conflicts = 0;
+		foreach ( (array) ( $review_state['conflicts'] ?? array() ) as $record ) {
+			if ( 'resolved' !== sanitize_key( $record['status'] ?? 'unresolved' ) ) { $unresolved_conflicts++; }
+		}
+
+		$opportunity_counts = $this->status_counts_for_table( $wpdb->prefix . 'ikon_seo_opportunities', array( 'open','reviewed','planned','completed','dismissed' ), 'is_current=1' );
+		$content_counts = $this->status_counts_for_table( $wpdb->prefix . 'ikon_seo_content_briefs', array( 'proposed','approved','draft_created','ready','rejected','outdated' ), 'opportunity_id>0' );
+		$editorial_counts = $this->status_counts_for_table( $wpdb->prefix . 'ikon_seo_editorial_reviews', array( 'unassigned','assigned','writing','review_requested','changes_requested','approved','signed_off','blocked' ) );
+		$publishing_counts = $this->status_counts_for_table( $wpdb->prefix . 'ikon_seo_publishing_releases', array( 'candidate','preflight_failed','preflight_passed','ready_for_manual_publish','publication_detected','monitoring','issues_found','verified','completed','blocked','cancelled' ) );
+		$impact_counts = $this->status_counts_for_table( $wpdb->prefix . 'ikon_seo_impact_studies', array( 'baseline_pending','monitoring','ready_for_assessment','assessed','acknowledged','blocked','archived' ) );
+		$pattern_counts = $this->status_counts_for_table( $wpdb->prefix . 'ikon_seo_patterns', array( 'candidate','review_ready','validated','limited_use','revalidation_required','rejected','retired' ) );
+		$approval_items = array();
+		$now = current_time( 'mysql', true );
+
+		$content_table = $wpdb->prefix . 'ikon_seo_content_briefs';
+		if ( $this->table_exists( $content_table ) ) {
+			$rows = $wpdb->get_results( "SELECT id,target_query,status,updated_at FROM {$content_table} WHERE status='proposed' AND opportunity_id>0 ORDER BY gap_priority DESC,updated_at ASC LIMIT 25", ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+			foreach ( $rows ?: array() as $row ) { $approval_items[] = array( 'type' => 'content_brief', 'id' => absint( $row['id'] ), 'title' => 'Approve brief: ' . sanitize_text_field( $row['target_query'] ), 'status' => 'proposed', 'priority' => 80, 'due_at' => '', 'review_url' => admin_url( 'admin.php?page=ikon-seo&tab=content-workbench' ) ); }
+		}
+		$editorial_table = $wpdb->prefix . 'ikon_seo_editorial_reviews';
+		$editorial_overdue = 0;
+		if ( $this->table_exists( $editorial_table ) ) {
+			$editorial_overdue = absint( $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$editorial_table} WHERE status IN ('assigned','writing','review_requested','changes_requested') AND ((review_due_at IS NOT NULL AND review_due_at<%s) OR (due_at IS NOT NULL AND due_at<%s))", $now, $now ) ) );
+			$rows = $wpdb->get_results( "SELECT id,draft_post_id,status,reviewer_id,review_due_at FROM {$editorial_table} WHERE status='review_requested' ORDER BY review_due_at ASC,id ASC LIMIT 25", ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+			foreach ( $rows ?: array() as $row ) { $approval_items[] = array( 'type' => 'editorial_review', 'id' => absint( $row['id'] ), 'title' => 'Editorial review: ' . sanitize_text_field( get_the_title( absint( $row['draft_post_id'] ) ) ?: 'Draft #' . absint( $row['draft_post_id'] ) ), 'status' => 'review_requested', 'priority' => 90, 'due_at' => sanitize_text_field( $row['review_due_at'] ), 'owner_id' => absint( $row['reviewer_id'] ), 'review_url' => admin_url( 'admin.php?page=ikon-seo&tab=editorial-review' ) ); }
+		}
+		$publishing_table = $wpdb->prefix . 'ikon_seo_publishing_releases';
+		if ( $this->table_exists( $publishing_table ) ) {
+			$rows = $wpdb->get_results( "SELECT id,draft_post_id,status,next_check_at FROM {$publishing_table} WHERE status IN ('preflight_passed','ready_for_manual_publish','issues_found') ORDER BY FIELD(status,'issues_found','preflight_passed','ready_for_manual_publish'),updated_at ASC LIMIT 25", ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+			foreach ( $rows ?: array() as $row ) { $status = sanitize_key( $row['status'] ); $approval_items[] = array( 'type' => 'publishing_readiness', 'id' => absint( $row['id'] ), 'title' => ( 'issues_found' === $status ? 'Investigate publication: ' : ( 'preflight_passed' === $status ? 'Approve publishing readiness: ' : 'Manual publishing decision: ' ) ) . sanitize_text_field( get_the_title( absint( $row['draft_post_id'] ) ) ?: 'Release #' . absint( $row['id'] ) ), 'status' => $status, 'priority' => 'issues_found' === $status ? 100 : 85, 'due_at' => sanitize_text_field( $row['next_check_at'] ), 'review_url' => admin_url( 'admin.php?page=ikon-seo&tab=publishing-readiness' ) ); }
+		}
+		$impact_table = $wpdb->prefix . 'ikon_seo_impact_studies';
+		if ( $this->table_exists( $impact_table ) ) {
+			$rows = $wpdb->get_results( "SELECT id,status,updated_at FROM {$impact_table} WHERE status='ready_for_assessment' ORDER BY updated_at ASC LIMIT 25", ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+			foreach ( $rows ?: array() as $row ) { $approval_items[] = array( 'type' => 'search_impact', 'id' => absint( $row['id'] ), 'title' => 'Assess Search Impact study #' . absint( $row['id'] ), 'status' => 'ready_for_assessment', 'priority' => 70, 'due_at' => '', 'review_url' => admin_url( 'admin.php?page=ikon-seo&tab=search-impact' ) ); }
+		}
+		$patterns_table = $wpdb->prefix . 'ikon_seo_patterns';
+		if ( $this->table_exists( $patterns_table ) ) {
+			$rows = $wpdb->get_results( "SELECT id,pattern_key,status,updated_at FROM {$patterns_table} WHERE status IN ('review_ready','revalidation_required') ORDER BY FIELD(status,'revalidation_required','review_ready'),updated_at ASC LIMIT 25", ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+			foreach ( $rows ?: array() as $row ) { $approval_items[] = array( 'type' => 'pattern_validation', 'id' => absint( $row['id'] ), 'title' => ( 'revalidation_required' === $row['status'] ? 'Revalidate pattern: ' : 'Validate pattern: ' ) . sanitize_text_field( $row['pattern_key'] ), 'status' => sanitize_key( $row['status'] ), 'priority' => 65, 'due_at' => '', 'review_url' => admin_url( 'admin.php?page=ikon-seo&tab=pattern-library' ) ); }
+		}
+		$governance_table = $wpdb->prefix . 'ikon_seo_governance_inbox';
+		if ( $this->table_exists( $governance_table ) ) {
+			$rows = $wpdb->get_results( "SELECT id,policy_name,status,received_at FROM {$governance_table} WHERE status='pending_local_approval' ORDER BY received_at ASC LIMIT 25", ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+			foreach ( $rows ?: array() as $row ) { $approval_items[] = array( 'type' => 'governance_policy', 'id' => absint( $row['id'] ), 'title' => 'Review governance policy: ' . sanitize_text_field( $row['policy_name'] ), 'status' => 'pending_local_approval', 'priority' => 95, 'due_at' => '', 'review_url' => admin_url( 'admin.php?page=ikon-seo&tab=agency-governance' ) ); }
+		}
+		$reports_table = $wpdb->prefix . 'ikon_seo_client_reports';
+		if ( $this->table_exists( $reports_table ) ) {
+			$rows = $wpdb->get_results( "SELECT id,period_end,status,prepared_by FROM {$reports_table} WHERE status='review_ready' ORDER BY period_end ASC LIMIT 25", ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+			foreach ( $rows ?: array() as $row ) { $approval_items[] = array( 'type' => 'client_report', 'id' => absint( $row['id'] ), 'title' => 'Approve client report ending ' . sanitize_text_field( $row['period_end'] ), 'status' => 'review_ready', 'priority' => 75, 'due_at' => sanitize_text_field( $row['period_end'] ), 'owner_id' => absint( $row['prepared_by'] ), 'review_url' => admin_url( 'admin.php?page=ikon-seo&tab=agency-service-levels' ) ); }
+		}
+
+		return array(
+			'discovery_review' => array( 'counts' => $review_counts, 'unresolved' => absint( $review_counts['needs_confirmation'] ?? 0 ) + absint( $review_counts['outdated'] ?? 0 ) + $unresolved_conflicts, 'unresolved_conflicts' => $unresolved_conflicts, 'generated_at' => sanitize_text_field( $review_state['generated_at'] ?? '' ) ),
+			'guided_launch' => array( 'state' => $this->sanitize_recursive( (array) get_option( 'ikon_seo_guided_launch_v1', array() ), 0 ) ),
+			'opportunities' => array( 'counts' => $opportunity_counts ),
+			'content' => array( 'counts' => $content_counts ),
+			'editorial' => array( 'counts' => $editorial_counts, 'overdue' => $editorial_overdue ),
+			'publishing' => array( 'counts' => $publishing_counts ),
+			'search_impact' => array( 'counts' => $impact_counts ),
+			'patterns' => array( 'counts' => $pattern_counts ),
+			'approval_items' => array_slice( $approval_items, 0, 100 ),
+		);
+	}
+
+	private function status_counts_for_table( $table, array $statuses, $where = '' ) {
+		global $wpdb;
+		$counts = array_fill_keys( $statuses, 0 );
+		if ( ! $this->table_exists( $table ) ) { return $counts; }
+		$sql = "SELECT status,COUNT(*) total FROM {$table}" . ( $where ? " WHERE {$where}" : '' ) . ' GROUP BY status';
+		$rows = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+		foreach ( $rows ?: array() as $row ) { $status = sanitize_key( $row['status'] ?? '' ); if ( isset( $counts[ $status ] ) ) { $counts[ $status ] = absint( $row['total'] ?? 0 ); } }
+		return $counts;
+	}
+
+	private function table_exists( $table ) {
+		global $wpdb;
+		return $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $table ) ) ) === $table;
+	}
+
 	private function stored_diagnostics_summary() {
 		global $wpdb;
 		$table = $wpdb->prefix . 'ikon_seo_evidence';
@@ -1164,7 +1263,7 @@ final class Ikon_SEO_Agency_Command_Centre {
 	}
 
 	private function sanitize_snapshot( array $data ) {
-		$allowed = array( 'format','generated_at','site','strategy','connections','inventory','diagnostics','technical','indexation','production_health','search','workflow','publisher','local_growth','visibility_brand','portfolio_quality','approvals','page_plans','monitoring','portfolio_signatures','safety','truncated' );
+		$allowed = array( 'format','generated_at','site','strategy','connections','inventory','diagnostics','technical','indexation','production_health','search','workflow','publisher','local_growth','visibility_brand','portfolio_quality','operations','approvals','page_plans','monitoring','portfolio_signatures','safety','truncated' );
 		$result = array();
 		foreach ( $allowed as $key ) {
 			if ( array_key_exists( $key, $data ) ) { $result[ $key ] = $this->sanitize_recursive( $data[ $key ] ); }

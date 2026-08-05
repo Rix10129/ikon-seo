@@ -4,7 +4,7 @@ defined( 'ABSPATH' ) || exit;
 
 final class Ikon_SEO_Plugin {
 	const OPTION_KEY = 'ikon_seo_settings';
-	const DB_VERSION = '25.0';
+	const DB_VERSION = '40.0';
 
 	private static $instance;
 
@@ -58,6 +58,14 @@ final class Ikon_SEO_Plugin {
 		$indexation->register_hooks();
 		$production_health = new Ikon_SEO_Production_Health( $history, $logger );
 		$production_health->register_hooks();
+		$platform_hardening = new Ikon_SEO_Platform_Hardening( $production_health, $crypto, $history, $logger );
+		$platform_hardening->register_hooks();
+		$deployment_control = new Ikon_SEO_Deployment_Control( $platform_hardening, $production_health, $history, $logger );
+		$deployment_control->register_hooks();
+		$production_certification = new Ikon_SEO_Production_Certification( $platform_hardening, $deployment_control, $production_health, $history, $logger );
+		$production_certification->register_hooks();
+		$staging_validation = new Ikon_SEO_Staging_Validation( $platform_hardening, $production_certification, $production_health, $connection, $history, $logger );
+		$staging_validation->register_hooks();
 		$strategy       = new Ikon_SEO_Strategy( $profile, $history, $logger );
 		$publisher      = new Ikon_SEO_Publisher_Intelligence( $profile, $strategy, $inventory, $search_intelligence, $history, $logger );
 		$publisher->register_hooks();
@@ -65,6 +73,16 @@ final class Ikon_SEO_Plugin {
 		$portfolio_quality_guard->register_hooks();
 		$competitor_content = new Ikon_SEO_Competitor_Content_Intelligence( $profile, $inventory, $search_intelligence, $history, $logger );
 		$authority       = new Ikon_SEO_Authority_Intelligence( $profile, $inventory, $history, $logger );
+		$opportunity_engine = new Ikon_SEO_Opportunity_Engine( $search_intelligence, $analytics, $technical, $indexation, $competitor_content, $authority, $inventory, $history, $logger );
+		$opportunity_engine->register_hooks();
+		$content_workbench = new Ikon_SEO_Content_Workbench( $opportunity_engine, $publisher, $competitor_content, $strategy, $profile, $inventory, $renderer, $history, $logger );
+		$editorial_review = new Ikon_SEO_Editorial_Review( $content_workbench, $publisher, $history, $logger );
+		$publishing_readiness = new Ikon_SEO_Publishing_Readiness( $editorial_review, $content_workbench, $history, $logger );
+		$publishing_readiness->register_hooks();
+		$search_impact = new Ikon_SEO_Search_Impact( $publishing_readiness, $search_intelligence, $analytics, $experiments_claims_revenue, $history, $logger );
+		$search_impact->register_hooks();
+		$pattern_library = new Ikon_SEO_Pattern_Library( $search_impact, $publishing_readiness, $profile, $history, $logger );
+		$pattern_library->register_hooks();
 		$local_growth    = new Ikon_SEO_Local_Growth( $profile, $local, $gbp, $analytics, $competitor_content, $authority, $strategy, $inventory, $history, $logger );
 		$local_growth->register_hooks();
 		$diagnostics    = new Ikon_SEO_Diagnostics( $crawler, $inventory, $rank_math, $search_console, $search_intelligence, $analytics, $technical, $authority, $strategy );
@@ -74,17 +92,30 @@ final class Ikon_SEO_Plugin {
 		$monitor->register_hooks();
 		$automation     = new Ikon_SEO_Automation( $profile, $strategy, $inventory, $crawler, $diagnostics, $search_intelligence, $technical, $analytics, $local_growth, $monitor, $history, $logger );
 		$automation->register_hooks();
+		$auto_discovery = new Ikon_SEO_Auto_Discovery( $profile, $strategy, $inventory, $search_intelligence, $analytics, $automation, $local, $history, $logger );
+		$auto_discovery->register_hooks();
+		$discovery_review = new Ikon_SEO_Discovery_Review( $auto_discovery, $profile, $strategy, $inventory, $local, $history, $logger );
+		$discovery_review->register_hooks();
 		$visibility_brand = new Ikon_SEO_Visibility_Brand_Intelligence( $profile, $search_intelligence, $local_growth, $authority, $competitor_content, $history, $logger );
 		$visibility_brand->register_hooks();
-		$closed_loop      = new Ikon_SEO_Closed_Loop( $profile, $strategy, $diagnostics, $search_intelligence, $analytics, $technical, $indexation, $competitor_content, $authority, $publisher, $local_growth, $visibility_brand, $automation, $history, $crypto, $logger );
+		$closed_loop      = new Ikon_SEO_Closed_Loop( $profile, $strategy, $diagnostics, $search_intelligence, $analytics, $technical, $indexation, $competitor_content, $authority, $opportunity_engine, $publisher, $local_growth, $visibility_brand, $automation, $history, $crypto, $logger );
 		$closed_loop->register_hooks();
+		$guided_launch    = new Ikon_SEO_Guided_Launch( $auto_discovery, $discovery_review, $strategy, $automation, $closed_loop, $history, $logger );
 		$agency_command  = new Ikon_SEO_Agency_Command_Centre( $profile, $strategy, $inventory, $workflow, $diagnostics, $search_intelligence, $technical, $indexation, $production_health, $analytics, $automation, $publisher, $local_growth, $visibility_brand, $closed_loop, $portfolio_quality_guard, $queue, $monitor, $history, $crypto, $logger );
 		$agency_command->register_hooks();
+		$portfolio_governance = new Ikon_SEO_Portfolio_Governance( $agency_command, $crypto, $history, $logger );
+		$portfolio_governance->register_hooks();
+		$agency_service_levels = new Ikon_SEO_Agency_Service_Levels( $agency_command, $portfolio_governance, $history, $logger );
+		$agency_service_levels->register_hooks();
+		$executive_command = new Ikon_SEO_Executive_Command_Centre( $agency_command, $portfolio_governance, $agency_service_levels, $history, $logger );
+		$executive_command->register_hooks();
+		$client_portal = new Ikon_SEO_Client_Portal( $agency_command, $agency_service_levels, $executive_command, $search_impact, $history, $logger );
+		$client_portal->register_hooks();
 
-		new Ikon_SEO_REST( $auth, $connection, $profile, $validator, $renderer, $schema, $quality, $inventory, $rank_math, $image_audit, $redirect_audit, $media, $workflow, $migration, $search_console, $search_intelligence, $analytics, $crawler, $technical, $indexation, $production_health, $competitor_content, $authority, $strategy, $publisher, $diagnostics, $queue, $monitor, $automation, $history, $local_growth, $visibility_brand, $closed_loop, $agency_command, $structured_media_governance, $experiments_claims_revenue, $international_server, $portfolio_quality_guard, $local, $gbp, $logger );
+		new Ikon_SEO_REST( $auth, $connection, $profile, $validator, $renderer, $schema, $quality, $inventory, $rank_math, $image_audit, $redirect_audit, $media, $workflow, $migration, $search_console, $search_intelligence, $analytics, $crawler, $technical, $indexation, $production_health, $platform_hardening, $deployment_control, $production_certification, $staging_validation, $competitor_content, $authority, $strategy, $publisher, $diagnostics, $queue, $monitor, $automation, $history, $local_growth, $visibility_brand, $closed_loop, $agency_command, $portfolio_governance, $agency_service_levels, $executive_command, $client_portal, $structured_media_governance, $experiments_claims_revenue, $international_server, $portfolio_quality_guard, $auto_discovery, $discovery_review, $guided_launch, $opportunity_engine, $content_workbench, $editorial_review, $publishing_readiness, $search_impact, $pattern_library, $local, $gbp, $logger );
 
 		if ( is_admin() ) {
-			new Ikon_SEO_Admin( $logger, $connection, $profile, $inventory, $rank_math, $image_audit, $redirect_audit, $workflow, $migration, $search_console, $search_intelligence, $analytics, $crawler, $technical, $indexation, $production_health, $competitor_content, $authority, $strategy, $publisher, $diagnostics, $queue, $monitor, $automation, $history, $local_growth, $visibility_brand, $closed_loop, $agency_command, $structured_media_governance, $experiments_claims_revenue, $international_server, $portfolio_quality_guard, $local, $gbp );
+			new Ikon_SEO_Admin( $logger, $connection, $profile, $inventory, $rank_math, $image_audit, $redirect_audit, $workflow, $migration, $search_console, $search_intelligence, $analytics, $crawler, $technical, $indexation, $production_health, $platform_hardening, $deployment_control, $production_certification, $staging_validation, $competitor_content, $authority, $strategy, $publisher, $diagnostics, $queue, $monitor, $automation, $history, $local_growth, $visibility_brand, $closed_loop, $agency_command, $portfolio_governance, $agency_service_levels, $executive_command, $structured_media_governance, $experiments_claims_revenue, $international_server, $portfolio_quality_guard, $auto_discovery, $discovery_review, $guided_launch, $opportunity_engine, $content_workbench, $editorial_review, $publishing_readiness, $search_impact, $pattern_library, $local, $gbp );
 		}
 
 		add_filter( 'cron_schedules', array( __CLASS__, 'cron_schedules' ) );
@@ -197,7 +228,47 @@ Begin checkout",
 			'strategy_ecommerce_trust_requirements' => '',
 			'strategy_ecommerce_feed_policy' => '',
 			'strategy_last_updated' => '',
-			'component_version'  => '25.0',
+			'auto_discovery_enabled' => 1,
+			'auto_discovery_max_pages' => 100,
+			'auto_discovery_include_connected' => 1,
+			'auto_discovery_last_run' => '',
+			'auto_discovery_version' => '',
+			'component_version'  => '40.0',
+
+			'production_certification_enabled' => 1,
+			'certification_recovery_drill_days' => 90,
+			'certification_support_window_days' => 365,
+			'certification_max_rollout_sites' => 100,
+			'certification_monitor_batch' => 3,
+			'certification_last_monitor' => '',
+			'staging_validation_enabled' => 1,
+			'staging_validation_monitor_batch' => 1,
+			'staging_validation_retention_days' => 180,
+			'staging_validation_last_run' => '',
+			'staging_validation_last_error' => '',
+			'opportunity_engine_enabled' => 1,
+			'opportunity_engine_max_items' => 300,
+			'opportunity_engine_stale_days' => 60,
+			'opportunity_engine_last_rebuild' => '',
+			'opportunity_engine_last_error' => '',
+			'publishing_readiness_enabled' => 1,
+			'publishing_monitoring_days' => 28,
+			'publishing_last_error' => '',
+			'search_impact_enabled' => 1,
+			'impact_default_baseline_days' => 28,
+			'impact_default_evaluation_days' => 28,
+			'impact_minimum_observations' => 100,
+			'impact_change_threshold_percent' => 10,
+			'impact_last_error' => '',
+			'pattern_library_enabled' => 1,
+			'pattern_library_stale_days' => 365,
+			'pattern_library_last_refresh' => '',
+			'pattern_library_last_error' => '',
+			'agency_service_levels_enabled' => 1,
+			'agency_service_default_currency' => 'USD',
+			'agency_service_report_retention_days' => 730,
+			'agency_service_last_monitor' => '',
+			'connection_owner_user_id' => 0,
 			'connection_verified_at' => '',
 			'connection_last_seen_at'=> '',
 			'token_hash'         => '',
@@ -279,6 +350,14 @@ Begin checkout",
 			'indexation_reinspect_after_change' => 1,
 			'indexation_history_retention_days' => 180,
 			'production_health_retention_days' => 90,
+			'platform_archive_retention_days' => 365,
+			'platform_integrity_retention_days' => 180,
+			'client_portal_event_retention_days' => 180,
+			'client_portal_snapshot_hours' => 12,
+			'deployment_environment' => function_exists( 'wp_get_environment_type' ) ? wp_get_environment_type() : 'production',
+			'deployment_channel' => 'stable',
+			'deployment_license_warning_days' => 30,
+			'deployment_retention_days' => 730,
 			'structured_media_governance_enabled' => 1,
 			'schema_governance_batch_size' => 10,
 			'schema_governance_stale_days' => 30,
@@ -340,6 +419,8 @@ Begin checkout",
 
 	public static function activate() {
 		global $wpdb;
+		$previous_plugin_version = (string) get_option( 'ikon_seo_plugin_version', '' );
+		$previous_db_version = (string) get_option( 'ikon_seo_db_version', '' );
 
 		$table_name      = $wpdb->prefix . 'ikon_seo_logs';
 		$charset_collate = $wpdb->get_charset_collate();
@@ -770,6 +851,18 @@ Begin checkout",
 			direct_evidence_json longtext DEFAULT NULL,
 			hypotheses_json longtext DEFAULT NULL,
 			status varchar(20) NOT NULL DEFAULT 'open',
+			opportunity_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			publisher_item_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			brief_version int(10) unsigned NOT NULL DEFAULT 1,
+			evidence_hash char(64) NOT NULL DEFAULT '',
+			approval_notes text DEFAULT NULL,
+			approved_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			approved_at datetime DEFAULT NULL,
+			draft_post_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			draft_hash char(64) NOT NULL DEFAULT '',
+			draft_created_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			draft_created_at datetime DEFAULT NULL,
+			last_error text DEFAULT NULL,
 			created_by bigint(20) unsigned NOT NULL DEFAULT 0,
 			created_at datetime NOT NULL,
 			updated_at datetime NOT NULL,
@@ -778,9 +871,397 @@ Begin checkout",
 			KEY gap_priority (gap_priority),
 			KEY target_intent (target_intent),
 			KEY status (status),
+			KEY opportunity_id (opportunity_id),
+			KEY publisher_item_id (publisher_item_id),
+			KEY draft_post_id (draft_post_id),
 			KEY updated_at (updated_at)
 		) {$charset_collate};";
 		dbDelta( $content_briefs_sql );
+
+		$editorial_reviews_table = $wpdb->prefix . 'ikon_seo_editorial_reviews';
+		$editorial_reviews_sql = "CREATE TABLE {$editorial_reviews_table} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			brief_id bigint(20) unsigned NOT NULL,
+			draft_post_id bigint(20) unsigned NOT NULL,
+			round_number int(10) unsigned NOT NULL DEFAULT 1,
+			status varchar(30) NOT NULL DEFAULT 'unassigned',
+			writer_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			reviewer_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			due_at datetime DEFAULT NULL,
+			review_due_at datetime DEFAULT NULL,
+			blocked_reason text DEFAULT NULL,
+			final_signoff_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			final_signoff_at datetime DEFAULT NULL,
+			current_snapshot_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			last_snapshot_hash char(64) NOT NULL DEFAULT '',
+			created_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			created_at datetime NOT NULL,
+			updated_at datetime NOT NULL,
+			PRIMARY KEY  (id),
+			UNIQUE KEY brief_id (brief_id),
+			KEY draft_post_id (draft_post_id),
+			KEY status (status),
+			KEY writer_id (writer_id),
+			KEY reviewer_id (reviewer_id),
+			KEY due_at (due_at),
+			KEY review_due_at (review_due_at)
+		) {$charset_collate};";
+		dbDelta( $editorial_reviews_sql );
+
+		$editorial_comments_table = $wpdb->prefix . 'ikon_seo_editorial_comments';
+		$editorial_comments_sql = "CREATE TABLE {$editorial_comments_table} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			review_id bigint(20) unsigned NOT NULL,
+			round_number int(10) unsigned NOT NULL DEFAULT 1,
+			comment_type varchar(30) NOT NULL DEFAULT 'general',
+			anchor_text text DEFAULT NULL,
+			section_key varchar(100) NOT NULL DEFAULT '',
+			comment_text text NOT NULL,
+			status varchar(20) NOT NULL DEFAULT 'open',
+			created_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			assigned_to bigint(20) unsigned NOT NULL DEFAULT 0,
+			resolved_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			resolved_at datetime DEFAULT NULL,
+			resolution_notes text DEFAULT NULL,
+			created_at datetime NOT NULL,
+			updated_at datetime NOT NULL,
+			PRIMARY KEY  (id),
+			KEY review_status (review_id,status),
+			KEY round_number (round_number),
+			KEY assigned_to (assigned_to),
+			KEY created_at (created_at)
+		) {$charset_collate};";
+		dbDelta( $editorial_comments_sql );
+
+		$editorial_checks_table = $wpdb->prefix . 'ikon_seo_editorial_checks';
+		$editorial_checks_sql = "CREATE TABLE {$editorial_checks_table} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			review_id bigint(20) unsigned NOT NULL,
+			round_number int(10) unsigned NOT NULL DEFAULT 1,
+			check_type varchar(30) NOT NULL DEFAULT 'quality',
+			check_key varchar(64) NOT NULL,
+			label text NOT NULL,
+			evidence text DEFAULT NULL,
+			required tinyint(1) unsigned NOT NULL DEFAULT 1,
+			status varchar(20) NOT NULL DEFAULT 'pending',
+			notes text DEFAULT NULL,
+			checked_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			checked_at datetime DEFAULT NULL,
+			created_at datetime NOT NULL,
+			updated_at datetime NOT NULL,
+			PRIMARY KEY  (id),
+			UNIQUE KEY review_round_key (review_id,round_number,check_key),
+			KEY review_status (review_id,status),
+			KEY check_type (check_type)
+		) {$charset_collate};";
+		dbDelta( $editorial_checks_sql );
+
+		$editorial_snapshots_table = $wpdb->prefix . 'ikon_seo_editorial_snapshots';
+		$editorial_snapshots_sql = "CREATE TABLE {$editorial_snapshots_table} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			review_id bigint(20) unsigned NOT NULL,
+			round_number int(10) unsigned NOT NULL DEFAULT 1,
+			draft_post_id bigint(20) unsigned NOT NULL,
+			snapshot_hash char(64) NOT NULL,
+			snapshot_reason varchar(40) NOT NULL DEFAULT 'review_request',
+			title text DEFAULT NULL,
+			excerpt text DEFAULT NULL,
+			content longtext DEFAULT NULL,
+			builder_data longtext DEFAULT NULL,
+			word_count int(10) unsigned NOT NULL DEFAULT 0,
+			created_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			created_at datetime NOT NULL,
+			PRIMARY KEY  (id),
+			KEY review_id (review_id),
+			KEY round_number (round_number),
+			KEY draft_post_id (draft_post_id),
+			KEY snapshot_hash (snapshot_hash)
+		) {$charset_collate};";
+		dbDelta( $editorial_snapshots_sql );
+
+		$editorial_events_table = $wpdb->prefix . 'ikon_seo_editorial_events';
+		$editorial_events_sql = "CREATE TABLE {$editorial_events_table} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			review_id bigint(20) unsigned NOT NULL,
+			round_number int(10) unsigned NOT NULL DEFAULT 1,
+			event_type varchar(40) NOT NULL,
+			actor_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			notes text DEFAULT NULL,
+			payload_json longtext DEFAULT NULL,
+			created_at datetime NOT NULL,
+			PRIMARY KEY  (id),
+			KEY review_id (review_id),
+			KEY event_type (event_type),
+			KEY created_at (created_at)
+		) {$charset_collate};";
+		dbDelta( $editorial_events_sql );
+
+		$publishing_releases_table = $wpdb->prefix . 'ikon_seo_publishing_releases';
+		$publishing_releases_sql = "CREATE TABLE {$publishing_releases_table} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			review_id bigint(20) unsigned NOT NULL,
+			brief_id bigint(20) unsigned NOT NULL,
+			draft_post_id bigint(20) unsigned NOT NULL,
+			source_post_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			live_post_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			publication_mode varchar(30) NOT NULL DEFAULT 'new_page',
+			status varchar(40) NOT NULL DEFAULT 'candidate',
+			target_url text DEFAULT NULL,
+			proposed_slug varchar(200) NOT NULL DEFAULT '',
+			release_hash char(64) NOT NULL,
+			signoff_snapshot_hash char(64) NOT NULL,
+			preflight_score smallint(5) unsigned NOT NULL DEFAULT 0,
+			verification_score smallint(5) unsigned NOT NULL DEFAULT 0,
+			blocker_count int(10) unsigned NOT NULL DEFAULT 0,
+			warning_count int(10) unsigned NOT NULL DEFAULT 0,
+			readiness_approved_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			readiness_approved_at datetime DEFAULT NULL,
+			manual_publish_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			published_at datetime DEFAULT NULL,
+			launch_snapshot_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			last_verified_at datetime DEFAULT NULL,
+			next_check_at datetime DEFAULT NULL,
+			monitoring_until datetime DEFAULT NULL,
+			blocked_reason text DEFAULT NULL,
+			created_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			created_at datetime NOT NULL,
+			updated_at datetime NOT NULL,
+			PRIMARY KEY  (id),
+			UNIQUE KEY review_id (review_id),
+			KEY brief_id (brief_id),
+			KEY draft_post_id (draft_post_id),
+			KEY source_post_id (source_post_id),
+			KEY live_post_id (live_post_id),
+			KEY status (status),
+			KEY next_check_at (next_check_at)
+		) {$charset_collate};";
+		dbDelta( $publishing_releases_sql );
+
+		$publishing_checks_table = $wpdb->prefix . 'ikon_seo_publishing_checks';
+		$publishing_checks_sql = "CREATE TABLE {$publishing_checks_table} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			release_id bigint(20) unsigned NOT NULL,
+			phase varchar(30) NOT NULL DEFAULT 'preflight',
+			check_key varchar(100) NOT NULL,
+			label varchar(255) NOT NULL,
+			severity varchar(20) NOT NULL DEFAULT 'warning',
+			status varchar(20) NOT NULL DEFAULT 'pending',
+			expected_value text DEFAULT NULL,
+			observed_value text DEFAULT NULL,
+			details text DEFAULT NULL,
+			checked_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			checked_at datetime DEFAULT NULL,
+			created_at datetime NOT NULL,
+			updated_at datetime NOT NULL,
+			PRIMARY KEY  (id),
+			UNIQUE KEY release_phase_key (release_id,phase,check_key),
+			KEY release_id (release_id),
+			KEY phase (phase),
+			KEY severity_status (severity,status)
+		) {$charset_collate};";
+		dbDelta( $publishing_checks_sql );
+
+		$publishing_snapshots_table = $wpdb->prefix . 'ikon_seo_publishing_snapshots';
+		$publishing_snapshots_sql = "CREATE TABLE {$publishing_snapshots_table} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			release_id bigint(20) unsigned NOT NULL,
+			snapshot_type varchar(40) NOT NULL,
+			post_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			url text DEFAULT NULL,
+			status_code smallint(5) unsigned NOT NULL DEFAULT 0,
+			title text DEFAULT NULL,
+			canonical text DEFAULT NULL,
+			robots varchar(255) NOT NULL DEFAULT '',
+			content_hash char(64) NOT NULL DEFAULT '',
+			meta_hash char(64) NOT NULL DEFAULT '',
+			payload_json longtext DEFAULT NULL,
+			created_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			created_at datetime NOT NULL,
+			PRIMARY KEY  (id),
+			KEY release_id (release_id),
+			KEY snapshot_type (snapshot_type),
+			KEY post_id (post_id),
+			KEY created_at (created_at)
+		) {$charset_collate};";
+		dbDelta( $publishing_snapshots_sql );
+
+		$publishing_events_table = $wpdb->prefix . 'ikon_seo_publishing_events';
+		$publishing_events_sql = "CREATE TABLE {$publishing_events_table} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			release_id bigint(20) unsigned NOT NULL,
+			event_type varchar(50) NOT NULL,
+			actor_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			notes text DEFAULT NULL,
+			payload_json longtext DEFAULT NULL,
+			created_at datetime NOT NULL,
+			PRIMARY KEY  (id),
+			KEY release_id (release_id),
+			KEY event_type (event_type),
+			KEY created_at (created_at)
+		) {$charset_collate};";
+		dbDelta( $publishing_events_sql );
+
+		$impact_studies_table = $wpdb->prefix . 'ikon_seo_impact_studies';
+		$impact_studies_sql = "CREATE TABLE {$impact_studies_table} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			release_id bigint(20) unsigned NOT NULL,
+			live_post_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			target_url text NOT NULL,
+			target_hash char(64) NOT NULL,
+			comparison_url text DEFAULT NULL,
+			comparison_hash char(64) NOT NULL DEFAULT '',
+			primary_metric varchar(40) NOT NULL DEFAULT 'clicks',
+			baseline_days smallint(5) unsigned NOT NULL DEFAULT 28,
+			evaluation_days smallint(5) unsigned NOT NULL DEFAULT 28,
+			status varchar(40) NOT NULL DEFAULT 'baseline_pending',
+			baseline_measurement_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			latest_measurement_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			confidence varchar(20) NOT NULL DEFAULT 'low',
+			outcome varchar(30) NOT NULL DEFAULT 'inconclusive',
+			adjusted_change_percent decimal(12,4) DEFAULT NULL,
+			assessment_json longtext DEFAULT NULL,
+			blocked_reason text DEFAULT NULL,
+			owner_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			created_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			created_at datetime NOT NULL,
+			updated_at datetime NOT NULL,
+			PRIMARY KEY  (id),
+			UNIQUE KEY release_id (release_id),
+			KEY live_post_id (live_post_id),
+			KEY target_hash (target_hash),
+			KEY status (status),
+			KEY outcome (outcome)
+		) {$charset_collate};";
+		dbDelta( $impact_studies_sql );
+
+		$impact_measurements_table = $wpdb->prefix . 'ikon_seo_impact_measurements';
+		$impact_measurements_sql = "CREATE TABLE {$impact_measurements_table} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			study_id bigint(20) unsigned NOT NULL,
+			checkpoint_type varchar(30) NOT NULL DEFAULT 'baseline',
+			checkpoint_days smallint(5) unsigned NOT NULL DEFAULT 0,
+			period_start date NOT NULL,
+			period_end date NOT NULL,
+			metrics_json longtext DEFAULT NULL,
+			comparison_metrics_json longtext DEFAULT NULL,
+			sources_json longtext DEFAULT NULL,
+			comparison_sources_json longtext DEFAULT NULL,
+			quality_score smallint(5) unsigned NOT NULL DEFAULT 0,
+			confidence varchar(20) NOT NULL DEFAULT 'low',
+			limitations_json longtext DEFAULT NULL,
+			created_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			created_at datetime NOT NULL,
+			PRIMARY KEY  (id),
+			UNIQUE KEY study_checkpoint (study_id,checkpoint_type,checkpoint_days),
+			KEY study_id (study_id),
+			KEY checkpoint_days (checkpoint_days),
+			KEY confidence (confidence)
+		) {$charset_collate};";
+		dbDelta( $impact_measurements_sql );
+
+		$impact_events_table = $wpdb->prefix . 'ikon_seo_impact_events';
+		$impact_events_sql = "CREATE TABLE {$impact_events_table} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			study_id bigint(20) unsigned NOT NULL,
+			event_type varchar(50) NOT NULL,
+			actor_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			notes text DEFAULT NULL,
+			payload_json longtext DEFAULT NULL,
+			created_at datetime NOT NULL,
+			PRIMARY KEY  (id),
+			KEY study_id (study_id),
+			KEY event_type (event_type),
+			KEY created_at (created_at)
+		) {$charset_collate};";
+		dbDelta( $impact_events_sql );
+
+		$patterns_table = $wpdb->prefix . 'ikon_seo_patterns';
+		$patterns_sql = "CREATE TABLE {$patterns_table} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			pattern_key char(64) NOT NULL,
+			title varchar(255) NOT NULL,
+			website_mode varchar(40) NOT NULL DEFAULT 'hybrid',
+			industry varchar(80) NOT NULL DEFAULT 'general',
+			market varchar(80) NOT NULL DEFAULT 'unspecified',
+			language varchar(30) NOT NULL DEFAULT 'en',
+			page_type varchar(60) NOT NULL DEFAULT 'unknown',
+			change_family varchar(60) NOT NULL DEFAULT 'other',
+			primary_metric varchar(40) NOT NULL DEFAULT 'clicks',
+			status varchar(40) NOT NULL DEFAULT 'candidate',
+			directional_signal varchar(30) NOT NULL DEFAULT 'inconclusive',
+			confidence varchar(20) NOT NULL DEFAULT 'low',
+			confidence_score smallint(5) unsigned NOT NULL DEFAULT 0,
+			study_count int(10) unsigned NOT NULL DEFAULT 0,
+			usable_study_count int(10) unsigned NOT NULL DEFAULT 0,
+			usable_site_count int(10) unsigned NOT NULL DEFAULT 0,
+			site_count int(10) unsigned NOT NULL DEFAULT 0,
+			positive_count int(10) unsigned NOT NULL DEFAULT 0,
+			negative_count int(10) unsigned NOT NULL DEFAULT 0,
+			neutral_count int(10) unsigned NOT NULL DEFAULT 0,
+			inconclusive_count int(10) unsigned NOT NULL DEFAULT 0,
+			consistency_percent decimal(6,2) NOT NULL DEFAULT 0,
+			median_change_percent decimal(12,4) DEFAULT NULL,
+			applicability_json longtext DEFAULT NULL,
+			limitations_json longtext DEFAULT NULL,
+			evidence_hash char(64) NOT NULL DEFAULT '',
+			validated_evidence_hash char(64) NOT NULL DEFAULT '',
+			review_notes text DEFAULT NULL,
+			approved_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			approved_at datetime DEFAULT NULL,
+			created_at datetime NOT NULL,
+			updated_at datetime NOT NULL,
+			PRIMARY KEY  (id),
+			UNIQUE KEY pattern_key (pattern_key),
+			KEY status (status),
+			KEY mode_industry (website_mode,industry),
+			KEY page_change (page_type,change_family),
+			KEY confidence_score (confidence_score),
+			KEY updated_at (updated_at)
+		) {$charset_collate};";
+		dbDelta( $patterns_sql );
+
+		$pattern_evidence_table = $wpdb->prefix . 'ikon_seo_pattern_evidence';
+		$pattern_evidence_sql = "CREATE TABLE {$pattern_evidence_table} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			pattern_id bigint(20) unsigned NOT NULL,
+			source_type varchar(20) NOT NULL DEFAULT 'local',
+			source_site_hash char(64) NOT NULL,
+			source_study_key varchar(100) NOT NULL,
+			local_study_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			outcome varchar(30) NOT NULL DEFAULT 'inconclusive',
+			confidence varchar(20) NOT NULL DEFAULT 'low',
+			adjusted_change_percent decimal(12,4) DEFAULT NULL,
+			human_decision varchar(40) NOT NULL DEFAULT '',
+			assessment_hash char(64) NOT NULL,
+			context_json longtext DEFAULT NULL,
+			is_current tinyint(1) unsigned NOT NULL DEFAULT 1,
+			observed_at datetime NOT NULL,
+			imported_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			created_at datetime NOT NULL,
+			updated_at datetime NOT NULL,
+			PRIMARY KEY  (id),
+			UNIQUE KEY source_study (source_site_hash,source_study_key),
+			KEY pattern_current (pattern_id,is_current),
+			KEY outcome_confidence (outcome,confidence),
+			KEY observed_at (observed_at)
+		) {$charset_collate};";
+		dbDelta( $pattern_evidence_sql );
+
+		$pattern_events_table = $wpdb->prefix . 'ikon_seo_pattern_events';
+		$pattern_events_sql = "CREATE TABLE {$pattern_events_table} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			pattern_id bigint(20) unsigned NOT NULL,
+			event_type varchar(50) NOT NULL,
+			actor_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			notes text DEFAULT NULL,
+			payload_json longtext DEFAULT NULL,
+			created_at datetime NOT NULL,
+			PRIMARY KEY  (id),
+			KEY pattern_id (pattern_id),
+			KEY event_type (event_type),
+			KEY created_at (created_at)
+		) {$charset_collate};";
+		dbDelta( $pattern_events_sql );
 
 
 		$backlinks_table = $wpdb->prefix . 'ikon_seo_backlinks';
@@ -1213,6 +1694,10 @@ Begin checkout",
 			site_url text NOT NULL,
 			site_hash char(64) NOT NULL,
 			encrypted_key longtext NOT NULL,
+			encrypted_governance_key longtext DEFAULT NULL,
+			governance_status varchar(30) NOT NULL DEFAULT 'not_configured',
+			governance_last_sync_at datetime DEFAULT NULL,
+			governance_last_error text DEFAULT NULL,
 			enabled tinyint(1) unsigned NOT NULL DEFAULT 1,
 			status varchar(20) NOT NULL DEFAULT 'connected',
 			monthly_budget decimal(14,2) NOT NULL DEFAULT 0,
@@ -1287,6 +1772,628 @@ Begin checkout",
 			KEY category (category)
 		) {$charset_collate};";
 		dbDelta( $agency_usage_sql );
+
+		$governance_policies_table = $wpdb->prefix . 'ikon_seo_governance_policies';
+		$governance_policies_sql = "CREATE TABLE {$governance_policies_table} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			policy_key varchar(100) NOT NULL,
+			name varchar(255) NOT NULL,
+			version int(10) unsigned NOT NULL DEFAULT 1,
+			status varchar(30) NOT NULL DEFAULT 'draft',
+			policy_json longtext NOT NULL,
+			fingerprint char(64) NOT NULL,
+			notes text DEFAULT NULL,
+			created_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			approved_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			approved_at datetime DEFAULT NULL,
+			created_at datetime NOT NULL,
+			updated_at datetime NOT NULL,
+			PRIMARY KEY  (id),
+			UNIQUE KEY policy_version (policy_key,version),
+			UNIQUE KEY fingerprint (fingerprint),
+			KEY status_updated (status,updated_at)
+		) {$charset_collate};";
+		dbDelta( $governance_policies_sql );
+
+		$governance_assignments_table = $wpdb->prefix . 'ikon_seo_governance_assignments';
+		$governance_assignments_sql = "CREATE TABLE {$governance_assignments_table} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			policy_id bigint(20) unsigned NOT NULL,
+			site_id bigint(20) unsigned NOT NULL,
+			status varchar(30) NOT NULL DEFAULT 'queued',
+			remote_proposal_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			remote_status varchar(30) NOT NULL DEFAULT '',
+			last_sync_at datetime DEFAULT NULL,
+			last_seen_fingerprint char(64) NOT NULL DEFAULT '',
+			last_error text DEFAULT NULL,
+			assigned_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			created_at datetime NOT NULL,
+			updated_at datetime NOT NULL,
+			PRIMARY KEY  (id),
+			UNIQUE KEY policy_site (policy_id,site_id),
+			KEY site_status (site_id,status),
+			KEY status_updated (status,updated_at)
+		) {$charset_collate};";
+		dbDelta( $governance_assignments_sql );
+
+		$governance_inbox_table = $wpdb->prefix . 'ikon_seo_governance_inbox';
+		$governance_inbox_sql = "CREATE TABLE {$governance_inbox_table} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			source_fingerprint char(64) NOT NULL,
+			source_label varchar(255) NOT NULL DEFAULT '',
+			policy_key varchar(100) NOT NULL,
+			policy_name varchar(255) NOT NULL,
+			policy_version int(10) unsigned NOT NULL DEFAULT 1,
+			policy_fingerprint char(64) NOT NULL,
+			policy_json longtext NOT NULL,
+			status varchar(30) NOT NULL DEFAULT 'pending_local_approval',
+			decision_notes text DEFAULT NULL,
+			received_at datetime NOT NULL,
+			last_received_at datetime NOT NULL,
+			decided_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			decided_at datetime DEFAULT NULL,
+			created_at datetime NOT NULL,
+			updated_at datetime NOT NULL,
+			PRIMARY KEY  (id),
+			UNIQUE KEY source_policy_version (source_fingerprint,policy_key,policy_version,policy_fingerprint),
+			KEY status_updated (status,updated_at)
+		) {$charset_collate};";
+		dbDelta( $governance_inbox_sql );
+
+		$governance_events_table = $wpdb->prefix . 'ikon_seo_governance_events';
+		$governance_events_sql = "CREATE TABLE {$governance_events_table} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			policy_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			site_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			action varchar(60) NOT NULL,
+			status varchar(30) NOT NULL DEFAULT 'completed',
+			message text NOT NULL,
+			details_json longtext DEFAULT NULL,
+			user_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			created_at datetime NOT NULL,
+			PRIMARY KEY  (id),
+			KEY policy_created (policy_id,created_at),
+			KEY site_created (site_id,created_at),
+			KEY action_status (action,status)
+		) {$charset_collate};";
+		dbDelta( $governance_events_sql );
+
+		$service_plans_table = $wpdb->prefix . 'ikon_seo_service_plans';
+		$service_plans_sql = "CREATE TABLE {$service_plans_table} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			plan_key varchar(100) NOT NULL,
+			name varchar(255) NOT NULL,
+			version int(10) unsigned NOT NULL DEFAULT 1,
+			status varchar(30) NOT NULL DEFAULT 'draft',
+			plan_json longtext NOT NULL,
+			fingerprint char(64) NOT NULL,
+			notes text DEFAULT NULL,
+			created_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			approved_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			approved_at datetime DEFAULT NULL,
+			created_at datetime NOT NULL,
+			updated_at datetime NOT NULL,
+			PRIMARY KEY  (id),
+			UNIQUE KEY plan_version (plan_key,version),
+			UNIQUE KEY fingerprint (fingerprint),
+			KEY status_updated (status,updated_at)
+		) {$charset_collate};";
+		dbDelta( $service_plans_sql );
+
+		$service_assignments_table = $wpdb->prefix . 'ikon_seo_service_assignments';
+		$service_assignments_sql = "CREATE TABLE {$service_assignments_table} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			plan_id bigint(20) unsigned NOT NULL,
+			site_id bigint(20) unsigned NOT NULL,
+			status varchar(30) NOT NULL DEFAULT 'active',
+			start_date date NOT NULL,
+			renewal_date date DEFAULT NULL,
+			capacity_override_units int(10) unsigned NOT NULL DEFAULT 0,
+			client_reporting_enabled tinyint(1) unsigned NOT NULL DEFAULT 1,
+			notes text DEFAULT NULL,
+			assigned_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			created_at datetime NOT NULL,
+			updated_at datetime NOT NULL,
+			PRIMARY KEY  (id),
+			KEY site_status (site_id,status),
+			KEY plan_status (plan_id,status),
+			KEY renewal_date (renewal_date)
+		) {$charset_collate};";
+		dbDelta( $service_assignments_sql );
+
+		$team_capacity_table = $wpdb->prefix . 'ikon_seo_team_capacity';
+		$team_capacity_sql = "CREATE TABLE {$team_capacity_table} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			user_id bigint(20) unsigned NOT NULL,
+			period_start date NOT NULL,
+			period_end date NOT NULL,
+			capacity_units int(10) unsigned NOT NULL DEFAULT 0,
+			notes text DEFAULT NULL,
+			created_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			created_at datetime NOT NULL,
+			updated_at datetime NOT NULL,
+			PRIMARY KEY  (id),
+			UNIQUE KEY user_period (user_id,period_start),
+			KEY period_end (period_end)
+		) {$charset_collate};";
+		dbDelta( $team_capacity_sql );
+
+		$service_work_items_table = $wpdb->prefix . 'ikon_seo_service_work_items';
+		$service_work_items_sql = "CREATE TABLE {$service_work_items_table} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			assignment_id bigint(20) unsigned NOT NULL,
+			site_id bigint(20) unsigned NOT NULL,
+			owner_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			source_type varchar(40) NOT NULL DEFAULT 'manual',
+			source_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			category varchar(60) NOT NULL DEFAULT 'seo_operations',
+			title varchar(255) NOT NULL,
+			description text DEFAULT NULL,
+			priority varchar(20) NOT NULL DEFAULT 'normal',
+			units int(10) unsigned NOT NULL DEFAULT 1,
+			status varchar(30) NOT NULL DEFAULT 'planned',
+			due_at datetime DEFAULT NULL,
+			first_action_at datetime DEFAULT NULL,
+			completed_at datetime DEFAULT NULL,
+			created_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			created_at datetime NOT NULL,
+			updated_at datetime NOT NULL,
+			PRIMARY KEY  (id),
+			KEY assignment_status (assignment_id,status),
+			KEY owner_status (owner_id,status),
+			KEY site_due (site_id,due_at),
+			KEY source_ref (source_type,source_id)
+		) {$charset_collate};";
+		dbDelta( $service_work_items_sql );
+
+		$client_reports_table = $wpdb->prefix . 'ikon_seo_client_reports';
+		$client_reports_sql = "CREATE TABLE {$client_reports_table} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			assignment_id bigint(20) unsigned NOT NULL,
+			site_id bigint(20) unsigned NOT NULL,
+			period_start date NOT NULL,
+			period_end date NOT NULL,
+			status varchar(30) NOT NULL DEFAULT 'draft',
+			report_json longtext NOT NULL,
+			evidence_fingerprint char(64) NOT NULL,
+			prepared_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			approved_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			approved_at datetime DEFAULT NULL,
+			delivered_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			delivered_at datetime DEFAULT NULL,
+			delivery_method varchar(40) NOT NULL DEFAULT '',
+			decision_notes text DEFAULT NULL,
+			created_at datetime NOT NULL,
+			updated_at datetime NOT NULL,
+			PRIMARY KEY  (id),
+			UNIQUE KEY assignment_period_fingerprint (assignment_id,period_start,period_end,evidence_fingerprint),
+			KEY site_status (site_id,status),
+			KEY period_end (period_end),
+			KEY status_updated (status,updated_at)
+		) {$charset_collate};";
+		dbDelta( $client_reports_sql );
+
+		$service_events_table = $wpdb->prefix . 'ikon_seo_service_events';
+		$service_events_sql = "CREATE TABLE {$service_events_table} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			action varchar(60) NOT NULL,
+			status varchar(30) NOT NULL DEFAULT 'completed',
+			message text NOT NULL,
+			details_json longtext DEFAULT NULL,
+			user_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			created_at datetime NOT NULL,
+			PRIMARY KEY  (id),
+			KEY action_status (action,status),
+			KEY created_at (created_at)
+		) {$charset_collate};";
+		dbDelta( $service_events_sql );
+
+		$command_risks_table = $wpdb->prefix . 'ikon_seo_command_risks';
+		$command_risks_sql = "CREATE TABLE {$command_risks_table} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			site_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			risk_key char(64) NOT NULL,
+			category varchar(60) NOT NULL DEFAULT 'operations',
+			severity varchar(20) NOT NULL DEFAULT 'medium',
+			title varchar(255) NOT NULL,
+			evidence_json longtext DEFAULT NULL,
+			owner_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			due_at datetime DEFAULT NULL,
+			recommended_action text DEFAULT NULL,
+			status varchar(20) NOT NULL DEFAULT 'open',
+			source varchar(60) NOT NULL DEFAULT 'executive',
+			first_seen_at datetime NOT NULL,
+			last_seen_at datetime NOT NULL,
+			resolution_notes text DEFAULT NULL,
+			resolved_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			resolved_at datetime DEFAULT NULL,
+			created_at datetime NOT NULL,
+			updated_at datetime NOT NULL,
+			PRIMARY KEY  (id),
+			UNIQUE KEY risk_key (risk_key),
+			KEY site_status (site_id,status),
+			KEY severity_status (severity,status),
+			KEY owner_status (owner_id,status),
+			KEY due_at (due_at)
+		) {$charset_collate};";
+		dbDelta( $command_risks_sql );
+
+		$command_notifications_table = $wpdb->prefix . 'ikon_seo_command_notifications';
+		$command_notifications_sql = "CREATE TABLE {$command_notifications_table} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			site_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			notification_key char(64) NOT NULL,
+			notification_type varchar(60) NOT NULL DEFAULT 'risk',
+			severity varchar(20) NOT NULL DEFAULT 'medium',
+			title varchar(255) NOT NULL,
+			summary text DEFAULT NULL,
+			status varchar(20) NOT NULL DEFAULT 'unread',
+			source_ref varchar(255) NOT NULL DEFAULT '',
+			acknowledged_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			acknowledged_at datetime DEFAULT NULL,
+			created_at datetime NOT NULL,
+			updated_at datetime NOT NULL,
+			PRIMARY KEY  (id),
+			UNIQUE KEY notification_key (notification_key),
+			KEY site_status (site_id,status),
+			KEY severity_status (severity,status),
+			KEY updated_at (updated_at)
+		) {$charset_collate};";
+		dbDelta( $command_notifications_sql );
+
+		$client_portal_access_table = $wpdb->prefix . 'ikon_seo_client_portal_access';
+		$client_portal_access_sql = "CREATE TABLE {$client_portal_access_table} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			wp_user_id bigint(20) unsigned NOT NULL,
+			site_id bigint(20) unsigned NOT NULL,
+			label varchar(190) NOT NULL DEFAULT '',
+			status varchar(20) NOT NULL DEFAULT 'pending',
+			permissions_json longtext DEFAULT NULL,
+			access_fingerprint char(64) NOT NULL,
+			expires_at datetime DEFAULT NULL,
+			created_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			activated_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			activated_at datetime DEFAULT NULL,
+			revoked_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			revoked_at datetime DEFAULT NULL,
+			revocation_reason text DEFAULT NULL,
+			created_at datetime NOT NULL,
+			updated_at datetime NOT NULL,
+			PRIMARY KEY  (id),
+			KEY user_status (wp_user_id,status),
+			KEY site_status (site_id,status),
+			KEY expires_at (expires_at),
+			KEY access_fingerprint (access_fingerprint)
+		) {$charset_collate};";
+		dbDelta( $client_portal_access_sql );
+
+		$client_portal_snapshots_table = $wpdb->prefix . 'ikon_seo_client_portal_snapshots';
+		$client_portal_snapshots_sql = "CREATE TABLE {$client_portal_snapshots_table} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			assignment_id bigint(20) unsigned NOT NULL,
+			site_id bigint(20) unsigned NOT NULL,
+			payload_hash char(64) NOT NULL,
+			payload_json longtext NOT NULL,
+			source_updated_at datetime DEFAULT NULL,
+			generated_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			generated_at datetime NOT NULL,
+			expires_at datetime NOT NULL,
+			PRIMARY KEY  (id),
+			KEY assignment_id (assignment_id),
+			KEY site_id (site_id),
+			KEY payload_hash (payload_hash),
+			KEY expires_at (expires_at)
+		) {$charset_collate};";
+		dbDelta( $client_portal_snapshots_sql );
+
+		$client_portal_events_table = $wpdb->prefix . 'ikon_seo_client_portal_events';
+		$client_portal_events_sql = "CREATE TABLE {$client_portal_events_table} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			assignment_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			site_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			wp_user_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			event_type varchar(40) NOT NULL,
+			status varchar(20) NOT NULL DEFAULT 'success',
+			message text DEFAULT NULL,
+			details_json longtext DEFAULT NULL,
+			actor_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			ip_hash char(64) NOT NULL DEFAULT '',
+			user_agent_hash char(64) NOT NULL DEFAULT '',
+			created_at datetime NOT NULL,
+			PRIMARY KEY  (id),
+			KEY assignment_event (assignment_id,event_type),
+			KEY user_event (wp_user_id,event_type),
+			KEY site_event (site_id,event_type),
+			KEY created_at (created_at)
+		) {$charset_collate};";
+		dbDelta( $client_portal_events_sql );
+
+		$license_entitlements_table = $wpdb->prefix . 'ikon_seo_license_entitlements';
+		$license_entitlements_sql = "CREATE TABLE {$license_entitlements_table} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			license_id varchar(190) NOT NULL,
+			organisation varchar(255) NOT NULL DEFAULT '',
+			edition varchar(30) NOT NULL DEFAULT 'core',
+			site_fingerprint char(64) NOT NULL,
+			entitlement_fingerprint char(64) NOT NULL,
+			features_json longtext DEFAULT NULL,
+			environment_scope_json longtext DEFAULT NULL,
+			max_sites int(10) unsigned NOT NULL DEFAULT 1,
+			status varchar(24) NOT NULL DEFAULT 'active',
+			source varchar(30) NOT NULL DEFAULT 'signed_import',
+			signature_state varchar(30) NOT NULL DEFAULT 'unverified',
+			signature longtext DEFAULT NULL,
+			issued_at datetime DEFAULT NULL,
+			not_before datetime DEFAULT NULL,
+			expires_at datetime DEFAULT NULL,
+			revoked_at datetime DEFAULT NULL,
+			revoked_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			revocation_reason text DEFAULT NULL,
+			created_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			created_at datetime NOT NULL,
+			updated_at datetime NOT NULL,
+			PRIMARY KEY  (id),
+			UNIQUE KEY entitlement_fingerprint (entitlement_fingerprint),
+			KEY site_status (site_fingerprint,status),
+			KEY expires_at (expires_at)
+		) {$charset_collate};";
+		dbDelta( $license_entitlements_sql );
+
+		$release_catalog_table = $wpdb->prefix . 'ikon_seo_release_catalog';
+		$release_catalog_sql = "CREATE TABLE {$release_catalog_table} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			release_key varchar(190) NOT NULL,
+			version varchar(40) NOT NULL,
+			database_version varchar(20) NOT NULL,
+			channel varchar(20) NOT NULL DEFAULT 'stable',
+			environment varchar(20) NOT NULL DEFAULT 'production',
+			status varchar(24) NOT NULL DEFAULT 'available',
+			package_sha256 char(64) NOT NULL,
+			manifest_sha256 char(64) NOT NULL,
+			release_fingerprint char(64) NOT NULL,
+			metadata_json longtext NOT NULL,
+			source varchar(30) NOT NULL DEFAULT 'signed_import',
+			signature_state varchar(30) NOT NULL DEFAULT 'unverified',
+			created_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			created_at datetime NOT NULL,
+			updated_at datetime NOT NULL,
+			PRIMARY KEY  (id),
+			UNIQUE KEY release_fingerprint (release_fingerprint),
+			KEY version_channel (version,channel),
+			KEY status (status)
+		) {$charset_collate};";
+		dbDelta( $release_catalog_sql );
+
+		$deployment_plans_table = $wpdb->prefix . 'ikon_seo_deployment_plans';
+		$deployment_plans_sql = "CREATE TABLE {$deployment_plans_table} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			release_id bigint(20) unsigned NOT NULL,
+			status varchar(40) NOT NULL DEFAULT 'prepared',
+			environment varchar(20) NOT NULL DEFAULT 'production',
+			channel varchar(20) NOT NULL DEFAULT 'stable',
+			from_version varchar(40) NOT NULL,
+			target_version varchar(40) NOT NULL,
+			target_database_version varchar(20) NOT NULL,
+			preflight_fingerprint char(64) NOT NULL,
+			preflight_json longtext NOT NULL,
+			recovery_archive_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			prepared_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			prepared_at datetime NOT NULL,
+			approved_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			approved_at datetime DEFAULT NULL,
+			approval_notes text DEFAULT NULL,
+			deployed_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			deployed_at datetime DEFAULT NULL,
+			deployment_notes text DEFAULT NULL,
+			verified_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			verified_at datetime DEFAULT NULL,
+			verification_json longtext DEFAULT NULL,
+			closed_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			closed_at datetime DEFAULT NULL,
+			closure_notes text DEFAULT NULL,
+			notes text DEFAULT NULL,
+			created_at datetime NOT NULL,
+			updated_at datetime NOT NULL,
+			PRIMARY KEY  (id),
+			KEY release_status (release_id,status),
+			KEY target_version (target_version),
+			KEY prepared_at (prepared_at)
+		) {$charset_collate};";
+		dbDelta( $deployment_plans_sql );
+
+		$deployment_events_table = $wpdb->prefix . 'ikon_seo_deployment_events';
+		$deployment_events_sql = "CREATE TABLE {$deployment_events_table} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			deployment_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			event_type varchar(50) NOT NULL,
+			status varchar(24) NOT NULL DEFAULT 'completed',
+			message text DEFAULT NULL,
+			details_json longtext DEFAULT NULL,
+			actor_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			created_at datetime NOT NULL,
+			PRIMARY KEY  (id),
+			KEY deployment_event (deployment_id,event_type),
+			KEY created_at (created_at)
+		) {$charset_collate};";
+		dbDelta( $deployment_events_sql );
+
+		$support_contracts_table = $wpdb->prefix . 'ikon_seo_support_contracts';
+		$support_contracts_sql = "CREATE TABLE {$support_contracts_table} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			contract_key varchar(64) NOT NULL,
+			version varchar(30) NOT NULL,
+			status varchar(24) NOT NULL DEFAULT 'draft',
+			contract_json longtext NOT NULL,
+			fingerprint char(64) NOT NULL,
+			created_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			approved_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			approved_at datetime DEFAULT NULL,
+			created_at datetime NOT NULL,
+			updated_at datetime NOT NULL,
+			PRIMARY KEY  (id),
+			KEY contract_status (contract_key,status),
+			KEY version (version),
+			KEY fingerprint (fingerprint)
+		) {$charset_collate};";
+		dbDelta( $support_contracts_sql );
+
+		$production_certifications_table = $wpdb->prefix . 'ikon_seo_production_certifications';
+		$production_certifications_sql = "CREATE TABLE {$production_certifications_table} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			certification_key char(64) NOT NULL,
+			contract_id bigint(20) unsigned NOT NULL,
+			release_version varchar(30) NOT NULL,
+			database_version varchar(20) NOT NULL,
+			environment varchar(24) NOT NULL DEFAULT 'production',
+			status varchar(24) NOT NULL DEFAULT 'draft',
+			score smallint(5) unsigned NOT NULL DEFAULT 0,
+			blocks_json longtext DEFAULT NULL,
+			warnings_json longtext DEFAULT NULL,
+			evidence_fingerprint char(64) NOT NULL DEFAULT '',
+			prepared_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			approved_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			approved_at datetime DEFAULT NULL,
+			created_at datetime NOT NULL,
+			updated_at datetime NOT NULL,
+			PRIMARY KEY  (id),
+			UNIQUE KEY certification_key (certification_key),
+			KEY contract_status (contract_id,status),
+			KEY release_environment (release_version,environment),
+			KEY updated_at (updated_at)
+		) {$charset_collate};";
+		dbDelta( $production_certifications_sql );
+
+		$certification_checks_table = $wpdb->prefix . 'ikon_seo_certification_checks';
+		$certification_checks_sql = "CREATE TABLE {$certification_checks_table} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			certification_id bigint(20) unsigned NOT NULL,
+			check_key varchar(64) NOT NULL,
+			critical tinyint(1) unsigned NOT NULL DEFAULT 0,
+			status varchar(20) NOT NULL DEFAULT 'pending',
+			evidence longtext DEFAULT NULL,
+			evidence_hash char(64) NOT NULL DEFAULT '',
+			notes text DEFAULT NULL,
+			recorded_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			observed_at datetime DEFAULT NULL,
+			created_at datetime NOT NULL,
+			updated_at datetime NOT NULL,
+			PRIMARY KEY  (id),
+			UNIQUE KEY certification_check (certification_id,check_key),
+			KEY certification_status (certification_id,status),
+			KEY critical (critical)
+		) {$charset_collate};";
+		dbDelta( $certification_checks_sql );
+
+		$rollout_waves_table = $wpdb->prefix . 'ikon_seo_rollout_waves';
+		$rollout_waves_sql = "CREATE TABLE {$rollout_waves_table} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			rollout_key char(64) NOT NULL,
+			certification_id bigint(20) unsigned NOT NULL,
+			label varchar(255) NOT NULL,
+			environment varchar(24) NOT NULL DEFAULT 'production',
+			channel varchar(24) NOT NULL DEFAULT 'stable',
+			status varchar(24) NOT NULL DEFAULT 'draft',
+			site_ids_json longtext NOT NULL,
+			results_json longtext NOT NULL,
+			prepared_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			approved_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			approved_at datetime DEFAULT NULL,
+			closed_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			closed_at datetime DEFAULT NULL,
+			created_at datetime NOT NULL,
+			updated_at datetime NOT NULL,
+			PRIMARY KEY  (id),
+			UNIQUE KEY rollout_key (rollout_key),
+			KEY certification_status (certification_id,status),
+			KEY updated_at (updated_at)
+		) {$charset_collate};";
+		dbDelta( $rollout_waves_sql );
+
+		$certification_events_table = $wpdb->prefix . 'ikon_seo_certification_events';
+		$certification_events_sql = "CREATE TABLE {$certification_events_table} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			event_type varchar(50) NOT NULL,
+			status varchar(24) NOT NULL DEFAULT 'completed',
+			contract_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			certification_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			message text DEFAULT NULL,
+			details_json longtext DEFAULT NULL,
+			created_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			created_at datetime NOT NULL,
+			PRIMARY KEY  (id),
+			KEY contract_event (contract_id,event_type),
+			KEY certification_event (certification_id,event_type),
+			KEY created_at (created_at)
+		) {$charset_collate};";
+		dbDelta( $certification_events_sql );
+
+		$staging_runs_table = $wpdb->prefix . 'ikon_seo_staging_runs';
+		$staging_runs_sql = "CREATE TABLE {$staging_runs_table} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			run_uuid varchar(64) NOT NULL,
+			environment varchar(24) NOT NULL DEFAULT 'staging',
+			status varchar(24) NOT NULL DEFAULT 'running',
+			plugin_version varchar(30) NOT NULL,
+			database_version varchar(20) NOT NULL,
+			wordpress_version varchar(30) NOT NULL DEFAULT '',
+			php_version varchar(30) NOT NULL DEFAULT '',
+			site_fingerprint char(64) NOT NULL,
+			evidence_fingerprint char(64) NOT NULL DEFAULT '',
+			score smallint(5) unsigned NOT NULL DEFAULT 0,
+			blocks_json longtext DEFAULT NULL,
+			warnings_json longtext DEFAULT NULL,
+			prepared_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			approved_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			approved_at datetime DEFAULT NULL,
+			created_at datetime NOT NULL,
+			updated_at datetime NOT NULL,
+			PRIMARY KEY  (id),
+			UNIQUE KEY run_uuid (run_uuid),
+			KEY environment_status (environment,status),
+			KEY evidence_fingerprint (evidence_fingerprint),
+			KEY updated_at (updated_at)
+		) {$charset_collate};";
+		dbDelta( $staging_runs_sql );
+
+		$staging_checks_table = $wpdb->prefix . 'ikon_seo_staging_checks';
+		$staging_checks_sql = "CREATE TABLE {$staging_checks_table} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			run_id bigint(20) unsigned NOT NULL,
+			check_key varchar(64) NOT NULL,
+			label varchar(255) NOT NULL,
+			category varchar(40) NOT NULL DEFAULT 'general',
+			critical tinyint(1) unsigned NOT NULL DEFAULT 0,
+			status varchar(20) NOT NULL DEFAULT 'pending',
+			message text DEFAULT NULL,
+			evidence_json longtext DEFAULT NULL,
+			evidence_hash char(64) NOT NULL DEFAULT '',
+			observed_at datetime DEFAULT NULL,
+			updated_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			created_at datetime NOT NULL,
+			updated_at datetime NOT NULL,
+			PRIMARY KEY  (id),
+			UNIQUE KEY run_check (run_id,check_key),
+			KEY run_status (run_id,status),
+			KEY category (category),
+			KEY critical (critical)
+		) {$charset_collate};";
+		dbDelta( $staging_checks_sql );
+
+		$staging_events_table = $wpdb->prefix . 'ikon_seo_staging_events';
+		$staging_events_sql = "CREATE TABLE {$staging_events_table} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			event_type varchar(50) NOT NULL,
+			status varchar(24) NOT NULL DEFAULT 'completed',
+			run_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			message text DEFAULT NULL,
+			details_json longtext DEFAULT NULL,
+			created_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			created_at datetime NOT NULL,
+			PRIMARY KEY  (id),
+			KEY run_event (run_id,event_type),
+			KEY created_at (created_at)
+		) {$charset_collate};";
+		dbDelta( $staging_events_sql );
 
 
 		$recommendations_table = $wpdb->prefix . 'ikon_seo_recommendations';
@@ -1458,6 +2565,67 @@ Begin checkout",
 			KEY created_at (created_at)
 		) {$charset_collate};";
 		dbDelta( $system_health_sql );
+
+		$release_integrity_table = $wpdb->prefix . 'ikon_seo_release_integrity_runs';
+		$release_integrity_sql = "CREATE TABLE {$release_integrity_table} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			run_hash char(64) NOT NULL,
+			release_version varchar(30) NOT NULL,
+			manifest_hash char(64) NOT NULL DEFAULT '',
+			signature_state varchar(30) NOT NULL DEFAULT 'unavailable',
+			file_state varchar(30) NOT NULL DEFAULT 'unavailable',
+			overall_status varchar(30) NOT NULL DEFAULT 'review',
+			changed_files_json longtext DEFAULT NULL,
+			source varchar(40) NOT NULL DEFAULT 'manual',
+			created_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			created_at datetime NOT NULL,
+			PRIMARY KEY  (id),
+			UNIQUE KEY run_hash (run_hash),
+			KEY overall_status (overall_status),
+			KEY created_at (created_at)
+		) {$charset_collate};";
+		dbDelta( $release_integrity_sql );
+
+		$recovery_archives_table = $wpdb->prefix . 'ikon_seo_recovery_archives';
+		$recovery_archives_sql = "CREATE TABLE {$recovery_archives_table} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			archive_uuid varchar(40) NOT NULL,
+			archive_type varchar(30) NOT NULL DEFAULT 'configuration',
+			label varchar(255) NOT NULL DEFAULT '',
+			plugin_version varchar(30) NOT NULL,
+			db_version varchar(30) NOT NULL,
+			payload_hash char(64) NOT NULL,
+			payload_json longtext NOT NULL,
+			status varchar(30) NOT NULL DEFAULT 'active',
+			created_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			created_at datetime NOT NULL,
+			restored_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			restored_at datetime DEFAULT NULL,
+			PRIMARY KEY  (id),
+			UNIQUE KEY archive_uuid (archive_uuid),
+			KEY archive_type (archive_type),
+			KEY status (status),
+			KEY created_at (created_at)
+		) {$charset_collate};";
+		dbDelta( $recovery_archives_sql );
+
+		$upgrade_journal_table = $wpdb->prefix . 'ikon_seo_upgrade_journal';
+		$upgrade_journal_sql = "CREATE TABLE {$upgrade_journal_table} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			journal_uuid varchar(40) NOT NULL,
+			from_plugin_version varchar(30) NOT NULL DEFAULT '',
+			to_plugin_version varchar(30) NOT NULL DEFAULT '',
+			from_db_version varchar(30) NOT NULL DEFAULT '',
+			to_db_version varchar(30) NOT NULL DEFAULT '',
+			status varchar(30) NOT NULL DEFAULT 'completed',
+			details_json longtext DEFAULT NULL,
+			created_at datetime NOT NULL,
+			PRIMARY KEY  (id),
+			UNIQUE KEY journal_uuid (journal_uuid),
+			KEY status (status),
+			KEY created_at (created_at)
+		) {$charset_collate};";
+		dbDelta( $upgrade_journal_sql );
 
 
 		$schema_audits_table = $wpdb->prefix . 'ikon_seo_schema_audits';
@@ -1826,6 +2994,83 @@ Begin checkout",
 		) {$charset_collate};";
 		dbDelta( $portfolio_quality_imports_sql );
 
+
+		$keyword_evidence_table = $wpdb->prefix . 'ikon_seo_keyword_evidence';
+		$keyword_evidence_sql = "CREATE TABLE {$keyword_evidence_table} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			evidence_hash char(64) NOT NULL,
+			source varchar(30) NOT NULL DEFAULT 'manual',
+			keyword varchar(255) NOT NULL,
+			target_url text DEFAULT NULL,
+			competitor_domain varchar(190) NOT NULL DEFAULT '',
+			country varchar(8) NOT NULL DEFAULT '',
+			device varchar(20) NOT NULL DEFAULT '',
+			intent varchar(40) NOT NULL DEFAULT '',
+			search_volume decimal(14,2) NOT NULL DEFAULT 0,
+			keyword_difficulty decimal(7,2) NOT NULL DEFAULT 0,
+			position decimal(10,2) NOT NULL DEFAULT 0,
+			previous_position decimal(10,2) NOT NULL DEFAULT 0,
+			estimated_traffic decimal(14,2) NOT NULL DEFAULT 0,
+			cpc decimal(12,4) NOT NULL DEFAULT 0,
+			serp_features_json longtext DEFAULT NULL,
+			evidence_notes text DEFAULT NULL,
+			observed_at date NOT NULL,
+			status varchar(20) NOT NULL DEFAULT 'active',
+			created_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			created_at datetime NOT NULL,
+			updated_at datetime NOT NULL,
+			PRIMARY KEY  (id),
+			UNIQUE KEY evidence_hash (evidence_hash),
+			KEY source_status (source,status),
+			KEY keyword (keyword(100)),
+			KEY competitor_domain (competitor_domain),
+			KEY observed_at (observed_at)
+		) {$charset_collate};";
+		dbDelta( $keyword_evidence_sql );
+
+		$opportunities_table = $wpdb->prefix . 'ikon_seo_opportunities';
+		$opportunities_sql = "CREATE TABLE {$opportunities_table} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			opportunity_key char(64) NOT NULL,
+			type varchar(60) NOT NULL,
+			category varchar(50) NOT NULL DEFAULT 'other',
+			primary_source varchar(40) NOT NULL DEFAULT 'unknown',
+			title varchar(255) NOT NULL,
+			summary text NOT NULL,
+			target_url text DEFAULT NULL,
+			post_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			keyword varchar(255) NOT NULL DEFAULT '',
+			intent varchar(40) NOT NULL DEFAULT '',
+			priority smallint(5) unsigned NOT NULL DEFAULT 50,
+			impact_score smallint(5) unsigned NOT NULL DEFAULT 50,
+			confidence varchar(20) NOT NULL DEFAULT 'medium',
+			confidence_score smallint(5) unsigned NOT NULL DEFAULT 50,
+			effort varchar(20) NOT NULL DEFAULT 'medium',
+			effort_score smallint(5) unsigned NOT NULL DEFAULT 50,
+			risk varchar(20) NOT NULL DEFAULT 'low',
+			risk_score smallint(5) unsigned NOT NULL DEFAULT 20,
+			freshness_score smallint(5) unsigned NOT NULL DEFAULT 50,
+			evidence_json longtext DEFAULT NULL,
+			actions_json longtext DEFAULT NULL,
+			status varchar(20) NOT NULL DEFAULT 'open',
+			is_current tinyint(1) unsigned NOT NULL DEFAULT 1,
+			first_seen_at datetime NOT NULL,
+			last_seen_at datetime NOT NULL,
+			review_notes text DEFAULT NULL,
+			reviewed_by bigint(20) unsigned NOT NULL DEFAULT 0,
+			reviewed_at datetime DEFAULT NULL,
+			created_at datetime NOT NULL,
+			updated_at datetime NOT NULL,
+			PRIMARY KEY  (id),
+			UNIQUE KEY opportunity_key (opportunity_key),
+			KEY current_priority (is_current,priority),
+			KEY category_status (category,status),
+			KEY source_status (primary_source,status),
+			KEY post_id (post_id),
+			KEY last_seen_at (last_seen_at)
+		) {$charset_collate};";
+		dbDelta( $opportunities_sql );
+
 		$history_table = $wpdb->prefix . 'ikon_seo_workspace_history';
 		$history_sql   = "CREATE TABLE {$history_table} (
 			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -1855,10 +3100,11 @@ Begin checkout",
 			add_option( self::OPTION_KEY, $defaults, '', false );
 		} else {
 			$settings                      = get_option( self::OPTION_KEY, array() );
-			$settings['component_version'] = '25.0';
+			$settings['component_version'] = '40.0';
 			update_option( self::OPTION_KEY, $settings, false );
 		}
 
+		if ( ! get_option( 'ikon_seo_installation_id', '' ) ) { add_option( 'ikon_seo_installation_id', wp_generate_uuid4(), '', false ); }
 		Ikon_SEO_Agency::bootstrap_owner();
 		Ikon_SEO_Profile::migrate_legacy_settings();
 		if ( ! wp_next_scheduled( 'ikon_seo_daily_monitor' ) ) {
@@ -1869,6 +3115,9 @@ Begin checkout",
 		}
 		if ( ! wp_next_scheduled( Ikon_SEO_Search_Intelligence::CRON_HOOK ) ) {
 			wp_schedule_event( time() + 6 * HOUR_IN_SECONDS, 'weekly', Ikon_SEO_Search_Intelligence::CRON_HOOK );
+		}
+		if ( ! wp_next_scheduled( Ikon_SEO_Opportunity_Engine::CRON_HOOK ) ) {
+			wp_schedule_event( strtotime( 'next monday 11:30 UTC' ), 'weekly', Ikon_SEO_Opportunity_Engine::CRON_HOOK );
 		}
 		if ( ! wp_next_scheduled( Ikon_SEO_Technical_Intelligence::CRON_HOOK ) ) {
 			wp_schedule_event( time() + 8 * HOUR_IN_SECONDS, 'weekly', Ikon_SEO_Technical_Intelligence::CRON_HOOK );
@@ -1915,13 +3164,52 @@ Begin checkout",
 		if ( ! wp_next_scheduled( Ikon_SEO_Portfolio_Quality_Guard::CRON_HOOK ) ) {
 			wp_schedule_event( strtotime( 'next sunday 09:30 UTC' ), 'weekly', Ikon_SEO_Portfolio_Quality_Guard::CRON_HOOK );
 		}
+		if ( ! get_option( Ikon_SEO_Auto_Discovery::OPTION_KEY, false ) && ! wp_next_scheduled( Ikon_SEO_Auto_Discovery::CRON_HOOK ) ) {
+			wp_schedule_single_event( time() + MINUTE_IN_SECONDS, Ikon_SEO_Auto_Discovery::CRON_HOOK );
+		}
+		if ( ! wp_next_scheduled( Ikon_SEO_Publishing_Readiness::CRON_HOOK ) ) {
+			wp_schedule_event( time() + 3 * HOUR_IN_SECONDS, 'daily', Ikon_SEO_Publishing_Readiness::CRON_HOOK );
+		}
+		if ( ! wp_next_scheduled( Ikon_SEO_Search_Impact::CRON_HOOK ) ) {
+			wp_schedule_event( time() + 4 * HOUR_IN_SECONDS, 'daily', Ikon_SEO_Search_Impact::CRON_HOOK );
+		}
+		if ( ! wp_next_scheduled( Ikon_SEO_Pattern_Library::CRON_HOOK ) ) {
+			wp_schedule_event( strtotime( 'next monday 13:00 UTC' ), 'weekly', Ikon_SEO_Pattern_Library::CRON_HOOK );
+		}
+		if ( ! wp_next_scheduled( Ikon_SEO_Portfolio_Governance::CRON_HOOK ) ) {
+			wp_schedule_event( time() + 2 * HOUR_IN_SECONDS, 'hourly', Ikon_SEO_Portfolio_Governance::CRON_HOOK );
+		}
+		if ( ! wp_next_scheduled( Ikon_SEO_Agency_Service_Levels::CRON_HOOK ) ) {
+			wp_schedule_event( time() + 5 * HOUR_IN_SECONDS, 'daily', Ikon_SEO_Agency_Service_Levels::CRON_HOOK );
+		}
+		if ( ! wp_next_scheduled( Ikon_SEO_Executive_Command_Centre::CRON_HOOK ) ) {
+			wp_schedule_event( time() + 90 * MINUTE_IN_SECONDS, 'hourly', Ikon_SEO_Executive_Command_Centre::CRON_HOOK );
+		}
+		if ( ! wp_next_scheduled( Ikon_SEO_Platform_Hardening::CRON_HOOK ) ) {
+			wp_schedule_event( time() + 6 * HOUR_IN_SECONDS, 'daily', Ikon_SEO_Platform_Hardening::CRON_HOOK );
+		}
+		if ( ! wp_next_scheduled( Ikon_SEO_Client_Portal::CRON_HOOK ) ) {
+			wp_schedule_event( time() + 7 * HOUR_IN_SECONDS, 'daily', Ikon_SEO_Client_Portal::CRON_HOOK );
+		}
+		if ( ! wp_next_scheduled( Ikon_SEO_Deployment_Control::CRON_HOOK ) ) {
+			wp_schedule_event( time() + 8 * HOUR_IN_SECONDS, 'daily', Ikon_SEO_Deployment_Control::CRON_HOOK );
+		}
+		if ( ! wp_next_scheduled( Ikon_SEO_Production_Certification::CRON_HOOK ) ) {
+			wp_schedule_event( time() + 9 * HOUR_IN_SECONDS, 'daily', Ikon_SEO_Production_Certification::CRON_HOOK );
+		}
+		if ( ! wp_next_scheduled( Ikon_SEO_Staging_Validation::CRON_HOOK ) ) {
+			wp_schedule_event( time() + 10 * HOUR_IN_SECONDS, 'daily', Ikon_SEO_Staging_Validation::CRON_HOOK );
+		}
 		update_option( 'ikon_seo_db_version', self::DB_VERSION, false );
+		update_option( 'ikon_seo_plugin_version', IKON_SEO_VERSION, false );
+		Ikon_SEO_Platform_Hardening::record_upgrade_journal( $previous_plugin_version, IKON_SEO_VERSION, $previous_db_version, self::DB_VERSION, $previous_plugin_version ? ( $previous_plugin_version === IKON_SEO_VERSION && $previous_db_version === self::DB_VERSION ? 'reactivated' : 'upgraded' ) : 'installed', array( 'automatic_rollback' => false, 'migration_completed' => true ) );
 	}
 
 	public static function deactivate() {
 		wp_clear_scheduled_hook( 'ikon_seo_daily_monitor' );
 		wp_clear_scheduled_hook( 'ikon_seo_evidence_crawl' );
 		wp_clear_scheduled_hook( Ikon_SEO_Search_Intelligence::CRON_HOOK );
+		wp_clear_scheduled_hook( Ikon_SEO_Opportunity_Engine::CRON_HOOK );
 		wp_clear_scheduled_hook( Ikon_SEO_Technical_Intelligence::CRON_HOOK );
 		wp_clear_scheduled_hook( Ikon_SEO_Automation::RUNNER_HOOK );
 		wp_clear_scheduled_hook( Ikon_SEO_Automation::DAILY_HOOK );
@@ -1937,17 +3225,29 @@ Begin checkout",
 		wp_clear_scheduled_hook( Ikon_SEO_Experiments_Claims_Revenue::CRON_HOOK );
 		wp_clear_scheduled_hook( Ikon_SEO_International_Server_Intelligence::CRON_HOOK );
 		wp_clear_scheduled_hook( Ikon_SEO_Portfolio_Quality_Guard::CRON_HOOK );
+		wp_clear_scheduled_hook( Ikon_SEO_Auto_Discovery::CRON_HOOK );
+		wp_clear_scheduled_hook( Ikon_SEO_Publishing_Readiness::CRON_HOOK );
+		wp_clear_scheduled_hook( Ikon_SEO_Search_Impact::CRON_HOOK );
+		wp_clear_scheduled_hook( Ikon_SEO_Pattern_Library::CRON_HOOK );
+		wp_clear_scheduled_hook( Ikon_SEO_Portfolio_Governance::CRON_HOOK );
+		wp_clear_scheduled_hook( Ikon_SEO_Agency_Service_Levels::CRON_HOOK );
+		wp_clear_scheduled_hook( Ikon_SEO_Executive_Command_Centre::CRON_HOOK );
+		wp_clear_scheduled_hook( Ikon_SEO_Platform_Hardening::CRON_HOOK );
+		wp_clear_scheduled_hook( Ikon_SEO_Client_Portal::CRON_HOOK );
+		wp_clear_scheduled_hook( Ikon_SEO_Deployment_Control::CRON_HOOK );
+		wp_clear_scheduled_hook( Ikon_SEO_Production_Certification::CRON_HOOK );
+		wp_clear_scheduled_hook( Ikon_SEO_Staging_Validation::CRON_HOOK );
 	}
 
 	public static function maybe_upgrade() {
-		if ( self::DB_VERSION !== get_option( 'ikon_seo_db_version' ) ) {
+		if ( self::DB_VERSION !== get_option( 'ikon_seo_db_version' ) || IKON_SEO_VERSION !== get_option( 'ikon_seo_plugin_version' ) ) {
 			self::activate();
 			Ikon_SEO_Profile::migrate_legacy_settings();
 		}
 
 		$settings = get_option( self::OPTION_KEY, array() );
-		if ( is_array( $settings ) && '25.0' !== (string) ( $settings['component_version'] ?? '' ) ) {
-			$settings['component_version'] = '25.0';
+		if ( is_array( $settings ) && '40.0' !== (string) ( $settings['component_version'] ?? '' ) ) {
+			$settings['component_version'] = '40.0';
 			update_option( self::OPTION_KEY, $settings, false );
 		}
 	}

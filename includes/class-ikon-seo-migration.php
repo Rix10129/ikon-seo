@@ -105,6 +105,7 @@ class Ikon_SEO_Migration {
 		$settings['business_url']     = $report['new_url'] . '/';
 		$settings['profile_home_url'] = $report['new_url'] . '/';
 		$settings['token_hash']       = '';
+		$settings['connection_owner_user_id'] = 0;
 		$settings['token_hint']       = '';
 		$settings['connection_verified_at'] = '';
 		$settings['connection_last_seen_at']= '';

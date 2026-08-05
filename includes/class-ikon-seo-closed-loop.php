@@ -22,6 +22,7 @@ final class Ikon_SEO_Closed_Loop {
 	private $indexation;
 	private $competitor_content;
 	private $authority;
+	private $opportunity_engine;
 	private $publisher;
 	private $local_growth;
 	private $visibility_brand;
@@ -40,6 +41,7 @@ final class Ikon_SEO_Closed_Loop {
 		Ikon_SEO_Indexation_Intelligence $indexation,
 		Ikon_SEO_Competitor_Content_Intelligence $competitor_content,
 		Ikon_SEO_Authority_Intelligence $authority,
+		Ikon_SEO_Opportunity_Engine $opportunity_engine,
 		Ikon_SEO_Publisher_Intelligence $publisher,
 		Ikon_SEO_Local_Growth $local_growth,
 		Ikon_SEO_Visibility_Brand_Intelligence $visibility_brand,
@@ -57,6 +59,7 @@ final class Ikon_SEO_Closed_Loop {
 		$this->indexation          = $indexation;
 		$this->competitor_content  = $competitor_content;
 		$this->authority           = $authority;
+		$this->opportunity_engine  = $opportunity_engine;
 		$this->publisher           = $publisher;
 		$this->local_growth        = $local_growth;
 		$this->visibility_brand    = $visibility_brand;
@@ -226,6 +229,13 @@ final class Ikon_SEO_Closed_Loop {
 			$errors[] = $authority->get_error_message();
 		} else {
 			$items = array_merge( $items, $this->from_module_recommendations( (array) $authority, 'authority', 64 ) );
+		}
+
+		$opportunities = $this->opportunity_engine->report( array( 'limit' => 100, 'status' => 'planned' ) );
+		if ( is_wp_error( $opportunities ) ) {
+			$errors[] = $opportunities->get_error_message();
+		} else {
+			$items = array_merge( $items, $this->from_planned_opportunities( (array) $opportunities, $items ) );
 		}
 
 		$items = $this->deduplicate_plan( $items );
@@ -660,6 +670,59 @@ final class Ikon_SEO_Closed_Loop {
 		}
 		foreach ( array_slice( (array) ( $report['cannibalisation'] ?? array() ), 0, 50 ) as $row ) {
 			$items[] = $this->simple_item( 'search_intelligence', 'ranking', sanitize_key( $row['classification'] ?? 'page_overlap' ), 'Review competing pages for “' . sanitize_text_field( $row['query'] ?? '' ) . '”', sanitize_text_field( $row['recommended_action'] ?? '' ), $row, 'high' === ( $row['confidence'] ?? '' ) ? 84 : 68, sanitize_key( $row['confidence'] ?? 'medium' ), '' );
+		}
+		return $items;
+	}
+
+	private function from_planned_opportunities( array $report, array $existing_items ) {
+		$items = array();
+		$existing_signatures = array();
+		foreach ( $existing_items as $existing ) {
+			$url = $this->normal_url( $existing['target_url'] ?? '' );
+			$post_id = absint( $existing['post_id'] ?? 0 );
+			$category = sanitize_key( $existing['category'] ?? 'opportunity' );
+			if ( $url || $post_id ) {
+				$existing_signatures[ $post_id . '|' . $url . '|' . $category ] = true;
+			}
+		}
+		foreach ( array_slice( (array) ( $report['opportunities'] ?? array() ), 0, 100 ) as $row ) {
+			if ( 'planned' !== sanitize_key( $row['status'] ?? '' ) ) {
+				continue;
+			}
+			$url = esc_url_raw( $row['target_url'] ?? '' );
+			$post_id = absint( $row['post_id'] ?? 0 );
+			$category = sanitize_key( $row['category'] ?? 'opportunity' );
+			$signature = $post_id . '|' . $this->normal_url( $url ) . '|' . $category;
+			if ( ( $url || $post_id ) && isset( $existing_signatures[ $signature ] ) ) {
+				continue;
+			}
+			$actions = (array) ( $row['actions'] ?? array() );
+			$action = sanitize_text_field( $actions[0] ?? 'Review the approved opportunity evidence and define the implementation task.' );
+			$evidence = array(
+				'opportunity_id' => absint( $row['id'] ?? 0 ),
+				'primary_source' => sanitize_key( $row['primary_source'] ?? 'unknown' ),
+				'keyword' => sanitize_text_field( $row['keyword'] ?? '' ),
+				'intent' => sanitize_key( $row['intent'] ?? '' ),
+				'effort' => sanitize_key( $row['effort'] ?? 'medium' ),
+				'risk' => sanitize_key( $row['risk'] ?? 'low' ),
+				'freshness_score' => absint( $row['freshness_score'] ?? 0 ),
+				'summary' => sanitize_textarea_field( $row['summary'] ?? '' ),
+				'supporting_evidence' => (array) ( $row['evidence'] ?? array() ),
+			);
+			$item = $this->simple_item(
+				'opportunity_engine',
+				$category,
+				sanitize_key( $row['type'] ?? 'planned_opportunity' ),
+				sanitize_text_field( $row['title'] ?? 'Planned SEO opportunity' ),
+				$action,
+				$evidence,
+				absint( $row['priority'] ?? 50 ),
+				sanitize_key( $row['confidence'] ?? 'medium' ),
+				$url,
+				$post_id
+			);
+			$item['effort'] = array( 'low' => 2, 'medium' => 3, 'high' => 5 )[ sanitize_key( $row['effort'] ?? 'medium' ) ] ?? 3;
+			$items[] = $item;
 		}
 		return $items;
 	}

@@ -14,6 +14,16 @@ final class Ikon_SEO_Agency {
 			return;
 		}
 
+		/*
+		 * Recovery rule: when the website has exactly one WordPress
+		 * administrator, that administrator must not be locked out of the
+		 * agency controls because an older upgrade missed the user-meta flag.
+		 */
+		if ( self::is_current_user_sole_administrator() ) {
+			update_user_meta( $user_id, self::META_KEY, 1 );
+			return;
+		}
+
 		$users = self::user_ids();
 		if ( ! $users ) {
 			update_user_meta( $user_id, self::META_KEY, 1 );
@@ -26,7 +36,35 @@ final class Ikon_SEO_Agency {
 			return false;
 		}
 
-		return (bool) get_user_meta( $user_id, self::META_KEY, true );
+		if ( (bool) get_user_meta( $user_id, self::META_KEY, true ) ) {
+			return true;
+		}
+
+		if ( self::is_current_user_sole_administrator() ) {
+			update_user_meta( $user_id, self::META_KEY, 1 );
+			return true;
+		}
+
+		return false;
+	}
+
+	private static function is_current_user_sole_administrator() {
+		$user_id = get_current_user_id();
+		if ( ! $user_id || ! current_user_can( 'manage_options' ) ) {
+			return false;
+		}
+
+		$admins = array_map(
+			'absint',
+			get_users(
+				array(
+					'role__in' => array( 'administrator' ),
+					'fields'   => 'ids',
+				)
+			)
+		);
+
+		return 1 === count( $admins ) && (int) $admins[0] === (int) $user_id;
 	}
 
 	public static function user_ids() {
@@ -80,6 +118,12 @@ final class Ikon_SEO_Agency {
 			'seo-health',
 			'diagnostics',
 			'search-intelligence',
+			'opportunity-engine',
+			'content-workbench',
+			'editorial-review',
+			'publishing-readiness',
+			'search-impact',
+			'agency-governance',
 			'content-intelligence',
 			'authority-intelligence',
 			'visibility-brand',

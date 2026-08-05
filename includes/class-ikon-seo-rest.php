@@ -26,6 +26,10 @@ class Ikon_SEO_REST {
 	private $technical;
 	private $indexation;
 	private $production_health;
+	private $platform_hardening;
+	private $deployment_control;
+	private $production_certification;
+	private $staging_validation;
 	private $competitor_content;
 	private $authority;
 	private $strategy;
@@ -39,10 +43,23 @@ class Ikon_SEO_REST {
 	private $visibility_brand;
 	private $closed_loop;
 	private $agency_command;
+	private $portfolio_governance;
+	private $agency_service_levels;
+	private $executive_command;
+	private $client_portal;
 	private $structured_media_governance;
 	private $experiments_claims_revenue;
 	private $international_server;
 	private $portfolio_quality_guard;
+	private $auto_discovery;
+	private $discovery_review;
+	private $guided_launch;
+	private $opportunity_engine;
+	private $content_workbench;
+	private $editorial_review;
+	private $publishing_readiness;
+	private $search_impact;
+	private $pattern_library;
 	private $local;
 	private $gbp;
 	private $logger;
@@ -69,6 +86,10 @@ class Ikon_SEO_REST {
 		Ikon_SEO_Technical_Intelligence $technical,
 		Ikon_SEO_Indexation_Intelligence $indexation,
 		Ikon_SEO_Production_Health $production_health,
+		Ikon_SEO_Platform_Hardening $platform_hardening,
+		Ikon_SEO_Deployment_Control $deployment_control,
+		Ikon_SEO_Production_Certification $production_certification,
+		Ikon_SEO_Staging_Validation $staging_validation,
 		Ikon_SEO_Competitor_Content_Intelligence $competitor_content,
 		Ikon_SEO_Authority_Intelligence $authority,
 		Ikon_SEO_Strategy $strategy,
@@ -82,10 +103,23 @@ class Ikon_SEO_REST {
 		Ikon_SEO_Visibility_Brand_Intelligence $visibility_brand,
 		Ikon_SEO_Closed_Loop $closed_loop,
 		Ikon_SEO_Agency_Command_Centre $agency_command,
+		Ikon_SEO_Portfolio_Governance $portfolio_governance,
+		Ikon_SEO_Agency_Service_Levels $agency_service_levels,
+		Ikon_SEO_Executive_Command_Centre $executive_command,
+		Ikon_SEO_Client_Portal $client_portal,
 		Ikon_SEO_Structured_Media_Governance $structured_media_governance,
 		Ikon_SEO_Experiments_Claims_Revenue $experiments_claims_revenue,
 		Ikon_SEO_International_Server_Intelligence $international_server,
 		Ikon_SEO_Portfolio_Quality_Guard $portfolio_quality_guard,
+		Ikon_SEO_Auto_Discovery $auto_discovery,
+		Ikon_SEO_Discovery_Review $discovery_review,
+		Ikon_SEO_Guided_Launch $guided_launch,
+		Ikon_SEO_Opportunity_Engine $opportunity_engine,
+		Ikon_SEO_Content_Workbench $content_workbench,
+		Ikon_SEO_Editorial_Review $editorial_review,
+		Ikon_SEO_Publishing_Readiness $publishing_readiness,
+		Ikon_SEO_Search_Impact $search_impact,
+		Ikon_SEO_Pattern_Library $pattern_library,
 		Ikon_SEO_Local $local,
 		Ikon_SEO_GBP $gbp,
 		Ikon_SEO_Logger $logger
@@ -111,6 +145,10 @@ class Ikon_SEO_REST {
 		$this->technical      = $technical;
 		$this->indexation     = $indexation;
 		$this->production_health = $production_health;
+		$this->platform_hardening = $platform_hardening;
+		$this->deployment_control = $deployment_control;
+		$this->production_certification = $production_certification;
+		$this->staging_validation = $staging_validation;
 		$this->competitor_content = $competitor_content;
 		$this->authority      = $authority;
 		$this->strategy       = $strategy;
@@ -124,10 +162,23 @@ class Ikon_SEO_REST {
 		$this->visibility_brand = $visibility_brand;
 		$this->closed_loop = $closed_loop;
 		$this->agency_command = $agency_command;
+		$this->portfolio_governance = $portfolio_governance;
+		$this->agency_service_levels = $agency_service_levels;
+		$this->executive_command = $executive_command;
+		$this->client_portal = $client_portal;
 		$this->structured_media_governance = $structured_media_governance;
 		$this->experiments_claims_revenue = $experiments_claims_revenue;
 		$this->international_server = $international_server;
 		$this->portfolio_quality_guard = $portfolio_quality_guard;
+		$this->auto_discovery = $auto_discovery;
+		$this->discovery_review = $discovery_review;
+		$this->guided_launch = $guided_launch;
+		$this->opportunity_engine = $opportunity_engine;
+		$this->content_workbench = $content_workbench;
+		$this->editorial_review = $editorial_review;
+		$this->publishing_readiness = $publishing_readiness;
+		$this->search_impact = $search_impact;
+		$this->pattern_library = $pattern_library;
 		$this->local          = $local;
 		$this->gbp            = $gbp;
 		$this->logger    = $logger;
@@ -140,7 +191,66 @@ class Ikon_SEO_REST {
 		$this->route( '/pair', WP_REST_Server::CREATABLE, 'pair', '__return_true' );
 		$this->route( '/health', WP_REST_Server::READABLE, 'health', array( $this->auth, 'can_read' ) );
 		$this->route( '/agency-snapshot', WP_REST_Server::READABLE, 'agency_snapshot', array( $this->agency_command, 'verify_agent_request' ) );
-		$this->route( '/agency-command-centre', WP_REST_Server::CREATABLE, 'agency_command_sync', array( $this->auth, 'can_draft' ) );
+		$this->route( '/agency-command-centre', WP_REST_Server::CREATABLE, 'agency_command_sync', array( $this->auth, 'can_executive_command' ) );
+		register_rest_route( self::NAMESPACE, '/client-portal', array( array( 'methods' => WP_REST_Server::READABLE, 'callback' => array( $this, 'client_portal_report' ), 'permission_callback' => array( $this->client_portal, 'can_access_request' ) ) ) );
+		register_rest_route( self::NAMESPACE, '/client-portal-admin', array( array( 'methods' => WP_REST_Server::READABLE, 'callback' => array( $this, 'client_portal_admin_report' ), 'permission_callback' => array( $this->auth, 'can_client_portal_admin' ) ), array( 'methods' => WP_REST_Server::CREATABLE, 'callback' => array( $this, 'client_portal_admin_sync' ), 'permission_callback' => array( $this->auth, 'can_client_portal_admin' ) ) ) );
+		register_rest_route(
+			self::NAMESPACE,
+			'/agency-governance-agent',
+			array(
+				array( 'methods' => WP_REST_Server::READABLE, 'callback' => array( $this, 'agency_governance_agent' ), 'permission_callback' => array( $this->portfolio_governance, 'verify_agent_request' ) ),
+				array( 'methods' => WP_REST_Server::CREATABLE, 'callback' => array( $this, 'agency_governance_agent' ), 'permission_callback' => array( $this->portfolio_governance, 'verify_agent_request' ) ),
+			)
+		);
+		register_rest_route(
+			self::NAMESPACE,
+			'/portfolio-governance',
+			array(
+				array( 'methods' => WP_REST_Server::READABLE, 'callback' => array( $this, 'portfolio_governance_report' ), 'permission_callback' => array( $this->auth, 'can_read' ) ),
+				array( 'methods' => WP_REST_Server::CREATABLE, 'callback' => array( $this, 'portfolio_governance_sync' ), 'permission_callback' => array( $this->auth, 'can_portfolio_governance' ) ),
+			)
+		);
+		register_rest_route(
+			self::NAMESPACE,
+			'/platform-hardening',
+			array(
+				array( 'methods' => WP_REST_Server::READABLE, 'callback' => array( $this, 'platform_hardening_report' ), 'permission_callback' => array( $this->auth, 'can_read' ) ),
+				array( 'methods' => WP_REST_Server::CREATABLE, 'callback' => array( $this, 'platform_hardening_sync' ), 'permission_callback' => array( $this->auth, 'can_platform_hardening' ) ),
+			)
+		);
+		register_rest_route(
+			self::NAMESPACE,
+			'/deployment-control',
+			array(
+				array( 'methods' => WP_REST_Server::READABLE, 'callback' => array( $this, 'deployment_control_report' ), 'permission_callback' => array( $this->auth, 'can_read' ) ),
+				array( 'methods' => WP_REST_Server::CREATABLE, 'callback' => array( $this, 'deployment_control_sync' ), 'permission_callback' => array( $this->auth, 'can_deployment_control' ) ),
+			)
+		);
+
+		register_rest_route(
+			self::NAMESPACE,
+			'/production-certification',
+			array(
+				array( 'methods' => WP_REST_Server::READABLE, 'callback' => array( $this, 'production_certification_report' ), 'permission_callback' => array( $this->auth, 'can_read' ) ),
+				array( 'methods' => WP_REST_Server::CREATABLE, 'callback' => array( $this, 'production_certification_sync' ), 'permission_callback' => array( $this->auth, 'can_production_certification' ) ),
+			)
+		);
+		register_rest_route(
+			self::NAMESPACE,
+			'/staging-validation',
+			array(
+				array( 'methods' => WP_REST_Server::READABLE, 'callback' => array( $this, 'staging_validation_report' ), 'permission_callback' => array( $this->auth, 'can_read' ) ),
+				array( 'methods' => WP_REST_Server::CREATABLE, 'callback' => array( $this, 'staging_validation_sync' ), 'permission_callback' => array( $this->auth, 'can_staging_validation' ) ),
+			)
+		);
+		register_rest_route(
+			self::NAMESPACE,
+			'/agency-service-levels',
+			array(
+				array( 'methods' => WP_REST_Server::READABLE, 'callback' => array( $this, 'agency_service_levels_report' ), 'permission_callback' => array( $this->auth, 'can_read' ) ),
+				array( 'methods' => WP_REST_Server::CREATABLE, 'callback' => array( $this, 'agency_service_levels_sync' ), 'permission_callback' => array( $this->auth, 'can_agency_service_levels' ) ),
+			)
+		);
 		$this->route( '/profile', WP_REST_Server::READABLE, 'profile', array( $this->auth, 'can_read' ) );
 		register_rest_route(
 			self::NAMESPACE,
@@ -293,6 +403,163 @@ class Ikon_SEO_REST {
 					'methods' => WP_REST_Server::CREATABLE,
 					'callback' => array( $this, 'international_server_sync' ),
 					'permission_callback' => array( $this->auth, 'can_draft' ),
+				),
+			)
+		);
+
+		register_rest_route(
+			self::NAMESPACE,
+			'/auto-discovery',
+			array(
+				array(
+					'methods' => WP_REST_Server::READABLE,
+					'callback' => array( $this, 'auto_discovery_report' ),
+					'permission_callback' => array( $this->auth, 'can_read' ),
+				),
+				array(
+					'methods' => WP_REST_Server::CREATABLE,
+					'callback' => array( $this, 'auto_discovery_sync' ),
+					'permission_callback' => array( $this->auth, 'can_draft' ),
+				),
+			)
+		);
+
+		register_rest_route(
+			self::NAMESPACE,
+			'/discovery-review',
+			array(
+				array(
+					'methods' => WP_REST_Server::READABLE,
+					'callback' => array( $this, 'discovery_review_report' ),
+					'permission_callback' => array( $this->auth, 'can_read' ),
+				),
+				array(
+					'methods' => WP_REST_Server::CREATABLE,
+					'callback' => array( $this, 'discovery_review_sync' ),
+					'permission_callback' => array( $this->auth, 'can_draft' ),
+				),
+			)
+		);
+
+		register_rest_route(
+			self::NAMESPACE,
+			'/guided-launch',
+			array(
+				array(
+					'methods' => WP_REST_Server::READABLE,
+					'callback' => array( $this, 'guided_launch_report' ),
+					'permission_callback' => array( $this->auth, 'can_read' ),
+				),
+				array(
+					'methods' => WP_REST_Server::CREATABLE,
+					'callback' => array( $this, 'guided_launch_sync' ),
+					'permission_callback' => array( $this->auth, 'can_draft' ),
+				),
+			)
+		);
+
+		register_rest_route(
+			self::NAMESPACE,
+			'/opportunity-engine',
+			array(
+				array(
+					'methods' => WP_REST_Server::READABLE,
+					'callback' => array( $this, 'opportunity_engine_report' ),
+					'permission_callback' => array( $this->auth, 'can_read' ),
+				),
+				array(
+					'methods' => WP_REST_Server::CREATABLE,
+					'callback' => array( $this, 'opportunity_engine_sync' ),
+					'permission_callback' => array( $this->auth, 'can_draft' ),
+				),
+			)
+		);
+
+
+		register_rest_route(
+			self::NAMESPACE,
+			'/content-workbench',
+			array(
+				array(
+					'methods' => WP_REST_Server::READABLE,
+					'callback' => array( $this, 'content_workbench_report' ),
+					'permission_callback' => array( $this->auth, 'can_read' ),
+				),
+				array(
+					'methods' => WP_REST_Server::CREATABLE,
+					'callback' => array( $this, 'content_workbench_sync' ),
+					'permission_callback' => array( $this->auth, 'can_draft' ),
+				),
+			)
+		);
+
+
+		register_rest_route(
+			self::NAMESPACE,
+			'/editorial-review',
+			array(
+				array(
+					'methods' => WP_REST_Server::READABLE,
+					'callback' => array( $this, 'editorial_review_report' ),
+					'permission_callback' => array( $this->auth, 'can_read' ),
+				),
+				array(
+					'methods' => WP_REST_Server::CREATABLE,
+					'callback' => array( $this, 'editorial_review_sync' ),
+					'permission_callback' => array( $this->auth, 'can_draft' ),
+				),
+			)
+		);
+
+
+		register_rest_route(
+			self::NAMESPACE,
+			'/publishing-readiness',
+			array(
+				array(
+					'methods' => WP_REST_Server::READABLE,
+					'callback' => array( $this, 'publishing_readiness_report' ),
+					'permission_callback' => array( $this->auth, 'can_read' ),
+				),
+				array(
+					'methods' => WP_REST_Server::CREATABLE,
+					'callback' => array( $this, 'publishing_readiness_sync' ),
+					'permission_callback' => array( $this->auth, 'can_publishing_readiness' ),
+				),
+			)
+		);
+
+		register_rest_route(
+			self::NAMESPACE,
+			'/search-impact',
+			array(
+				array(
+					'methods' => WP_REST_Server::READABLE,
+					'callback' => array( $this, 'search_impact_report' ),
+					'permission_callback' => array( $this->auth, 'can_read' ),
+				),
+				array(
+					'methods' => WP_REST_Server::CREATABLE,
+					'callback' => array( $this, 'search_impact_sync' ),
+					'permission_callback' => array( $this->auth, 'can_search_impact' ),
+				),
+			)
+		);
+
+
+		register_rest_route(
+			self::NAMESPACE,
+			'/pattern-library',
+			array(
+				array(
+					'methods' => WP_REST_Server::READABLE,
+					'callback' => array( $this, 'pattern_library_report' ),
+					'permission_callback' => array( $this->auth, 'can_read' ),
+				),
+				array(
+					'methods' => WP_REST_Server::CREATABLE,
+					'callback' => array( $this, 'pattern_library_sync' ),
+					'permission_callback' => array( $this->auth, 'can_pattern_library' ),
 				),
 			)
 		);
@@ -628,6 +895,11 @@ class Ikon_SEO_REST {
 					'quota-aware-index-inspection',
 					'canonical-selection-history',
 					'production-health-and-conflict-checks',
+					'platform-hardening-and-release-integrity',
+					'configuration-recovery-archives',
+					'upgrade-migration-journal',
+					'deployment-control-and-managed-updates',
+					'signed-license-entitlements',
 					'strategy-aware-website-modes',
 					'quality-and-automation-policy',
 					'mode-aware-business-value',
@@ -1086,6 +1358,340 @@ class Ikon_SEO_REST {
 				'report' => $this->international_server->report( absint( $payload['limit'] ?? 100 ) ),
 			)
 		);
+	}
+
+	public function auto_discovery_report( WP_REST_Request $request ) {
+		return rest_ensure_response( $this->auto_discovery->report() );
+	}
+
+	public function auto_discovery_sync( WP_REST_Request $request ) {
+		$payload = $request->get_json_params();
+		$payload = is_array( $payload ) ? $payload : array();
+		$result = $this->auto_discovery->sync( $payload, get_current_user_id() );
+		return is_wp_error( $result ) ? $result : rest_ensure_response(
+			array(
+				'command' => sanitize_key( $payload['command'] ?? 'read' ),
+				'result'  => $result,
+				'report'  => $this->auto_discovery->report(),
+			)
+		);
+	}
+
+	public function discovery_review_report( WP_REST_Request $request ) {
+		return rest_ensure_response( $this->discovery_review->report() );
+	}
+
+	public function discovery_review_sync( WP_REST_Request $request ) {
+		$replay = $this->idempotent_replay( $request );
+		if ( $replay ) {
+			return rest_ensure_response( $replay );
+		}
+		$payload = $request->get_json_params();
+		$payload = is_array( $payload ) ? $payload : array();
+		$result = $this->discovery_review->sync( $payload, get_current_user_id() );
+		if ( is_wp_error( $result ) ) {
+			return $result;
+		}
+		$response = array(
+			'command' => sanitize_key( $payload['command'] ?? 'read' ),
+			'result'  => $result,
+			'report'  => $this->discovery_review->report(),
+		);
+		$this->store_idempotent_result( $request, $response );
+		return rest_ensure_response( $response );
+	}
+
+	public function guided_launch_report( WP_REST_Request $request ) {
+		return rest_ensure_response( $this->guided_launch->report() );
+	}
+
+	public function agency_governance_agent( WP_REST_Request $request ) {
+		$payload = $request->get_json_params();
+		$payload = is_array( $payload ) ? $payload : array( 'command' => 'read' );
+		$result = $this->portfolio_governance->agent_sync( $payload );
+		return is_wp_error( $result ) ? $result : rest_ensure_response( array( 'result' => $result ) );
+	}
+
+	public function portfolio_governance_report( WP_REST_Request $request ) {
+		return rest_ensure_response( $this->portfolio_governance->report( array( 'limit' => absint( $request->get_param( 'limit' ) ?: 100 ) ) ) );
+	}
+
+	public function portfolio_governance_sync( WP_REST_Request $request ) {
+		$replay = $this->idempotent_replay( $request );
+		if ( $replay ) {
+			return rest_ensure_response( $replay );
+		}
+		$payload = $request->get_json_params();
+		$payload = is_array( $payload ) ? $payload : array();
+		$result = $this->portfolio_governance->sync( $payload, $this->workspace_actor_id() );
+		if ( is_wp_error( $result ) ) {
+			return $result;
+		}
+		$response = array(
+			'command' => sanitize_key( $payload['command'] ?? 'read' ),
+			'result'  => $result,
+			'report'  => $this->portfolio_governance->report( array( 'limit' => absint( $payload['limit'] ?? 100 ) ) ),
+		);
+		$this->store_idempotent_result( $request, $response );
+		return rest_ensure_response( $response );
+	}
+
+
+	public function platform_hardening_report( WP_REST_Request $request ) {
+		return rest_ensure_response( $this->platform_hardening->report() );
+	}
+
+	public function platform_hardening_sync( WP_REST_Request $request ) {
+		$payload = $request->get_json_params();
+		$payload = is_array( $payload ) ? $payload : array();
+		$result = $this->platform_hardening->sync( $payload, $this->workspace_actor_id() );
+		return is_wp_error( $result ) ? $result : rest_ensure_response( $result );
+	}
+
+
+	public function production_certification_report( WP_REST_Request $request ) {
+		return rest_ensure_response( $this->production_certification->report( array( 'limit' => absint( $request->get_param( 'limit' ) ?: 50 ) ) ) );
+	}
+
+	public function production_certification_sync( WP_REST_Request $request ) {
+		$payload = $request->get_json_params();
+		$payload = is_array( $payload ) ? $payload : array();
+		$result = $this->production_certification->sync( $payload, $this->workspace_user_id() );
+		return is_wp_error( $result ) ? $result : rest_ensure_response( $result );
+	}
+
+	public function staging_validation_report( WP_REST_Request $request ) {
+		return rest_ensure_response( $this->staging_validation->report( array(
+			'limit' => absint( $request->get_param( 'limit' ) ?: 25 ),
+			'include_checks' => rest_sanitize_boolean( $request->get_param( 'include_checks' ) ),
+		) ) );
+	}
+
+	public function staging_validation_sync( WP_REST_Request $request ) {
+		$payload = $request->get_json_params();
+		$payload = is_array( $payload ) ? $payload : array();
+		$result = $this->staging_validation->sync( $payload, $this->workspace_actor_id() );
+		return is_wp_error( $result ) ? $result : rest_ensure_response( $result );
+	}
+
+	public function deployment_control_report( WP_REST_Request $request ) {
+		return rest_ensure_response( $this->deployment_control->report() );
+	}
+
+	public function deployment_control_sync( WP_REST_Request $request ) {
+		$payload = $request->get_json_params();
+		$payload = is_array( $payload ) ? $payload : array();
+		$result = $this->deployment_control->sync( $payload, $this->workspace_actor_id() );
+		return is_wp_error( $result ) ? $result : rest_ensure_response( $result );
+	}
+
+	public function agency_service_levels_report( WP_REST_Request $request ) {
+		return rest_ensure_response( $this->agency_service_levels->report( array( 'limit' => absint( $request->get_param( 'limit' ) ?: 100 ) ) ) );
+	}
+
+	public function agency_service_levels_sync( WP_REST_Request $request ) {
+		$replay = $this->idempotent_replay( $request );
+		if ( $replay ) {
+			return rest_ensure_response( $replay );
+		}
+		$payload = $request->get_json_params();
+		$payload = is_array( $payload ) ? $payload : array();
+		$result = $this->agency_service_levels->sync( $payload, $this->workspace_actor_id() );
+		if ( is_wp_error( $result ) ) {
+			return $result;
+		}
+		$response = array(
+			'command' => sanitize_key( $payload['command'] ?? 'read' ),
+			'result'  => $result,
+			'report'  => $this->agency_service_levels->report( array( 'limit' => absint( $payload['limit'] ?? 100 ) ) ),
+		);
+		$this->store_idempotent_result( $request, $response );
+		return rest_ensure_response( $response );
+	}
+
+	public function guided_launch_sync( WP_REST_Request $request ) {
+		$replay = $this->idempotent_replay( $request );
+		if ( $replay ) {
+			return rest_ensure_response( $replay );
+		}
+		$payload = $request->get_json_params();
+		$payload = is_array( $payload ) ? $payload : array();
+		$command = sanitize_key( $payload['command'] ?? 'read' );
+		if ( 'activate' === $command ) {
+			$result = $this->guided_launch->activate(
+				array(
+					'create_workflow' => ! array_key_exists( 'create_workflow', $payload ) || ! empty( $payload['create_workflow'] ),
+					'run_safe_tasks'  => ! array_key_exists( 'run_safe_tasks', $payload ) || ! empty( $payload['run_safe_tasks'] ),
+					'build_plan'      => ! array_key_exists( 'build_plan', $payload ) || ! empty( $payload['build_plan'] ),
+					'task_batch'      => absint( $payload['task_batch'] ?? 3 ),
+				),
+				get_current_user_id()
+			);
+		} elseif ( 'acknowledge_conflicts' === $command ) {
+			$result = $this->guided_launch->acknowledge_conflicts( ! empty( $payload['acknowledged'] ), get_current_user_id() );
+		} else {
+			$result = $this->guided_launch->report();
+		}
+		if ( is_wp_error( $result ) ) {
+			return $result;
+		}
+		$response = array( 'command' => $command, 'result' => $result, 'report' => $this->guided_launch->report() );
+		$this->store_idempotent_result( $request, $response );
+		return rest_ensure_response( $response );
+	}
+
+
+	public function opportunity_engine_report( WP_REST_Request $request ) {
+		$args = array(
+			'limit' => absint( $request->get_param( 'limit' ) ?: 100 ),
+			'status' => sanitize_key( $request->get_param( 'status' ) ?: '' ),
+			'category' => sanitize_key( $request->get_param( 'category' ) ?: '' ),
+			'source' => sanitize_key( $request->get_param( 'source' ) ?: '' ),
+		);
+		return rest_ensure_response( $this->opportunity_engine->report( $args ) );
+	}
+
+	public function opportunity_engine_sync( WP_REST_Request $request ) {
+		$replay = $this->idempotent_replay( $request );
+		if ( $replay ) {
+			return rest_ensure_response( $replay );
+		}
+		$payload = $request->get_json_params();
+		$payload = is_array( $payload ) ? $payload : array();
+		$result = $this->opportunity_engine->sync( $payload, get_current_user_id() );
+		if ( is_wp_error( $result ) ) {
+			return $result;
+		}
+		$response = array(
+			'command' => sanitize_key( $payload['command'] ?? 'read' ),
+			'result' => $result,
+			'report' => $this->opportunity_engine->report( array( 'limit' => absint( $payload['limit'] ?? 100 ) ) ),
+		);
+		$this->store_idempotent_result( $request, $response );
+		return rest_ensure_response( $response );
+	}
+
+	public function content_workbench_report( WP_REST_Request $request ) {
+		return rest_ensure_response( $this->content_workbench->report( absint( $request->get_param( 'limit' ) ?: 100 ) ) );
+	}
+
+	public function content_workbench_sync( WP_REST_Request $request ) {
+		$replay = $this->idempotent_replay( $request );
+		if ( $replay ) {
+			return rest_ensure_response( $replay );
+		}
+		$payload = $request->get_json_params();
+		$payload = is_array( $payload ) ? $payload : array();
+		$result = $this->content_workbench->sync( $payload, $this->workspace_actor_id() );
+		if ( is_wp_error( $result ) ) {
+			return $result;
+		}
+		$response = array(
+			'command' => sanitize_key( $payload['command'] ?? 'read' ),
+			'result' => $result,
+			'report' => $this->content_workbench->report( absint( $payload['limit'] ?? 100 ), true ),
+		);
+		$this->store_idempotent_result( $request, $response );
+		return rest_ensure_response( $response );
+	}
+
+
+	public function editorial_review_report( WP_REST_Request $request ) {
+		return rest_ensure_response( $this->editorial_review->report( array( 'limit' => absint( $request->get_param( 'limit' ) ?: 100 ), 'status' => sanitize_key( $request->get_param( 'status' ) ?: '' ) ) ) );
+	}
+
+	public function editorial_review_sync( WP_REST_Request $request ) {
+		$replay = $this->idempotent_replay( $request );
+		if ( $replay ) {
+			return rest_ensure_response( $replay );
+		}
+		$payload = $request->get_json_params();
+		$payload = is_array( $payload ) ? $payload : array();
+		$result = $this->editorial_review->sync( $payload, $this->workspace_actor_id() );
+		if ( is_wp_error( $result ) ) {
+			return $result;
+		}
+		$response = array(
+			'command' => sanitize_key( $payload['command'] ?? 'read' ),
+			'result' => $result,
+			'report' => $this->editorial_review->report( array( 'limit' => absint( $payload['limit'] ?? 100 ) ), true ),
+		);
+		$this->store_idempotent_result( $request, $response );
+		return rest_ensure_response( $response );
+	}
+
+
+	public function publishing_readiness_report( WP_REST_Request $request ) {
+		return rest_ensure_response( $this->publishing_readiness->report( array( 'limit' => absint( $request->get_param( 'limit' ) ?: 100 ), 'status' => sanitize_key( $request->get_param( 'status' ) ?: '' ) ) ) );
+	}
+
+	public function publishing_readiness_sync( WP_REST_Request $request ) {
+		$replay = $this->idempotent_replay( $request );
+		if ( $replay ) {
+			return rest_ensure_response( $replay );
+		}
+		$payload = $request->get_json_params();
+		$payload = is_array( $payload ) ? $payload : array();
+		$result = $this->publishing_readiness->sync( $payload, $this->workspace_actor_id() );
+		if ( is_wp_error( $result ) ) {
+			return $result;
+		}
+		$response = array(
+			'command' => sanitize_key( $payload['command'] ?? 'read' ),
+			'result' => $result,
+			'report' => $this->publishing_readiness->report( array( 'limit' => absint( $payload['limit'] ?? 100 ) ), true ),
+		);
+		$this->store_idempotent_result( $request, $response );
+		return rest_ensure_response( $response );
+	}
+
+	public function search_impact_report( WP_REST_Request $request ) {
+		return rest_ensure_response( $this->search_impact->report( array( 'limit' => absint( $request->get_param( 'limit' ) ?: 100 ), 'status' => sanitize_key( $request->get_param( 'status' ) ?: '' ) ) ) );
+	}
+
+	public function search_impact_sync( WP_REST_Request $request ) {
+		$replay = $this->idempotent_replay( $request );
+		if ( $replay ) {
+			return rest_ensure_response( $replay );
+		}
+		$payload = $request->get_json_params();
+		$payload = is_array( $payload ) ? $payload : array();
+		$result = $this->search_impact->sync( $payload, $this->workspace_actor_id() );
+		if ( is_wp_error( $result ) ) {
+			return $result;
+		}
+		$response = array(
+			'command' => sanitize_key( $payload['command'] ?? 'read' ),
+			'result' => $result,
+			'report' => $this->search_impact->report( array( 'limit' => absint( $payload['limit'] ?? 100 ) ), true ),
+		);
+		$this->store_idempotent_result( $request, $response );
+		return rest_ensure_response( $response );
+	}
+
+
+	public function pattern_library_report( WP_REST_Request $request ) {
+		return rest_ensure_response( $this->pattern_library->report( array( 'limit' => absint( $request->get_param( 'limit' ) ?: 100 ), 'status' => sanitize_key( $request->get_param( 'status' ) ?: '' ) ) ) );
+	}
+
+	public function pattern_library_sync( WP_REST_Request $request ) {
+		$replay = $this->idempotent_replay( $request );
+		if ( $replay ) {
+			return rest_ensure_response( $replay );
+		}
+		$payload = $request->get_json_params();
+		$payload = is_array( $payload ) ? $payload : array();
+		$result = $this->pattern_library->sync( $payload, $this->workspace_actor_id() );
+		if ( is_wp_error( $result ) ) {
+			return $result;
+		}
+		$response = array(
+			'command' => sanitize_key( $payload['command'] ?? 'read' ),
+			'result' => $result,
+			'report' => $this->pattern_library->report( array( 'limit' => absint( $payload['limit'] ?? 100 ) ) ),
+		);
+		$this->store_idempotent_result( $request, $response );
+		return rest_ensure_response( $response );
 	}
 
 	public function portfolio_quality_report( WP_REST_Request $request ) {
@@ -1698,6 +2304,24 @@ class Ikon_SEO_REST {
 	}
 
 
+
+	public function client_portal_report( WP_REST_Request $request ) {
+		$response = rest_ensure_response( $this->client_portal->portal_data_for_user( get_current_user_id(), absint( $request->get_param( 'assignment_id' ) ) ) );
+		$response->header( 'Cache-Control', 'private, no-store, no-cache, must-revalidate, max-age=0' );
+		return $response;
+	}
+
+	public function client_portal_admin_report( WP_REST_Request $request ) {
+		return rest_ensure_response( $this->client_portal->admin_report() );
+	}
+
+	public function client_portal_admin_sync( WP_REST_Request $request ) {
+		$payload = $request->get_json_params();
+		$payload = is_array( $payload ) ? $payload : array();
+		$result = $this->client_portal->admin_sync( $payload, $this->workspace_actor_id() );
+		return is_wp_error( $result ) ? $result : rest_ensure_response( $result );
+	}
+
 	public function agency_snapshot() {
 		$response = rest_ensure_response( $this->agency_command->snapshot() );
 		$response->header( 'Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0' );
@@ -1707,7 +2331,7 @@ class Ikon_SEO_REST {
 	public function agency_command_sync( WP_REST_Request $request ) {
 		$payload = $request->get_json_params();
 		$payload = is_array( $payload ) ? $payload : array();
-		$result  = $this->agency_command->sync( $payload, get_current_user_id() );
+		$result  = $this->executive_command->sync( $payload, $this->workspace_actor_id() );
 		return is_wp_error( $result ) ? $result : rest_ensure_response( $result );
 	}
 
@@ -1780,8 +2404,10 @@ class Ikon_SEO_REST {
 				'/profile' => array( 'get' => $this->operation( 'readIkonSEOWebsiteProfile', 'Read the active website identity, schema policy and publishing rules before writing' ) ),
 				'/strategy' => array( 'post' => $this->write_operation( 'syncIkonSEOWebsiteStrategy', 'Read the active website strategy and operating mode; save an approved strategy update only when save is true', '#/components/schemas/StrategySync', array(), false, false ) ),
 				'/workflow-automation' => array( 'post' => $this->write_operation( 'syncIkonSEOWorkflowAutomation', 'Read workflow state; create mode-based workflows, update or approve tasks, run read-only automation and generate briefings', '#/components/schemas/WorkflowAutomationSync', array(), false, false ) ),
-				'/publisher-intelligence' => array( 'post' => $this->write_operation( 'syncIkonSEOPublisherIntelligence', 'Read or update the keyword universe, topic hubs, editorial pipeline, contributor profiles, quality gates, lifecycle recommendations and portfolio signatures', '#/components/schemas/PublisherSync', array(), false, false ) ),
-				'/agency-command-centre' => array( 'post' => $this->write_operation( 'syncIkonSEOAgencyCommandCentre', 'Read the multi-site portfolio, refresh read-only snapshots, record budgets and resolve portfolio alerts', '#/components/schemas/AgencyCommandSync', array(), false, false ) ),
+				'/content-workbench' => array( 'post' => $this->write_operation( 'syncIkonSEOContentWorkbench', 'Convert planned opportunities into evidence-locked briefs, approve or reject briefs, create separate drafts, run quality gates and mark drafts ready for human review', '#/components/schemas/ContentWorkbenchSync', array( $idempotency ), false, false ) ),
+				'/platform-hardening' => array( 'post' => array_merge( $this->write_operation( 'syncIkonSEOPlatformHardening', 'Run release integrity and compatibility checks, create credential-free recovery archives, preview same-version restores and repair scheduled events', '#/components/schemas/PlatformHardeningSync', array( $idempotency ), false, false ), array( 'description' => 'Configuration restore, scheduler repair and cleanup require the approve key scope. No command publishes or edits WordPress content, transmits diagnostics, or performs an automatic rollback.' ) ) ),
+				'/agency-command-centre' => array( 'post' => $this->write_operation( 'syncIkonSEOAgencyCommandCentre', 'Read executive portfolio analytics, refresh read-only snapshots, manage the internal risk register and inspect client-safe portal previews', '#/components/schemas/AgencyCommandSync', array(), false, false ) ),
+				'/portfolio-governance' => array( 'post' => array_merge( $this->write_operation( 'syncIkonSEOPortfolioGovernance', 'Create approval-first agency policies, assign them to managed websites, deliver proposal-only synchronisation and record local governance decisions', '#/components/schemas/PortfolioGovernanceSync', array( $idempotency ), false, false ), array( 'description' => 'Policies are only proposed remotely. A local WordPress administrator must accept a proposal before it becomes active, and no command publishes or changes public content.' ) ) ),
 				'/schema/preview' => array( 'post' => $this->write_operation( 'previewIkonSEOSchema', 'Preview profile-aware schema and conflict warnings without changing WordPress', '#/components/schemas/PagePayload', array(), false, false ) ),
 				'/domain-migration' => array( 'get' => array_merge( $this->operation( 'previewIkonSEODomainMigration', 'Preview stored references affected by a domain change; applying remains administrator-only' ), array(
 					'parameters' => array(
@@ -1803,16 +2429,12 @@ class Ikon_SEO_REST {
 					'get'   => array_merge( $this->operation( 'readWordPressPage', 'Read page content, SEO, schema and quality data' ), array( 'parameters' => array( $id_parameter ) ) ),
 					'patch' => $this->write_operation( 'updateIkonSEODraft', 'Update an Ikon SEO managed draft', '#/components/schemas/PagePayload', array( $id_parameter, $idempotency ) ),
 				),
-				'/inventory' => array( 'get' => array_merge( $this->operation( 'auditWordPressInventory', 'Audit pages, links, metadata, orphans and keyword overlap' ), array(
-					'parameters' => array( array( 'name' => 'refresh', 'in' => 'query', 'schema' => array( 'type' => 'boolean' ) ) ),
-				) ) ),
+				'/deployment-control' => array( 'post' => array_merge( $this->write_operation( 'syncIkonSEODeploymentControl', 'Read entitlement status, register signed releases, prepare approval-gated deployment plans and verify manually installed updates', '#/components/schemas/DeploymentControlSync', array( $idempotency ), false, false ), array( 'description' => 'No command downloads, installs, activates, deactivates or rolls back plugin code. Approval, entitlement and manual-deployment decisions require the approve key scope.' ) ) ),
 				'/seo-health' => array( 'get' => array_merge( $this->operation( 'auditIkonSEOHealth', 'Audit Rank Math compatibility, metadata, canonicals, indexing and schema ownership' ), array( 'parameters' => array( array( 'name' => 'refresh', 'in' => 'query', 'schema' => array( 'type' => 'boolean' ) ) ) ) ) ),
-				'/evidence' => array( 'get' => array_merge( $this->operation( 'diagnoseIkonSEORankingEvidence', 'Read page-level technical, Search Console and Analytics evidence with categorised findings, evidence sufficiency, business value and clear limitations' ), array(
-					'parameters' => array(
-						array( 'name' => 'post_id', 'in' => 'query', 'schema' => array( 'type' => 'integer' ) ),
-						array( 'name' => 'refresh', 'in' => 'query', 'schema' => array( 'type' => 'boolean', 'default' => false ) ),
-					),
-				) ) ),
+				'/editorial-review' => array( 'post' => $this->write_operation( 'syncIkonSEOEditorialReview', 'Assign controlled drafts, manage review rounds and comments, verify sources and claims, compare revisions, record final sign-off and keep publishing separate', '#/components/schemas/EditorialReviewSync', array( $idempotency ), false, false ) ),
+				'/publishing-readiness' => array( 'post' => array_merge( $this->write_operation( 'syncIkonSEOPublishingReadiness', 'Create immutable release candidates from signed-off drafts, run preflight checks, record a separate readiness approval, detect manual publication and perform read-only post-launch verification', '#/components/schemas/PublishingReadinessSync', array( $idempotency ), false, false ), array( 'description' => 'No command publishes or changes a public page. Readiness decisions, publication records, completion and blocking commands require the approve key scope; preparation and read-only verification commands require draft scope.' ) ) ),
+				'/search-impact' => array( 'post' => array_merge( $this->write_operation( 'syncIkonSEOSearchImpact', 'Create and monitor baseline-versus-post-launch impact studies using stored first-party evidence, comparison pages and human-reviewed outcome decisions', '#/components/schemas/SearchImpactSync', array( $idempotency ), false, false ), array( 'description' => 'No command changes a public page. Assessment, acknowledgement and blocking decisions require the approve key scope; study creation, evidence capture and confounder recording require draft scope. Reported outcomes describe association and do not assert causation.' ) ) ),
+				'/pattern-library' => array( 'post' => array_merge( $this->write_operation( 'syncIkonSEOPatternLibrary', 'Aggregate anonymised, acknowledged impact evidence into context-bounded pattern candidates and record human validation decisions', '#/components/schemas/PatternLibrarySync', array( $idempotency ), false, false ), array( 'description' => 'No pattern is automatically applied. Validation, limited-use, rejection, retirement and restoration decisions require the approve scope. Refresh and anonymised evidence import require draft scope.' ) ) ),
 				'/image-audit' => array( 'get' => array_merge( $this->operation( 'auditWordPressImages', 'Audit image alternative text, captions, descriptions and duplicates' ), array( 'parameters' => array( array( 'name' => 'refresh', 'in' => 'query', 'schema' => array( 'type' => 'boolean' ) ) ) ) ) ),
 				'/redirect-opportunities' => array( 'get' => array_merge( $this->operation( 'readRedirectOpportunities', 'Read broken internal URLs and Rank Math 404 redirect opportunities without creating redirects' ), array( 'parameters' => array( array( 'name' => 'refresh', 'in' => 'query', 'schema' => array( 'type' => 'boolean' ) ) ) ) ) ),
 				'/technical-intelligence' => array( 'get' => array_merge( $this->operation( 'readIkonSEOTechnicalIntelligence', 'Read URL discovery, sitemap parity, internal-link graph, redirect evidence and PageSpeed/Core Web Vitals findings' ), array(
@@ -1822,7 +2444,10 @@ class Ikon_SEO_REST {
 					),
 				) ) ),
 				'/indexation-intelligence' => array( 'post' => $this->write_operation( 'syncIkonSEOIndexationIntelligence', 'Read and manage quota-aware Google index evidence, canonical disagreements, inspection queues and production health checks', '#/components/schemas/IndexationSync', array(), false, false ) ),
-				'/portfolio-quality-guard' => array( 'post' => $this->write_operation( 'syncIkonSEOPortfolioQualityGuard', 'Read and manage privacy-preserving cross-site quality evidence, differentiation risks and review gates', '#/components/schemas/PortfolioQualitySync', array(), false, false ) ),
+				'/auto-discovery' => array( 'post' => $this->write_operation( 'syncIkonSEOAutoDiscovery', 'Read, run and apply review-first website discovery and strategy proposals', '#/components/schemas/AutoDiscoverySync', array(), false, false ) ),
+				'/discovery-review' => array( 'post' => $this->write_operation( 'syncIkonSEODiscoveryReview', 'Read and save fact-level confirmations, corrected values, rejections and conflict resolutions without changing live pages', '#/components/schemas/DiscoveryReviewSync', array( $idempotency ), false, false ) ),
+				'/guided-launch' => array( 'post' => $this->write_operation( 'syncIkonSEOGuidedLaunch', 'Read or activate the approval-first workflow, safe audit batch and Operating Plan after discovery review', '#/components/schemas/GuidedLaunchSync', array( $idempotency ), false, false ) ),
+				'/opportunity-engine' => array( 'post' => $this->write_operation( 'syncIkonSEOOpportunityEngine', 'Read, rebuild and review a unified evidence-based opportunity queue; optionally import approved Semrush, Ahrefs or licensed-provider keyword evidence', '#/components/schemas/OpportunityEngineSync', array( $idempotency ), false, false ) ),
 				'/competitor-content' => array( 'post' => $this->write_operation( 'syncIkonSEOCompetitorContentIntelligence', 'Read stored competitor and content intelligence; optionally store current competitor observations or create a page-level content brief', '#/components/schemas/CompetitorContentSync', array(), false, false ) ),
 				'/authority-intelligence' => array( 'post' => $this->write_operation( 'syncIkonSEOAuthorityIntelligence', 'Read imported authority and off-site evidence; optionally store approved backlink or competitor-link observations', '#/components/schemas/AuthoritySync', array(), false, false ) ),
 				'/visibility-brand-intelligence' => array( 'post' => $this->write_operation( 'syncIkonSEOVisibilityBrandIntelligence', 'Read combined visibility and brand evidence; optionally store reviewed observations, brand mentions or refresh a snapshot', '#/components/schemas/VisibilityBrandSync', array(), false, false ) ),
@@ -1836,9 +2461,9 @@ class Ikon_SEO_REST {
 					) ),
 					'post'=> $this->write_operation( 'importApprovedImage', 'Import an image from an approved HTTPS host', '#/components/schemas/MediaImport', array( $idempotency ) ),
 				),
-				'/reviews' => array( 'get' => $this->operation( 'listIkonSEOReviews', 'List improvement drafts awaiting review' ) ),
+				'/staging-validation' => array( 'post' => array_merge( $this->write_operation( 'syncIkonSEOStagingValidation', 'Run non-destructive staging checks, evidence-lock the result and require a second administrator before certification handoff', '#/components/schemas/StagingValidationSync', array( $idempotency ), false, false ), array( 'description' => 'No command publishes, installs or changes live content. Run preparation uses draft scope; approval requires approve scope and production environments are blocked.' ) ) ),
 				'/reviews/{id}/comparison' => array( 'get' => array_merge( $this->operation( 'compareIkonSEOReview', 'Compare an improvement draft with its live source' ), array( 'parameters' => array( $id_parameter ) ) ) ),
-				'/reviews/{id}/merge' => array( 'post' => $this->write_operation( 'mergeApprovedIkonSEOReview', 'Merge an approved draft into its original page', null, array( $id_parameter, $idempotency ), true ) ),
+				'/production-certification' => array( 'post' => array_merge( $this->write_operation( 'syncIkonSEOProductionCertification', 'Create support contracts, certify signed releases and govern manual rollout waves', '#/components/schemas/ProductionCertificationSync', array( $idempotency ), false, false ), array( 'description' => 'No command downloads, installs, rolls back or publishes anything. Contract, certification and rollout approvals require the approve key scope.' ) ) ),
 				'/pages/{id}/snapshots' => array( 'get' => array_merge( $this->operation( 'listIkonSEOSnapshots', 'List rollback snapshots for a page' ), array( 'parameters' => array( $id_parameter ) ) ) ),
 				'/pages/{id}/rollback' => array( 'post' => $this->write_operation( 'rollbackIkonSEOPage', 'Restore a page from an Ikon SEO snapshot', '#/components/schemas/Rollback', array( $id_parameter, $idempotency ), true ) ),
 				'/logs' => array( 'get' => array_merge( $this->operation( 'readIkonSEOActivity', 'Read recent workflow activity' ), array(
@@ -1863,20 +2488,8 @@ class Ikon_SEO_REST {
 						array( 'name' => 'refresh', 'in' => 'query', 'schema' => array( 'type' => 'boolean', 'default' => false ) ),
 					),
 				) ) ),
-				'/queue' => array( 'get' => array_merge( $this->operation( 'listIkonSEOPagePlans', 'List CSV-imported page plans awaiting interactive generation' ), array(
-					'parameters' => array(
-						array( 'name' => 'status', 'in' => 'query', 'schema' => array( 'type' => 'string', 'enum' => array( 'planned', 'claimed', 'paused', 'completed', 'failed', 'archived' ) ) ),
-						array( 'name' => 'batch_id', 'in' => 'query', 'schema' => array( 'type' => 'string' ) ),
-						array( 'name' => 'limit', 'in' => 'query', 'schema' => array( 'type' => 'integer', 'maximum' => 200 ) ),
-					),
-				) ) ),
-				'/queue/{id}/claim' => array( 'post' => $this->write_operation( 'claimIkonSEOPagePlan', 'Claim one page plan for up to one hour before generating its payload', null, array( $id_parameter, $idempotency ) ) ),
-				'/queue/{id}/complete' => array( 'post' => $this->write_operation( 'completeIkonSEOPagePlan', 'Validate a completed page payload, create its WordPress draft and complete the page plan', '#/components/schemas/QueueCompletion', array( $id_parameter, $idempotency ) ) ),
-				'/monitoring' => array( 'get' => $this->operation( 'readContentRefreshMonitor', 'Read overdue reviews, upcoming refresh dates and meaningful Search Console declines' ) ),
-				'/workspace-state' => array( 'post' => $this->write_operation( 'syncIkonSEOProjectHistory', 'Read durable project history and optionally save one completed, pending or recommended project event', '#/components/schemas/WorkspaceSync', array(), false, false ) ),
-				'/local-growth' => array(
-					'post' => $this->write_operation( 'syncIkonSEOLocalGrowth', 'Read local growth readiness; refresh approved evidence, synchronize review and conversion workflows, and store competitor-prominence observations without changing public profiles', '#/components/schemas/LocalGrowthSync', array(), false, false ),
-				),
+				'/workspace-state' => array( 'post' => $this->write_operation( 'syncIkonSEOProjectHistory', 'Read and append durable project history for continuity across private workspaces', '#/components/schemas/WorkspaceStateSync', array(), false, false ) ),
+				'/local-growth' => array( 'post' => $this->write_operation( 'syncIkonSEOLocalGrowth', 'Read and manage approval-first local growth evidence, plans and measurements without publishing or changing Google Business Profile', '#/components/schemas/LocalGrowthSync', array(), false, false ) ),
 				'/local/locations' => array( 'get' => $this->operation( 'readIkonSEOLocations', 'Read profile-bound storefront, hybrid and service-area records before preparing local content' ) ),
 				'/local/nap-audit' => array( 'get' => $this->operation( 'auditIkonSEONAP', 'Compare master local business data with assigned landing pages and schema' ) ),
 				'/local/citations' => array( 'get' => array_merge( $this->operation( 'readIkonSEOCitations', 'Read the citation consistency workspace' ), array(
@@ -1954,7 +2567,13 @@ class Ikon_SEO_REST {
 			$document['paths']['/local/ranks'],
 			$document['paths']['/visibility-brand-intelligence'],
 			$document['paths']['/search-console/inspect'],
-			$document['paths']['/schema/preview']
+			$document['paths']['/schema/preview'],
+			$document['paths']['/monitoring'],
+			$document['paths']['/search-intelligence'],
+			$document['paths']['/analytics/report'],
+			$document['paths']['/reviews/{id}/comparison'],
+			$document['paths']['/queue/{id}/complete'],
+			$document['paths']['/local/locations']
 		);
 		unset( $document['paths']['/media'] );
 
@@ -1969,6 +2588,24 @@ class Ikon_SEO_REST {
 			'summary'     => $summary,
 			'responses'   => array( '200' => array( 'description' => 'Successful response' ) ),
 		);
+	}
+
+	private function workspace_actor_id() {
+		$current = absint( get_current_user_id() );
+		if ( $current ) {
+			return $current;
+		}
+		$settings = Ikon_SEO_Plugin::settings();
+		$owner = absint( $settings['connection_owner_user_id'] ?? 0 );
+		if ( $owner && user_can( $owner, 'manage_options' ) ) {
+			return $owner;
+		}
+		$admin_email = sanitize_email( get_option( 'admin_email' ) );
+		$administrator = $admin_email ? get_user_by( 'email', $admin_email ) : false;
+		if ( $administrator && user_can( absint( $administrator->ID ), 'manage_options' ) ) {
+			return absint( $administrator->ID );
+		}
+		return 0;
 	}
 
 	private function write_operation( $operation_id, $summary, $schema_ref = null, array $parameters = array(), $approval = false, $consequential = true ) {
@@ -2001,8 +2638,139 @@ class Ikon_SEO_REST {
 
 	private function openapi_schemas() {
 		return array(
+			'PlatformHardeningSync' => array(
+				'type' => 'object',
+				'properties' => array(
+					'command' => array( 'type' => 'string', 'enum' => array( 'read', 'run_checks', 'verify_release', 'create_archive', 'preview_restore', 'restore_archive', 'repair_scheduler', 'cleanup' ), 'default' => 'read' ),
+					'archive_type' => array( 'type' => 'string', 'enum' => array( 'configuration', 'support' ), 'default' => 'configuration' ),
+					'label' => array( 'type' => 'string', 'maxLength' => 255 ),
+					'archive_id' => array( 'type' => 'integer', 'minimum' => 1 ),
+					'expected_hash' => array( 'type' => 'string', 'pattern' => '^[a-f0-9]{64}$' ),
+				),
+			),
 
 
+			'StagingValidationSync' => array(
+				'type' => 'object',
+				'required' => array( 'command' ),
+				'properties' => array(
+					'command' => array( 'type' => 'string', 'enum' => array( 'read', 'start_run', 'run_checks', 'approve_run', 'evidence_pack' ), 'default' => 'read' ),
+					'run_id' => array( 'type' => 'integer', 'minimum' => 1 ),
+					'evidence_fingerprint' => array( 'type' => 'string', 'pattern' => '^[a-f0-9]{64}$' ),
+					'check_keys' => array( 'type' => 'array', 'items' => array( 'type' => 'string' ), 'maxItems' => 30 ),
+					'run' => array( 'type' => 'object' ),
+					'limit' => array( 'type' => 'integer', 'minimum' => 1, 'maximum' => 100 ),
+				),
+			),
+
+			'ProductionCertificationSync' => array(
+				'type' => 'object',
+				'required' => array( 'command' ),
+				'properties' => array(
+					'command' => array( 'type'=>'string', 'enum'=>array('read','create_contract','approve_contract','create_certification','record_check','refresh_certification','approve_certification','create_rollout','approve_rollout','record_rollout_result','close_rollout') ),
+					'contract_id' => array( 'type'=>'integer' ), 'certification_id' => array( 'type'=>'integer' ), 'rollout_id' => array( 'type'=>'integer' ),
+					'check_key' => array( 'type'=>'string' ), 'site_id' => array( 'type'=>'integer' ), 'status' => array( 'type'=>'string' ), 'notes' => array( 'type'=>'string' ),
+					'evidence_fingerprint' => array( 'type'=>'string' ), 'contract' => array( 'type'=>'object' ), 'certification' => array( 'type'=>'object' ), 'check' => array( 'type'=>'object' ), 'rollout' => array( 'type'=>'object' ),
+				),
+			),
+			'DeploymentControlSync' => array(
+				'type' => 'object',
+				'properties' => array(
+					'command' => array( 'type' => 'string', 'enum' => array( 'read', 'create_evaluation', 'import_entitlement', 'revoke_entitlement', 'register_installed_release', 'import_release', 'create_plan', 'approve_plan', 'record_manual_deployment', 'verify_deployment', 'close_plan' ), 'default' => 'read' ),
+					'entitlement_id' => array( 'type' => 'integer', 'minimum' => 1 ),
+					'release_id' => array( 'type' => 'integer', 'minimum' => 1 ),
+					'plan_id' => array( 'type' => 'integer', 'minimum' => 1 ),
+					'expected_fingerprint' => array( 'type' => 'string', 'pattern' => '^[a-f0-9]{64}$' ),
+					'notes' => array( 'type' => 'string', 'maxLength' => 5000 ),
+					'evaluation' => array( 'type' => 'object' ),
+					'envelope' => array( 'type' => 'object' ),
+					'plan' => array( 'type' => 'object' ),
+				),
+			),
+
+
+
+			'AutoDiscoverySync' => array(
+				'type' => 'object',
+				'properties' => array(
+					'command' => array( 'type' => 'string', 'enum' => array( 'read', 'run', 'apply', 'save_settings' ), 'default' => 'read' ),
+					'refresh' => array( 'type' => 'boolean', 'default' => true ),
+					'max_pages' => array( 'type' => 'integer', 'minimum' => 10, 'maximum' => 300, 'default' => 100 ),
+					'fields' => array( 'type' => 'array', 'items' => array( 'type' => 'string' ) ),
+					'overwrite' => array( 'type' => 'boolean', 'default' => false ),
+					'create_workflow' => array( 'type' => 'boolean', 'default' => false ),
+					'run_safe_task' => array( 'type' => 'boolean', 'default' => false ),
+					'enabled' => array( 'type' => 'boolean' ),
+					'include_connected' => array( 'type' => 'boolean' ),
+				),
+			),
+
+
+			'DiscoveryReviewSync' => array(
+				'type' => 'object',
+				'properties' => array(
+					'command' => array( 'type' => 'string', 'enum' => array( 'read', 'accept_high_confidence', 'update_fact', 'resolve_conflict', 'apply_confirmed' ), 'default' => 'read' ),
+					'fact_id' => array( 'type' => 'string' ),
+					'status' => array( 'type' => 'string', 'enum' => array( 'detected', 'confirmed', 'edited', 'rejected', 'needs_confirmation' ) ),
+					'value' => array(),
+					'conflict_id' => array( 'type' => 'string' ),
+					'selected_value' => array( 'type' => 'string' ),
+					'custom_value' => array( 'type' => 'string' ),
+					'generated_at' => array( 'type' => 'string', 'description' => 'Optimistic-lock value from the current discovery report.' ),
+				),
+			),
+
+			'GuidedLaunchSync' => array(
+				'type' => 'object',
+				'properties' => array(
+					'command' => array( 'type' => 'string', 'enum' => array( 'read', 'activate', 'acknowledge_conflicts' ), 'default' => 'read' ),
+					'create_workflow' => array( 'type' => 'boolean', 'default' => true ),
+					'run_safe_tasks' => array( 'type' => 'boolean', 'default' => true ),
+					'build_plan' => array( 'type' => 'boolean', 'default' => true ),
+					'task_batch' => array( 'type' => 'integer', 'minimum' => 1, 'maximum' => 5, 'default' => 3 ),
+					'acknowledged' => array( 'type' => 'boolean' ),
+				),
+			),
+
+
+			'OpportunityEngineSync' => array(
+				'type' => 'object',
+				'description' => 'The engine is read-only analysis. It cannot publish, redirect, delete, noindex or change canonicals.',
+				'properties' => array(
+					'command' => array( 'type' => 'string', 'enum' => array( 'read', 'rebuild', 'import', 'update_status', 'archive_evidence' ), 'default' => 'read' ),
+					'limit' => array( 'type' => 'integer', 'minimum' => 10, 'maximum' => 1000, 'default' => 100 ),
+					'source' => array( 'type' => 'string', 'enum' => array( 'semrush', 'ahrefs', 'licensed_provider', 'manual', 'workspace_import' ) ),
+					'opportunity_id' => array( 'type' => 'integer', 'minimum' => 1 ),
+					'evidence_id' => array( 'type' => 'integer', 'minimum' => 1 ),
+					'status' => array( 'type' => 'string', 'enum' => array( 'open', 'reviewed', 'planned', 'completed', 'dismissed' ) ),
+					'notes' => array( 'type' => 'string' ),
+					'records' => array(
+						'type' => 'array',
+						'maxItems' => 5000,
+						'items' => array(
+							'type' => 'object',
+							'required' => array( 'keyword' ),
+							'properties' => array(
+								'keyword' => array( 'type' => 'string' ),
+								'target_url' => array( 'type' => 'string', 'format' => 'uri' ),
+								'competitor_domain' => array( 'type' => 'string' ),
+								'country' => array( 'type' => 'string' ),
+								'device' => array( 'type' => 'string' ),
+								'intent' => array( 'type' => 'string' ),
+								'search_volume' => array( 'type' => 'number', 'minimum' => 0 ),
+								'keyword_difficulty' => array( 'type' => 'number', 'minimum' => 0, 'maximum' => 100 ),
+								'position' => array( 'type' => 'number', 'minimum' => 0 ),
+								'previous_position' => array( 'type' => 'number', 'minimum' => 0 ),
+								'estimated_traffic' => array( 'type' => 'number', 'minimum' => 0 ),
+								'cpc' => array( 'type' => 'number', 'minimum' => 0 ),
+								'serp_features' => array( 'type' => 'array', 'items' => array( 'type' => 'string' ) ),
+								'evidence_notes' => array( 'type' => 'string' ),
+								'observed_at' => array( 'type' => 'string', 'format' => 'date' ),
+							),
+						),
+					),
+				),
+			),
 
 			'PortfolioQualitySync' => array(
 				'type' => 'object',
@@ -2286,12 +3054,53 @@ class Ikon_SEO_REST {
 				),
 			),
 
+			'PortfolioGovernanceSync' => array(
+				'type' => 'object',
+				'properties' => array(
+					'command' => array( 'type' => 'string', 'enum' => array( 'read', 'create_policy', 'approve_policy', 'retire_policy', 'save_site_key', 'assign_policy', 'sync_assignment', 'accept_proposal', 'reject_proposal' ), 'default' => 'read' ),
+					'policy_id' => array( 'type' => 'integer', 'minimum' => 1 ),
+					'site_id' => array( 'type' => 'integer', 'minimum' => 1 ),
+					'assignment_id' => array( 'type' => 'integer', 'minimum' => 1 ),
+					'proposal_id' => array( 'type' => 'integer', 'minimum' => 1 ),
+					'governance_key' => array( 'type' => 'string', 'minLength' => 28 ),
+					'notes' => array( 'type' => 'string' ),
+					'limit' => array( 'type' => 'integer', 'minimum' => 10, 'maximum' => 200, 'default' => 100 ),
+					'policy' => array(
+						'type' => 'object',
+						'properties' => array(
+							'name' => array( 'type' => 'string' ),
+							'policy_key' => array( 'type' => 'string' ),
+							'version' => array( 'type' => 'integer', 'minimum' => 1 ),
+							'minimum_strategy_readiness' => array( 'type' => 'integer', 'minimum' => 70, 'maximum' => 100 ),
+							'max_safe_batch' => array( 'type' => 'integer', 'minimum' => 1, 'maximum' => 5 ),
+							'require_fact_review' => array( 'type' => 'boolean' ),
+							'require_guided_launch' => array( 'type' => 'boolean' ),
+							'require_brief_approval' => array( 'type' => 'boolean' ),
+							'require_editorial_review' => array( 'type' => 'boolean' ),
+							'require_publishing_preflight' => array( 'type' => 'boolean' ),
+							'require_impact_study' => array( 'type' => 'boolean' ),
+							'data_retention_days' => array( 'type' => 'integer', 'minimum' => 90, 'maximum' => 1095 ),
+							'allowed_evidence_sources' => array( 'type' => 'array', 'items' => array( 'type' => 'string' ) ),
+							'notes' => array( 'type' => 'string' ),
+						),
+					),
+				),
+			),
+
 			'AgencyCommandSync' => array(
 				'type' => 'object',
 				'properties' => array(
-					'command' => array( 'type' => 'string', 'enum' => array( 'read','refresh_site','refresh_all','record_usage','resolve_alert' ), 'default' => 'read' ),
+					'command' => array( 'type' => 'string', 'enum' => array( 'read','refresh_site','refresh_all','refresh_portfolio','record_usage','resolve_alert','assign_risk','resolve_risk','reopen_risk','acknowledge_notification','dismiss_notification','client_portal_preview' ), 'default' => 'read' ),
 					'site_id' => array( 'type' => 'integer', 'minimum' => 1 ),
 					'alert_id' => array( 'type' => 'integer', 'minimum' => 1 ),
+					'risk_id' => array( 'type' => 'integer', 'minimum' => 1 ),
+					'notification_id' => array( 'type' => 'integer', 'minimum' => 1 ),
+					'owner_id' => array( 'type' => 'integer', 'minimum' => 0 ),
+					'due_at' => array( 'type' => 'string' ),
+					'notes' => array( 'type' => 'string', 'maxLength' => 5000 ),
+					'severity' => array( 'type' => 'string', 'enum' => array( 'critical','high','medium','low' ) ),
+					'approval_type' => array( 'type' => 'string' ),
+					'search' => array( 'type' => 'string', 'maxLength' => 255 ),
 					'limit' => array( 'type' => 'integer', 'minimum' => 1, 'maximum' => 200, 'default' => 100 ),
 					'usage' => array(
 						'type' => 'object',
@@ -2306,6 +3115,151 @@ class Ikon_SEO_REST {
 					),
 				),
 			),
+
+			'ContentWorkbenchSync' => array(
+				'type' => 'object',
+				'properties' => array(
+					'command' => array( 'type' => 'string', 'enum' => array( 'read','create_brief','approve_brief','reject_brief','create_scaffold','submit_draft','evaluate_draft','mark_ready' ), 'default' => 'read' ),
+					'opportunity_id' => array( 'type' => 'integer', 'minimum' => 1 ),
+					'brief_id' => array( 'type' => 'integer', 'minimum' => 1 ),
+					'evidence_hash' => array( 'type' => 'string', 'minLength' => 64, 'maxLength' => 64, 'description' => 'Use the exact current brief evidence hash for approval and draft creation.' ),
+					'notes' => array( 'type' => 'string', 'maxLength' => 5000 ),
+					'limit' => array( 'type' => 'integer', 'minimum' => 10, 'maximum' => 250, 'default' => 100 ),
+					'page_payload' => array( '$ref' => '#/components/schemas/PagePayload' ),
+				),
+			),
+
+
+			'EditorialReviewSync' => array(
+				'type' => 'object',
+				'properties' => array(
+					'command' => array( 'type' => 'string', 'enum' => array( 'read','start_review','assign','request_review','add_comment','resolve_comment','update_check','request_changes','submit_revision','approve_round','sign_off','block','unblock','compare' ), 'default' => 'read' ),
+					'brief_id' => array( 'type' => 'integer', 'minimum' => 1 ),
+					'review_id' => array( 'type' => 'integer', 'minimum' => 1 ),
+					'comment_id' => array( 'type' => 'integer', 'minimum' => 1 ),
+					'check_id' => array( 'type' => 'integer', 'minimum' => 1 ),
+					'from_snapshot_id' => array( 'type' => 'integer', 'minimum' => 1 ),
+					'to_snapshot_id' => array( 'type' => 'integer', 'minimum' => 1 ),
+					'notes' => array( 'type' => 'string', 'maxLength' => 5000 ),
+					'resolution' => array( 'type' => 'string', 'enum' => array( 'open','resolved','dismissed' ) ),
+					'check_status' => array( 'type' => 'string', 'enum' => array( 'pending','verified','failed','not_applicable' ) ),
+					'limit' => array( 'type' => 'integer', 'minimum' => 10, 'maximum' => 250, 'default' => 100 ),
+					'assignment' => array(
+						'type' => 'object',
+						'properties' => array(
+							'writer_id' => array( 'type' => 'integer', 'minimum' => 0 ),
+							'reviewer_id' => array( 'type' => 'integer', 'minimum' => 0 ),
+							'due_at' => array( 'type' => 'string' ),
+							'review_due_at' => array( 'type' => 'string' ),
+						),
+					),
+					'comment' => array(
+						'type' => 'object',
+						'properties' => array(
+							'type' => array( 'type' => 'string', 'enum' => array( 'inline','source','claim','structure','seo','accessibility','general' ) ),
+							'anchor_text' => array( 'type' => 'string', 'maxLength' => 1000 ),
+							'section_key' => array( 'type' => 'string', 'maxLength' => 100 ),
+							'text' => array( 'type' => 'string', 'maxLength' => 10000 ),
+							'assigned_to' => array( 'type' => 'integer', 'minimum' => 0 ),
+						),
+					),
+				),
+			),
+
+
+			'PublishingReadinessSync' => array(
+				'type' => 'object',
+				'properties' => array(
+					'command' => array( 'type' => 'string', 'enum' => array( 'read','create_release','run_preflight','mark_ready','record_manual_publication','verify_launch','complete_monitoring','block','unblock','compare' ), 'default' => 'read' ),
+					'review_id' => array( 'type' => 'integer', 'minimum' => 1 ),
+					'release_id' => array( 'type' => 'integer', 'minimum' => 1 ),
+					'live_post_id' => array( 'type' => 'integer', 'minimum' => 1 ),
+					'live_url' => array( 'type' => 'string', 'format' => 'uri' ),
+					'from_snapshot_id' => array( 'type' => 'integer', 'minimum' => 1 ),
+					'to_snapshot_id' => array( 'type' => 'integer', 'minimum' => 1 ),
+					'notes' => array( 'type' => 'string', 'maxLength' => 5000 ),
+					'refresh' => array( 'type' => 'boolean', 'default' => false ),
+					'limit' => array( 'type' => 'integer', 'minimum' => 10, 'maximum' => 250, 'default' => 100 ),
+					'plan' => array(
+						'type' => 'object',
+						'properties' => array(
+							'slug' => array( 'type' => 'string', 'maxLength' => 200 ),
+							'target_url' => array( 'type' => 'string', 'format' => 'uri' ),
+						),
+					),
+				),
+				'description' => 'This workflow never publishes, schedules, merges, redirects, deletes, or changes canonical/indexing settings. Manual WordPress publication remains a separate human action. Approval decisions require the approve connection-key scope.',
+			),
+
+			'SearchImpactSync' => array(
+				'type' => 'object',
+				'properties' => array(
+					'command' => array( 'type' => 'string', 'enum' => array( 'read','create_study','capture_baseline','capture_checkpoint','add_confounder','assess','acknowledge','block','unblock' ), 'default' => 'read' ),
+					'study_id' => array( 'type' => 'integer', 'minimum' => 1 ),
+					'release_id' => array( 'type' => 'integer', 'minimum' => 1 ),
+					'checkpoint_days' => array( 'type' => 'integer', 'enum' => array( 7, 28, 56, 90 ) ),
+					'notes' => array( 'type' => 'string', 'maxLength' => 5000 ),
+					'decision' => array( 'type' => 'string', 'enum' => array( 'retain','expand_carefully','continue_monitoring','investigate','consider_revision','no_action' ) ),
+					'refresh' => array( 'type' => 'boolean', 'default' => false ),
+					'plan' => array(
+						'type' => 'object',
+						'properties' => array(
+							'primary_metric' => array( 'type' => 'string', 'enum' => array( 'clicks','impressions','ctr','position','sessions','active_users','views','key_events','qualified_leads','customers','revenue' ), 'default' => 'clicks' ),
+							'comparison_url' => array( 'type' => 'string', 'format' => 'uri' ),
+							'baseline_days' => array( 'type' => 'integer', 'minimum' => 7, 'maximum' => 90, 'default' => 28 ),
+							'evaluation_days' => array( 'type' => 'integer', 'minimum' => 7, 'maximum' => 180, 'default' => 28 ),
+						),
+					),
+					'confounder' => array(
+						'type' => 'object',
+						'properties' => array(
+							'type' => array( 'type' => 'string', 'enum' => array( 'seasonality','sitewide_change','algorithm_update','campaign','tracking_change','availability','pricing','competitor_change','offline_event','other' ) ),
+							'notes' => array( 'type' => 'string', 'maxLength' => 5000 ),
+							'occurred_at' => array( 'type' => 'string' ),
+							'direction' => array( 'type' => 'string', 'enum' => array( 'positive','negative','mixed','unknown' ) ),
+						),
+					),
+				),
+				'description' => 'Measures association between a manual publication and later stored evidence. It does not prove causation, invent targets or change public content. Assessment and human acknowledgement require the approve connection-key scope.',
+			),
+
+
+			'PatternLibrarySync' => array(
+				'type' => 'object',
+				'properties' => array(
+					'command' => array( 'type' => 'string', 'enum' => array( 'read','refresh','import_evidence','validate','limit','reject','retire','restore' ), 'default' => 'read' ),
+					'pattern_id' => array( 'type' => 'integer', 'minimum' => 1 ),
+					'notes' => array( 'type' => 'string', 'maxLength' => 5000 ),
+					'limit' => array( 'type' => 'integer', 'minimum' => 1, 'maximum' => 200, 'default' => 100 ),
+					'status' => array( 'type' => 'string', 'enum' => array( 'candidate','review_ready','validated','limited_use','revalidation_required','rejected','retired' ) ),
+					'records' => array(
+						'type' => 'array',
+						'maxItems' => 200,
+						'items' => array(
+							'type' => 'object',
+							'properties' => array(
+								'source_site_fingerprint' => array( 'type' => 'string', 'pattern' => '^[a-f0-9]{32,64}$' ),
+								'source_study_key' => array( 'type' => 'string', 'maxLength' => 100 ),
+								'website_mode' => array( 'type' => 'string' ),
+								'industry' => array( 'type' => 'string' ),
+								'market' => array( 'type' => 'string' ),
+								'language' => array( 'type' => 'string' ),
+								'page_type' => array( 'type' => 'string' ),
+								'change_family' => array( 'type' => 'string' ),
+								'primary_metric' => array( 'type' => 'string' ),
+								'outcome' => array( 'type' => 'string', 'enum' => array( 'positive_signal','negative_signal','neutral_signal','inconclusive' ) ),
+								'confidence' => array( 'type' => 'string', 'enum' => array( 'low','medium','high' ) ),
+								'adjusted_change_percent' => array( 'type' => array( 'number','null' ) ),
+								'human_decision' => array( 'type' => 'string' ),
+								'assessment_hash' => array( 'type' => 'string' ),
+								'observed_at' => array( 'type' => 'string' ),
+							),
+						),
+					),
+				),
+				'description' => 'Builds context-bounded advisory patterns from anonymised acknowledged evidence. It never applies a pattern, changes public content or makes a causal or universal claim.',
+			),
+
 
 			'PublisherSync' => array(
 				'type' => 'object',

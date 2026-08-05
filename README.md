@@ -4,22 +4,11 @@ Ikon SEO is an approval-first WordPress SEO operating system for auditing, plann
 
 ## Current release
 
-**v1.5.0 — Portfolio Quality & Footprint Guard** adds:
+**v2.0.1 — Staging Validation & Evidence Runner**
 
-1. **Privacy-preserving local page signatures** using bounded hashes, topic terms and structural counts instead of complete article text.
-2. **Cross-site content similarity review** using bundles exported from other managed websites.
-3. **Repeated template and heading-pattern detection** for portfolio-wide editorial review.
-4. **Topic-map overlap and differentiation evidence** without treating normal subject overlap as an automatic failure.
-5. **Hashed author and optional media-reuse observations** without exporting author names or image files.
-6. **Publishing-pattern observations** used only as contextual evidence.
-7. **Thin programmatic cluster detection** for repeated local pages below configurable content thresholds.
-8. **Publisher Intelligence review gates** for high-risk findings.
-9. **Closed-Loop Operating Plan and Agency Command Centre integration** with approval-required recommendations.
-10. **Weekly bounded evaluation, retention cleanup and Project History records** while preserving exactly 30 focused workspace operations.
+The plugin now adds versioned production support contracts, release-specific certification checklists, exact evidence fingerprints, two-person certification approval and bounded controlled rollout waves. It records production-readiness and manual deployment evidence but never downloads, installs, activates, publishes or rolls back anything automatically.
 
-All v1.4.0 International & Server Intelligence and every earlier experiment, claim, revenue, governance, indexation, Operating Plan, agency, local, publisher, workflow, strategy, search, technical, competitor, authority, analytics, Project History and draft-protection system remain available.
-
-Portfolio findings are review signals. They do not prove copying, spam, a search-policy violation or ranking impact.
+Production certification does not claim that a site is safe without real staging evidence. Critical package, migration, recovery, cron, REST, role-separation, tenant-isolation, privacy and runbook checks must pass, and any evidence change invalidates the previous approval.
 
 ## Evidence sources
 
@@ -65,7 +54,7 @@ find . -name '*.php' -print0 | xargs -0 -n1 php -l
 ```
 
 ```bash
-zip -r ikon-seo-v1.5.0.zip ikon-seo -x 'ikon-seo/.git/*'
+zip -r ikon-seo-v2.0.1.zip ikon-seo -x 'ikon-seo/.git/*'
 ```
 
 ## Project continuity
@@ -73,3 +62,7 @@ zip -r ikon-seo-v1.5.0.zip ikon-seo -x 'ikon-seo/.git/*'
 Project History stores durable research, recommendations, page-plan decisions, drafts and next steps in WordPress. A private workspace can call `syncIkonSEOProjectHistory` with an empty object to load the latest state without relying on conversation history.
 
 Agency users can download a no-secret transfer guide from **Project History**. When moving to another private-workspace account, import the same schema, generate a fresh workflow key, test the connection and history action, then revoke the old key.
+
+## Staging certification
+
+v2.0.1 adds a non-destructive validation runner for real WordPress staging environments. It collects evidence, blocks on every non-passing critical check, locks results to a SHA-256 fingerprint, and requires a different administrator to approve the handoff. See `docs/STAGING-VALIDATION-EVIDENCE-RUNNER.md`.

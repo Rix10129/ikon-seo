@@ -2,8 +2,8 @@
 /**
  * Plugin Name: Ikon SEO
  * Plugin URI: https://ikondigitals.com/
- * Description: Closed-loop SEO operations with portfolio quality safeguards, international targeting, privacy-preserving evidence, controlled experiments, governance and approval-first improvements.
- * Version: 1.5.0
+ * Description: Approval-first SEO operations with automatic website discovery, strategy proposals, portfolio safeguards, governance, measurement and controlled improvements.
+ * Version: 2.0.1
  * Author: Ikon Digitals
  * Author URI: https://ikondigitals.com/
  * Text Domain: ikon-seo
@@ -13,7 +13,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'IKON_SEO_VERSION', '1.5.0' );
+define( 'IKON_SEO_VERSION', '2.0.1' );
 define( 'IKON_SEO_FILE', __FILE__ );
 define( 'IKON_SEO_DIR', plugin_dir_path( __FILE__ ) );
 define( 'IKON_SEO_URL', plugin_dir_url( __FILE__ ) );
@@ -51,12 +51,29 @@ require_once IKON_SEO_DIR . 'includes/class-ikon-seo-competitor-content-intellig
 require_once IKON_SEO_DIR . 'includes/class-ikon-seo-authority-intelligence.php';
 require_once IKON_SEO_DIR . 'includes/class-ikon-seo-strategy.php';
 require_once IKON_SEO_DIR . 'includes/class-ikon-seo-automation.php';
+require_once IKON_SEO_DIR . 'includes/class-ikon-seo-auto-discovery.php';
+require_once IKON_SEO_DIR . 'includes/class-ikon-seo-discovery-review.php';
 require_once IKON_SEO_DIR . 'includes/class-ikon-seo-publisher-intelligence.php';
 require_once IKON_SEO_DIR . 'includes/class-ikon-seo-local-growth.php';
 require_once IKON_SEO_DIR . 'includes/class-ikon-seo-agency-command-centre.php';
 require_once IKON_SEO_DIR . 'includes/class-ikon-seo-visibility-brand-intelligence.php';
 require_once IKON_SEO_DIR . 'includes/class-ikon-seo-closed-loop.php';
+require_once IKON_SEO_DIR . 'includes/class-ikon-seo-guided-launch.php';
+require_once IKON_SEO_DIR . 'includes/class-ikon-seo-opportunity-engine.php';
+require_once IKON_SEO_DIR . 'includes/class-ikon-seo-content-workbench.php';
+require_once IKON_SEO_DIR . 'includes/class-ikon-seo-editorial-review.php';
+require_once IKON_SEO_DIR . 'includes/class-ikon-seo-publishing-readiness.php';
+require_once IKON_SEO_DIR . 'includes/class-ikon-seo-search-impact.php';
+require_once IKON_SEO_DIR . 'includes/class-ikon-seo-pattern-library.php';
+require_once IKON_SEO_DIR . 'includes/class-ikon-seo-portfolio-governance.php';
+require_once IKON_SEO_DIR . 'includes/class-ikon-seo-agency-service-levels.php';
+require_once IKON_SEO_DIR . 'includes/class-ikon-seo-executive-command-centre.php';
+require_once IKON_SEO_DIR . 'includes/class-ikon-seo-client-portal.php';
 require_once IKON_SEO_DIR . 'includes/class-ikon-seo-production-health.php';
+require_once IKON_SEO_DIR . 'includes/class-ikon-seo-platform-hardening.php';
+require_once IKON_SEO_DIR . 'includes/class-ikon-seo-deployment-control.php';
+require_once IKON_SEO_DIR . 'includes/class-ikon-seo-production-certification.php';
+require_once IKON_SEO_DIR . 'includes/class-ikon-seo-staging-validation.php';
 require_once IKON_SEO_DIR . 'includes/class-ikon-seo-analytics.php';
 require_once IKON_SEO_DIR . 'includes/class-ikon-seo-crawler.php';
 require_once IKON_SEO_DIR . 'includes/class-ikon-seo-diagnostics.php';
