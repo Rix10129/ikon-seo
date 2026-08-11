@@ -3,7 +3,7 @@
  * Plugin Name: Ikon SEO
  * Plugin URI: https://ikondigitals.com/
  * Description: Approval-first SEO operations with automatic website discovery, strategy proposals, portfolio safeguards, governance, measurement and controlled improvements.
- * Version: 2.0.1
+ * Version: 2.0.2
  * Author: Ikon Digitals
  * Author URI: https://ikondigitals.com/
  * Text Domain: ikon-seo
@@ -13,7 +13,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'IKON_SEO_VERSION', '2.0.1' );
+define( 'IKON_SEO_VERSION', '2.0.2' );
 define( 'IKON_SEO_FILE', __FILE__ );
 define( 'IKON_SEO_DIR', plugin_dir_path( __FILE__ ) );
 define( 'IKON_SEO_URL', plugin_dir_url( __FILE__ ) );
@@ -83,6 +83,7 @@ require_once IKON_SEO_DIR . 'includes/class-ikon-seo-workspace-history.php';
 require_once IKON_SEO_DIR . 'includes/class-ikon-seo-rest.php';
 require_once IKON_SEO_DIR . 'includes/class-ikon-seo-admin.php';
 require_once IKON_SEO_DIR . 'includes/class-ikon-seo-plugin.php';
+require_once IKON_SEO_DIR . 'includes/class-ikon-seo-production-pages.php';
 
 register_activation_hook( __FILE__, array( 'Ikon_SEO_Plugin', 'activate' ) );
 register_deactivation_hook( __FILE__, array( 'Ikon_SEO_Plugin', 'deactivate' ) );
@@ -92,3 +93,4 @@ function ikon_seo() {
 }
 
 ikon_seo();
+Ikon_SEO_Production_Pages::bootstrap();
