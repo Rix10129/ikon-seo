@@ -3,7 +3,7 @@
  * Plugin Name: Ikon SEO Services Dubai Rollout
  * Plugin URI: https://ikondigitals.com/
  * Description: Site-specific preview, apply and rollback controller for the Ikon Digitals SEO Services Dubai production page.
- * Version: 1.0.0
+ * Version: 1.1.0
  * Author: Ikon Digitals
  * Author URI: https://ikondigitals.com/
  * Requires at least: 6.4
@@ -14,7 +14,7 @@
 defined( 'ABSPATH' ) || exit;
 
 final class Ikon_SEO_Services_Dubai_Rollout {
-	const VERSION       = '1.0.0';
+	const VERSION       = '1.1.0';
 	const MENU_SLUG     = 'ikon-seo-services-dubai-rollout';
 	const PAGE_SLUG     = 'seo-services-dubai';
 	const BACKUP_META   = '_ikon_sd_rollout_backup';
@@ -298,7 +298,7 @@ final class Ikon_SEO_Services_Dubai_Rollout {
 	}
 
 	private function excerpt() {
-		return 'SEO services in Dubai covering technical SEO, commercial pages, local search, content, authority and AI visibility.';
+		return 'SEO services in Dubai for technical SEO, local search, content, authority and AI visibility, backed by documented results.';
 	}
 
 	private function create_backup( WP_Post $page ) {
@@ -347,8 +347,8 @@ final class Ikon_SEO_Services_Dubai_Rollout {
 
 	private function apply_seo_meta( $page_id ) {
 		if ( defined( 'RANK_MATH_VERSION' ) || class_exists( 'RankMath' ) ) {
-			update_post_meta( $page_id, 'rank_math_title', 'SEO Services in Dubai | Ikon Digitals' );
-			update_post_meta( $page_id, 'rank_math_description', 'SEO services in Dubai covering technical SEO, commercial pages, local search, content, authority and AI visibility, backed by documented results.' );
+			update_post_meta( $page_id, 'rank_math_title', 'SEO Services Dubai | Proven Search Growth | Ikon Digitals' );
+			update_post_meta( $page_id, 'rank_math_description', 'SEO services in Dubai for technical SEO, local search, content, authority and AI visibility. See documented results and request an SEO opportunity review.' );
 			update_post_meta( $page_id, 'rank_math_focus_keyword', 'SEO services Dubai' );
 			update_post_meta( $page_id, 'rank_math_canonical_url', home_url( '/' . self::PAGE_SLUG . '/' ) );
 		}
