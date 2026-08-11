@@ -1,0 +1,44 @@
+name: SEO Services Dubai rollout
+
+on:
+  pull_request:
+    paths:
+      - 'production/seo-services-dubai/**'
+      - 'tests/seo-services-dubai-rollout-test.php'
+      - '.github/workflows/seo-services-dubai-rollout.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-rollout:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          coverage: none
+      - name: Lint rollout plugin
+        run: php -l production/seo-services-dubai/ikon-seo-services-dubai-rollout.php
+      - name: Run rollout safety checks
+        run: php tests/seo-services-dubai-rollout-test.php
+      - name: Build installable WordPress ZIP
+        run: |
+          rm -rf build
+          mkdir -p build/ikon-seo-services-dubai-rollout/assets
+          cp production/seo-services-dubai/ikon-seo-services-dubai-rollout.php build/ikon-seo-services-dubai-rollout/
+          cp production/seo-services-dubai/page-content.html build/ikon-seo-services-dubai-rollout/
+          cp production/seo-services-dubai/assets/page.css build/ikon-seo-services-dubai-rollout/assets/
+          cd build
+          zip -qr ikon-seo-services-dubai-rollout-v1.0.0.zip ikon-seo-services-dubai-rollout
+      - name: Upload verified plugin ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: ikon-seo-services-dubai-rollout-v1.0.0
+          path: build/ikon-seo-services-dubai-rollout-v1.0.0.zip
+          if-no-files-found: error
+          retention-days: 30
