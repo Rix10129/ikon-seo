@@ -21,6 +21,8 @@ It reports per managed site:
 
 The Agency Hub Command view consumes this report, so version/update status is part of the daily operator surface rather than another control room.
 
+The Hub Command view also now has a portfolio priority queue that condenses each managed site to profile state, campaign state, exception count, installed version and one next safe action.
+
 ## Safety state in Phase 1
 
 Central package installation remains explicitly disabled.
@@ -58,10 +60,14 @@ The recovered v4.3.0 package contains signed release-integrity files, but the pr
 
 Until that is solved, development packages are not operator-installable releases.
 
+A CLI release helper has now been added in the development tree to build a deterministic manifest and sign/verify it with a private key supplied by path at release time. The private signing key is never stored in the plugin tree.
+
 ## Current validation baseline
 
-The recovered v4.4 development tree now has a `tests/current-release-tests.json` manifest and CLI `tests/current-release-gate.php` runner so historical exact-version tests are not treated as current blockers.
+The recovered v4.4 development tree has a `tests/current-release-tests.json` manifest and CLI `tests/current-release-gate.php` runner so historical exact-version tests are not treated as current blockers.
 
-Current release gate after fleet-version groundwork: **39/39 blocking tests pass**.
+Current release gate after fleet-version, portfolio-queue and release-tooling groundwork: **40/40 blocking tests pass**.
+
+A full PHP syntax pass currently covers **195 PHP files with zero syntax failures**, and the bundled OpenAPI/current-test JSON files parse successfully.
 
 Historical static tests pinned to old release numbers remain historical evidence and are intentionally not used as v4.4 release blockers.
