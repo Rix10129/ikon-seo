@@ -1,73 +1,130 @@
 # v4.4 Managed Update Groundwork
 
-Status: development design/validation record. Do not deploy this branch as an installable release yet.
+Status: development validation record. Do not install this development branch on a production site yet.
 
 ## Why this exists
 
-The agency-scale goal is to stop visiting every client WordPress admin to upload another ZIP. v4.3.0 already has Deployment Control with signed entitlement/release metadata, preflight, recovery references, manual approval and post-deployment verification. v4.4 should extend that system instead of inventing a second updater.
+The agency-scale goal is to stop visiting every client WordPress admin to upload another ZIP. v4.3.0 already has Deployment Control, recovery, production-health and Hub/Site Agent primitives. v4.4 extends those primitives rather than creating a second updater.
 
-## Phase 1 implemented in recovered v4.3.0 development tree
+## Fleet and operator layer
 
-A read-only `Ikon_SEO_Managed_Update_Coordinator` now provides fleet version visibility without installing code.
+`Ikon_SEO_Managed_Update_Coordinator` gives Agency Hub one fleet report with:
 
-It reports per managed site:
+- Site Agent version from authenticated health data;
+- Hub version;
+- connection/last-seen state;
+- compatibility: current / update available / review / blocked / unknown;
+- signed release-catalogue state;
+- per-site managed-update credential/enablement state;
+- one managed-update action when the site and release are eligible.
 
-- Site Agent version from the existing authenticated `/health` response;
-- Agency Hub version;
-- connection state and last-seen time;
-- compatibility state: current / update available / review / blocked / unknown;
-- latest release-catalogue metadata when available;
-- explicit transport state.
+The Hub Command view also has the Portfolio Priority Queue: profile state, campaign state, exception count, installed version and one next safe action per website.
 
-The Agency Hub Command view consumes this report, so version/update status is part of the daily operator surface rather than another control room.
+## Separate deployment authority
 
-The Hub Command view also now has a portfolio priority queue that condenses each managed site to profile state, campaign state, exception count, installed version and one next safe action.
+Managed updates do **not** reuse the normal Site Agent workflow key.
 
-## Safety state in Phase 1
+v4.4 creates a separate per-site deployment credential. The Site Agent stores only its password hash; the Hub stores the encrypted corresponding deployment key. Revoking the normal connection also clears the deployment authority and disables managed updates on that Site Agent.
 
-Central package installation remains explicitly disabled.
+Managed updates are locally disabled by default and must be explicitly enabled on the Site Agent.
 
-The coordinator contains no:
+## Independently signed release envelope
 
-- `Plugin_Upgrader` invocation;
-- package download;
-- filesystem write;
-- plugin activation/deactivation;
-- public-content modification.
+The Hub is not the only trust check.
 
-This is intentional until release signing, recovery preflight and post-install verification are ready.
+For `preflight` and `apply`, the Hub sends a signed release envelope. The Site Agent independently verifies that envelope using its packaged release public key before any package download is considered.
 
-## Update transport design for the next gate
+The signed payload contains release/version/database/channel/environment, package URL, exact package SHA-256, manifest SHA-256, WordPress/PHP requirements and whether remote download is allowed.
 
-The later transport should run locally on each Site Agent and be initiated from Agency Hub only after explicit deployment authorization.
+This prevents a compromised or buggy normal workflow from silently substituting arbitrary release metadata.
 
-Required boundaries:
+## Site Agent preflight
 
-1. Dedicated deployment authority; do not silently reuse a normal draft-production key.
-2. Signed release envelope and exact package checksum before download/install.
-3. WordPress/PHP/DB compatibility preflight.
-4. Local recovery reference before replacement.
-5. Use WordPress upgrader/filesystem mechanisms, not ad-hoc file copying.
-6. Verify activation, Core version, DB version and REST/connection health after install.
-7. Mark failed site blocked from cohort continuation.
-8. Staged cohorts: internal/staging -> pilot -> remaining compatible sites.
-9. Audit every release/site/operator/preflight/install/verification/recovery decision.
-10. No updater action changes page content, redirects, robots/indexability, GBP data or publication state.
+The managed-update transport blocks when material conditions include:
 
-## Trust-root prerequisite
+- local managed updates disabled;
+- no separate deployment credential;
+- release signature not independently verified;
+- release identity/version/database incomplete;
+- missing/fake package SHA-256;
+- remote download not permitted by the signed envelope;
+- non-HTTPS or non-allowlisted package host;
+- same-version overwrite/downgrade;
+- major-version transition;
+- target database older than installed schema;
+- PHP/WordPress below release requirements;
+- non-stable release on production;
+- another update lock active;
+- WordPress file modifications disabled;
+- host requires interactive filesystem credentials.
 
-The recovered v4.3.0 package contains signed release-integrity files, but the private release-signing key is not present in the recovered source package. The v4.4 installable milestone must therefore complete an explicit release-signing/trust-root transition rather than shipping a modified package with the old v4.3.0 manifest/signature.
+## Package verification and WordPress install path
 
-Until that is solved, development packages are not operator-installable releases.
+When preflight is ready, the Site Agent:
 
-A CLI release helper has now been added in the development tree to build a deterministic manifest and sign/verify it with a private key supplied by path at release time. The private signing key is never stored in the plugin tree.
+1. acquires a bounded update lock;
+2. downloads the signed package URL to a temporary file;
+3. enforces the package size ceiling;
+4. verifies the exact package SHA-256;
+5. unpacks to a temporary verification directory;
+6. verifies `ikon-seo/ikon-seo.php`, plugin identity and exact target version;
+7. verifies packaged release manifest version/database and optional manifest hash;
+8. creates a local Platform Hardening recovery archive;
+9. exposes the already-verified local package to WordPress's normal `Plugin_Upgrader` path;
+10. confirms the installed plugin header reports the approved target version;
+11. records a pending post-reboot verification checkpoint.
+
+The Hub coordinator itself contains no filesystem/install primitive. Filesystem replacement happens locally on the Site Agent only.
+
+## Post-reboot verification
+
+On the next Site Agent request, the transport confirms target Core version + target DB version and runs Production Health. A critical health result marks the update verification failed; otherwise the pending update is marked verified after reboot with health status/counts retained.
+
+A failed site must be held from further cohort rollout until reviewed.
+
+## Public-content safety
+
+The update transport contains no page publish/update/delete/trash path and does not modify redirects, robots/indexability, GBP data or website content.
+
+Managed plugin deployment and website production remain separate authorities.
+
+## Release tooling
+
+The development tree now has CLI helpers to:
+
+- build the deterministic release manifest;
+- sign/verify that manifest with a private key supplied by path at release time;
+- generate normalized release metadata from an exact package URL/hash;
+- sign a release envelope;
+- verify a release envelope;
+- export a public key from a private release key.
+
+Private signing keys are never copied into the plugin tree.
+
+## Trust-root transition
+
+The recovered v4.3.0 package does not include the private key corresponding to its old signing material. Therefore v4.4 is intentionally the one manual trust-transition release.
+
+Before v4.4 can be called installable:
+
+1. create a new dedicated release-signing key in secure operator storage;
+2. package only the public release key in v4.4;
+3. produce/verify the signed v4.4 manifest;
+4. perform the exact v4.3.0 -> v4.4 staging upgrade and data-preservation tests;
+5. perform rollback/recovery rehearsal;
+6. then install v4.4 manually on the Agency Hub/pilot Site Agent.
+
+Future compatible releases can then use the managed-update path instead of repeated ZIP uploads.
 
 ## Current validation baseline
 
-The recovered v4.4 development tree has a `tests/current-release-tests.json` manifest and CLI `tests/current-release-gate.php` runner so historical exact-version tests are not treated as current blockers.
+Current local recovered v4.4 development baseline:
 
-Current release gate after fleet-version, portfolio-queue and release-tooling groundwork: **40/40 blocking tests pass**.
+- plugin version: **4.4.0**;
+- database component: **57.0**;
+- current release gate: **41/41 blocking tests pass**;
+- full PHP syntax pass: **197 PHP files, zero syntax failures**;
+- bundled JSON/OpenAPI/current-test files parse successfully;
+- current generated release manifest: **406 tracked files**.
 
-A full PHP syntax pass currently covers **195 PHP files with zero syntax failures**, and the bundled OpenAPI/current-test JSON files parse successfully.
-
-Historical static tests pinned to old release numbers remain historical evidence and are intentionally not used as v4.4 release blockers.
+Historical tests pinned to superseded exact versions remain historical evidence and are not used as current-release blockers.
